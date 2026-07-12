@@ -1,0 +1,8 @@
+pdfplumber
+sentence-transformers
+rank_bm25
+qdrant-client
+fastapi
+uvicorn
+python-dotenv
+ragas
