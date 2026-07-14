@@ -23,3 +23,7 @@ data/
 # OS
 .DS_Store
 Thumbs.db
+
+# RegBrain generated artifacts
+ingestion/chunks/
+retrieval/bm25_index.pkl
