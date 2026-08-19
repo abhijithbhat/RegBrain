@@ -9,7 +9,6 @@ import {
   Moon,
   RefreshCw,
   Search,
-  Settings2,
   ShieldCheck,
   Sun,
   XCircle,
@@ -102,26 +101,11 @@ export default function Home() {
   const [result, setResult] = useState<QueryResult | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [apiUrl, setApiUrl] = useState(
-    process.env.NEXT_PUBLIC_API_URL || "https://regbrain.onrender.com"
-  );
-  const [apiKey, setApiKey] = useState(
-    process.env.NEXT_PUBLIC_API_KEY || "regbrain-dev-key"
-  );
-  const [showSettings, setShowSettings] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    try {
-      const savedUrl = localStorage.getItem("regbrain_api_url");
-      const savedKey = localStorage.getItem("regbrain_api_key");
-      if (savedUrl) setApiUrl(savedUrl);
-      if (savedKey) setApiKey(savedKey);
-    } catch {
-      // Ignore localStorage read errors in SSR/sandboxed mode
-    }
-  }, []);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://regbrain.onrender.com";
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY || "regbrain-dev-key";
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -156,34 +140,15 @@ export default function Home() {
     abortControllerRef.current = abortController;
 
     try {
-      let response: Response;
-      try {
-        response = await fetch(`${apiUrl}/query/stream`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-Key": apiKey,
-          },
-          body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
-          signal: abortController.signal,
-        });
-      } catch (error: unknown) {
-        if (apiUrl.includes(":8001")) {
-          const fallbackUrl = apiUrl.replace(":8001", ":8000");
-          response = await fetch(`${fallbackUrl}/query/stream`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-API-Key": apiKey,
-            },
-            body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
-            signal: abortController.signal,
-          });
-          setApiUrl(fallbackUrl);
-        } else {
-          throw error;
-        }
-      }
+      const response = await fetch(`${apiUrl}/query/stream`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": apiKey,
+        },
+        body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
+        signal: abortController.signal,
+      });
 
       if (!response.ok) {
         let detail = `HTTP ${response.status}`;
@@ -302,38 +267,6 @@ export default function Home() {
             </nav>
           </section>
 
-          {showSettings && (
-            <section className="settings-panel" aria-label="Audit API configuration">
-              <p className="structural-label">Audit connection settings</p>
-              <label className="settings-field">
-                Endpoint
-                <input
-                  value={apiUrl}
-                  onChange={(event) => {
-                    const val = event.target.value;
-                    setApiUrl(val);
-                    try { localStorage.setItem("regbrain_api_url", val); } catch {}
-                  }}
-                  type="text"
-                  placeholder="https://regbrain.onrender.com"
-                />
-              </label>
-              <label className="settings-field">
-                API key
-                <input
-                  value={apiKey}
-                  onChange={(event) => {
-                    const val = event.target.value;
-                    setApiKey(val);
-                    try { localStorage.setItem("regbrain_api_key", val); } catch {}
-                  }}
-                  type="password"
-                  placeholder="••••••••••••"
-                />
-              </label>
-            </section>
-          )}
-
           <div className="spine-controls">
             <button
               className="ledger-control"
@@ -343,16 +276,6 @@ export default function Home() {
             >
               {theme === "dark" ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
               {theme === "dark" ? "Parchment" : "Ledger"}
-            </button>
-            <button
-              aria-expanded={showSettings}
-              className="ledger-control"
-              onClick={() => setShowSettings((open) => !open)}
-              title="Audit API configuration"
-              type="button"
-            >
-              <Settings2 className="h-3 w-3" />
-              Settings
             </button>
           </div>
         </aside>
