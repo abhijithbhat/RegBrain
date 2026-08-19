@@ -140,63 +140,87 @@ export default function Home() {
     abortControllerRef.current = abortController;
 
     try {
-      const response = await fetch(`${apiUrl}/query/stream`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": apiKey,
-        },
-        body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
-        signal: abortController.signal,
-      });
+      let receivedResult = false;
+      try {
+        const response = await fetch(`${apiUrl}/query/stream`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-Key": apiKey,
+          },
+          body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
+          signal: abortController.signal,
+        });
 
-      if (!response.ok) {
-        let detail = `HTTP ${response.status}`;
-        try {
-          const errorBody = await response.json();
-          detail = errorBody.detail?.message || errorBody.detail || errorBody.message || detail;
-        } catch {
-          // Preserve the HTTP status when an error body is unavailable.
-        }
-        throw new Error(detail);
-      }
+        if (response.ok && response.body) {
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = "";
 
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error("No readable stream response from server");
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
 
-      const decoder = new TextDecoder();
-      let buffer = "";
+            buffer += decoder.decode(value, { stream: true });
+            const parts = buffer.split("\n\n");
+            buffer = parts.pop() || "";
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+            for (const part of parts) {
+              const record = part.trim();
+              if (!record.startsWith("data:")) continue;
 
-        buffer += decoder.decode(value, { stream: true });
-        const parts = buffer.split("\n\n");
-        buffer = parts.pop() || "";
-
-        for (const part of parts) {
-          const record = part.trim();
-          if (!record.startsWith("data:")) continue;
-
-          try {
-            const data = JSON.parse(record.replace(/^data:\s*/, ""));
-            if (data.stage) {
-              setCurrentStage(data.stage as StageType);
-            } else if (data.status || data.answer !== undefined) {
-              setResult(data);
-              if (data.session_id) setSessionId(data.session_id);
-              setCurrentStage(null);
-              setIsLoading(false);
-            } else if (data.error) {
-              setErrorMessage(data.message || data.error);
-              setCurrentStage(null);
-              setIsLoading(false);
+              try {
+                const data = JSON.parse(record.replace(/^data:\s*/, ""));
+                if (data.stage) {
+                  setCurrentStage(data.stage as StageType);
+                } else if (data.status || data.answer !== undefined) {
+                  setResult(data);
+                  if (data.session_id) setSessionId(data.session_id);
+                  setCurrentStage(null);
+                  setIsLoading(false);
+                  receivedResult = true;
+                } else if (data.error) {
+                  setErrorMessage(data.message || data.error);
+                  setCurrentStage(null);
+                  setIsLoading(false);
+                  receivedResult = true;
+                }
+              } catch (parseError) {
+                console.error("Error parsing SSE JSON chunk:", parseError, record);
+              }
             }
-          } catch (parseError) {
-            console.error("Error parsing SSE JSON chunk:", parseError, record);
           }
         }
+      } catch (streamError) {
+        console.warn("Stream interrupted, falling back to standard endpoint...", streamError);
+      }
+
+      // If streaming was interrupted or did not deliver final result, fallback to standard /query
+      if (!receivedResult) {
+        const fallbackRes = await fetch(`${apiUrl}/query`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-Key": apiKey,
+          },
+          body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
+          signal: abortController.signal,
+        });
+
+        if (!fallbackRes.ok) {
+          let detail = `HTTP ${fallbackRes.status}`;
+          try {
+            const errorBody = await fallbackRes.json();
+            detail = errorBody.detail?.message || errorBody.detail || errorBody.message || detail;
+          } catch {
+            // Preserve status code
+          }
+          throw new Error(detail);
+        }
+
+        const data = await fallbackRes.json();
+        setResult(data);
+        if (data.session_id) setSessionId(data.session_id);
       }
     } catch (error: unknown) {
       if (!(error instanceof Error && error.name === "AbortError")) {
