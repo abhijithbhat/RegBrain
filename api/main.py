@@ -486,7 +486,13 @@ def query_stream(request: Request, body: QueryRequest):
 
     def sse_generator():
         while True:
-            item = event_queue.get()
+            try:
+                item = event_queue.get(timeout=2.0)
+            except queue.Empty:
+                # SSE keep-alive heartbeat to prevent Cloudflare/Render proxy 502 idle timeouts
+                yield ": keep-alive\n\n"
+                continue
+
             if item["type"] == "stage":
                 yield f"data: {json.dumps({'stage': item['stage']})}\n\n"
             elif item["type"] == "result":
@@ -496,4 +502,12 @@ def query_stream(request: Request, body: QueryRequest):
                 yield f"data: {json.dumps(item['error'])}\n\n"
                 break
 
-    return StreamingResponse(sse_generator(), media_type="text/event-stream")
+    return StreamingResponse(
+        sse_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
