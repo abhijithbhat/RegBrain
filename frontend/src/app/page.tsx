@@ -102,8 +102,12 @@ export default function Home() {
   const [result, setResult] = useState<QueryResult | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [apiUrl, setApiUrl] = useState("http://127.0.0.1:8001");
-  const [apiKey, setApiKey] = useState("regbrain-dev-key");
+  const [apiUrl, setApiUrl] = useState(
+    process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001"
+  );
+  const [apiKey, setApiKey] = useState(
+    process.env.NEXT_PUBLIC_API_KEY || "regbrain-dev-key"
+  );
   const [showSettings, setShowSettings] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
   const abortControllerRef = useRef<AbortController | null>(null);
