@@ -1,0 +1,790 @@
+[
+  {
+    "question_id": 1,
+    "question": "What are the KYC requirements for NBFCs?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A."
+    ],
+    "citations_count": 1,
+    "final_answer": "NBFCs must have a KYC policy that is approved by the Board of Directors (or a delegated committee). The policy must contain four key elements – a Customer Acceptance Policy, Risk Management, Customer Identification Procedures (CIP) and Monitoring of Transactions. It must also provide for periodic KYC updates, exceptional update measures (e.g., recent photograph, physical presence, more frequent updates), obtaining a copy of OVD or deemed OVD for address changes, the ability to update KYC at any branch, and the ability to change the registered mobile number for accounts opened non‑face‑to‑face. [A.]",
+    "reference_answer": "NBFCs must formulate a Board-approved KYC policy that incorporates a Customer Acceptance Policy, Risk Management, Customer Identification Procedures (CIP), and Transaction Monitoring. Additionally, periodic KYC updation must be conducted based on customer risk categorization.",
+    "retrieved_contexts": [
+      "A. General Requirements for NBFC-LSP Arrangements ................................ 14",
+      "B. Finance to NBFCs not requiring Registration ............................................. 95",
+      "B. Conduct and Customer Protection Requirements\n8. Assessing the borrower’s creditworthiness\n(1) An NBFC shall obtain the necessary information relating to economic profile of\nthe borrower with a view to assessing the borrower’s creditworthiness before\nextending any loan, including, at a minimum, age, occupation and income\ndetails. The same shall be kept on record for audit purposes.\n15\n(2) An NBFC shall ensure that there is no automatic increase in credit limit unless\nan explicit request is received, evaluated and kept on record from the borrower\nfor such increase.\n9. Disclosures to borrowers\n(1) An NBFC shall provide a Key Fact Statement (KFS), as per instructions\ncontained in Reserve Bank of India (Non- Banking Financial Companies –\nResponsible Business Conduct) Directions, 2025.\n(2) As regards penal charges, an NBFC shall be guided by Reserve Bank of India\n(Non- Banking Financial Companies – Responsible Business Conduct)\nDirections, 2025.\n(3) An NBFC shall ensure that digitally sig…",
+      "B. Provisioning Requirements\n54. These requirements shall be in addition to the instructions contained in\nparagraphs 28 to 36.\n55. An NBFC-ML shall make provisions for standard assets at 0.40 per cent of the\noutstanding, which shall not be reckoned for arriving at net NPAs.\nExplanation: The above rate of standard asset provisioning shall be applicable\nin respect of microfinance loans as well.\n21",
+      "A. Board of Directors / Policies-related guidelines:\n6. Know Your Customer (KYC) Policy:\n(1) The NBFC shall have a KYC policy. The Board of Directors of the NBFC, or any\ncommittee to which the Board has delegated power, shall duly approve the KYC policy.\n(2) The KYC policy shall include following four key elements:\n(i) Customer Acceptance Policy;\n(ii) Risk Management;\n(iii) Customer Identification Procedures (CIP); and\n(iv) Monitoring of Transactions\n(3) The KYC policy shall, inter alia, incorporate provisions for the following:\n(i) Periodic updation of KYC\n(ii) Any exceptional measures for KYC updation, such as requiring a recent\nphotograph, physical presence, or a more frequent updation schedule than the\nminimum prescribed.\n(iii) Obtaining a copy of OVD or deemed OVD, for the purpose of proof of change\nof address during KYC updation.\n(iv) Providing facility of updation / periodic updation of KYC at any branch.\n(v) Change of registered Mobile Number for accounts opened in non-face-to-…"
+    ],
+    "pipeline_time_s": 9.96
+  },
+  {
+    "question_id": 2,
+    "question": "What is the capital adequacy requirement for Commercial Banks?",
+    "expected_clause_id": "Chapter III",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "Chapter III"
+    ],
+    "citations_count": 1,
+    "final_answer": "Commercial banks must maintain a minimum Pillar 1 Capital‑to‑Risk‑Weighted Assets Ratio (CRAR) of 9 % on an ongoing basis (excluding capital buffers). In addition, the regulatory framework specifies that CET1 capital must be at least 5.5 % of RWAs and Tier 1 capital at least 7 % of RWAs, with the overall Minimum Total Capital also set at 9 % of RWAs.",
+    "reference_answer": "Commercial Banks are required to maintain a minimum total capital ratio (CRAR) of 9% of risk-weighted assets under Pillar 1 of the regulatory capital framework, along with applicable capital conservation buffers.",
+    "retrieved_contexts": [
+      "E. Internal Capital Adequacy Assessment Process (ICAAP)\n24. A CIC is required to make a thorough internal assessment of the need for capital\n(as reflected in ANW and leverage ratio), commensurate with the risks in its business.\nThe CIC shall be guided by paragraph 54 of Reserve Bank of India (Non-Banking\nFinancial Companies – Prudential Norms on Capital Adequacy) Directions, 2025, in this\nregard.\n17\nChapter-IV – Prudential Regulations\n25. Prudential Regulations applicable to a CIC are as under:",
+      "C. Capital Adequacy and Other prudential norms\n47. Any loss or profit arising because of transfer of loans, which is realised, should\nbe accounted for accordingly and reflected in the Profit & Loss account of the transferor\nfor the accounting period during which the transfer is completed. However, unrealised\n16\nprofits, if any, arising out of such transfers, shall be deducted from CET 1 capital for\nmeeting regulatory capital adequacy requirements till the maturity of such loans.\n48. In case of transfer of a pool of loans, the transferee(s), and the transferor(s) in\ncase of retention of economic interest, should maintain borrower-wise accounts. Thus,\nthe exposures of the transferor(s) and the transferee(s) would be to the individual\nobligors in a pool of loans.\n49. The capital adequacy treatment for loans acquired, in respect of the economic\ninterest held by the transferor and transferee(s) post such transfer, will be as per the\ninstructions applicable to loans directly originated by th…",
+      "Chapter III\nRegulatory capital\nA Composition of regulatory capital\nA.1 General\n9. The capital adequacy framework shall be based on three components or three\nPillars. Pillar 1 is the Minimum Capital Requirement while Pillar 2 and Pillar 3 are\nthe Supervisory Review and Evaluation Process (SREP) and Market Discipline,\nrespectively. A bank shall maintain a minimum Pillar 1 Capital to Risk-weighted\nAssets Ratio (CRAR) of 9 per cent on an on-going basis (other than capital\nbuffers) as prescribed under these Directions. The Reserve Bank will take into\naccount the relevant risk factors and the internal capital adequacy assessments\nof each bank to ensure that the capital held by a bank is commensurate with its\noverall risk profile. This would include, among others, the effectiveness of the\nbank’s risk management systems in identifying, assessing / measuring,\nmonitoring, and managing various risks including interest rate risk in the banking\nbook, liquidity risk, concentration risk, and residual…",
+      "A. Capital Requirement\n16. An NBFC-MFI shall maintain a capital adequacy ratio consisting of Tier 1 and Tier\n2 capital which shall not be less than 15 per cent of its aggregate risk weighted assets of\non-balance sheet and of risk adjusted value of off-balance sheet items.\n17. The total of Tier 2 capital at any point of time, shall not exceed 100 percent of Tier\n1 capital.\n18. The treatment to on-balance and off-balance sheet assets for capital adequacy\nshall be as provided in the Reserve Bank of India (Non-Banking Financial Companies –\nPrudential Norms on Capital Adequacy) Directions, 2025 respectively.\n19. An NBFC-MFI shall also adhere to provisions of the Reserve Bank of India (Non-\nBanking Financial Companies – Prudential Norms on Capital Adequacy) Directions, 2025\non treatment of deferred tax assets and deferred tax liabilities for computation of capital.\n20. For loans guaranteed under any existing or future schemes launched by CGTMSE,\nCRGFTLIH and NCGTC, an NBFC-MFI shall assign r…",
+      "Chapter IV – Minimum Capital Requirements for Operational Risk"
+    ],
+    "pipeline_time_s": 1.99
+  },
+  {
+    "question_id": 3,
+    "question": "What are the penalties for non-compliance?",
+    "expected_clause_id": "Chapter VI",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "H."
+    ],
+    "citations_count": 1,
+    "final_answer": "Non‑compliance with the provisions may attract supervisory and/or enforcement action, as applicable. [H.]",
+    "reference_answer": "Penalties for non-compliance include monetary fines, penal interest charges levied by the RBI for statutory shortfalls (such as CRR/SLR defaults), and potential regulatory restrictions on business operations.",
+    "retrieved_contexts": [
+      "H. Penal consequences for non-compliance ..................................................... 6",
+      "H. Penal consequences for non-compliance\n15. Non-compliance with any of the provisions contained in these Directions may\nattract supervisory and / or enforcement action, as applicable.\n6",
+      "C. Penalty on Premature Withdrawal of Non-Resident External (NRE) Deposits ......... 14",
+      "Chapter IX - Other Regulations applicable to Non-Banking Financial\nCompanies",
+      "Part II\nInformation on Breach/ Penalty in respect of Regulatory Liquidity Requirements"
+    ],
+    "pipeline_time_s": 1.35
+  },
+  {
+    "question_id": 4,
+    "question": "What are the governance requirements for Small Finance Banks?",
+    "expected_clause_id": "C.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [],
+    "citations_count": 0,
+    "final_answer": "The provided context does not specify any governance requirements for Small Finance Banks.",
+    "reference_answer": "Small Finance Banks must maintain strong governance led by a majority of independent directors on their Board, establish dedicated Board committees (Audit, Risk, Nomination), and comply with RBI fit and proper criteria for directors.",
+    "retrieved_contexts": [
+      "Chapter II: Voluntary transition of Small Finance Banks to Universal Banks",
+      "Chapter II: Voluntary transition of Small Finance Banks to Universal Banks ............... 15",
+      "A. Bank finance to Government owned entities ............................................ 138",
+      "A. General Requirements for bank-LSP Arrangements .................................. 18",
+      "Annex I\nMinimum Information to be Declared by Borrowing Entities to Banks while\nApproaching for Finance under Multiple Banking Arrangement"
+    ],
+    "pipeline_time_s": 1.84
+  },
+  {
+    "question_id": 5,
+    "question": "What is the minimum CRR that banks must maintain?",
+    "expected_clause_id": "D.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "D.",
+      "C."
+    ],
+    "citations_count": 2,
+    "final_answer": "Banks must keep a CRR that is at least 90 % of the prescribed CRR on every day of the fortnight, and the prescribed CRR itself is set at not less than 3.75 % (or 3.5 %, 3.25 % or 3.0 % of NDTL depending on the reporting period) of the bank’s NDTL. This ensures the daily balance never falls below the minimum required level.",
+    "reference_answer": "Every scheduled commercial bank must maintain a minimum Cash Reserve Ratio (CRR) specified by the RBI as a percentage of its Net Demand and Time Liabilities (NDTL) on an average daily basis during a fortnight.",
+    "retrieved_contexts": [
+      "D. Maintenance of Minimum CRR on Daily Basis\n10. Every scheduled bank shall maintain minimum CRR of not less than 90 percent of\nthe required CRR on all days during the reporting fortnight, in such a manner that the\naverage of CRR maintained daily shall not be less than the CRR prescribed by the\nReserve Bank.",
+      "A. Penalties for default in CRR Maintenance\n42. Every bank is liable to pay to the Reserve Bank, penal interest as mentioned\nbelow, if the daily balance of cash reserve (CRR) held by the bank during any fortnight\nis below the minimum prescribed by or under these Directions.\n(1) Penal interest shall be recovered from scheduled Commercial banks in the event\nof shortfall in maintenance of prescribed CRR on a daily basis for that day at the rate\nof three percent per annum above the Bank Rate on the amount by which the amount\nactually maintained falls short of the prescribed minimum on that day and if the shortfall\ncontinues on the next succeeding day/s, penal interest shall be recovered at the rate\nof five per cent per annum above the Bank Rate.\n(2) In cases of shortfall in maintenance of CRR on average basis during a fortnight,\npenal interest will be recovered as envisaged in sub-section (3) of Section 42 of\nReserve Bank of India Act, 1934.\n43. Banks are required to furnish the particular…",
+      "Chapter II - Cash Reserve Ratio (CRR)",
+      "2.2 Long-term\n3. Certificates of Deposits\n4. Net Demand and Time Liabilities\n(After deduction of liabilities under zero reserve prescription, Annex A)\n5. Amount of Deposits required to be maintained as per current rate of CRR\n6. Any other liability on which CRR is required to be maintained as per current\nRBI instructions under section 42 and 42(1A) of the Reserve Bank of India Act,\n1934.\n7. Total CRR required to be maintained under Section 42 and 42(1A) of the\nReserve Bank of India Act, 1934.\n32\nAnnex A to Form A\nName of the Bank:\n(Amount in Rupees rounded off to the nearest thousand)\nOutstanding Revaluation Interest\nItems at value\nBook value\n1 2 3 4\nFOREIGN CURRENCY LIABILITIES\nForeign Currency Liabilities to others In India",
+      "C. Maintenance of CRR\n9. Every bank shall maintain in India with the Reserve Bank, an average daily\nbalance, the amount of which shall not be less than 3.75 per cent, 3.5 per cent, 3.25\nper cent and 3.0 per cent of its NDTL, as on the last day of the second preceding\nfortnight, effective from the reporting fortnight beginning September 6, October 4,\nNovember 1 and November 29, 2025, respectively."
+    ],
+    "pipeline_time_s": 2.03
+  },
+  {
+    "question_id": 6,
+    "question": "What are the rules for priority sector lending?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "13.1",
+      "12.1",
+      "17.1",
+      "4.3",
+      "i."
+    ],
+    "citations_count": 5,
+    "final_answer": "Priority sector lending (PSL) covers loans that meet specific eligibility criteria.  Bank loans to the housing sector are classified as PSL when they fall within the limits set out in the directions (e.g., individual loans up to ₹35 lakh in metros and ₹25 lakh elsewhere, with overall dwelling costs not exceeding ₹45 lakh/₹30 lakh) and are not for the bank’s own employees or bond‑backed housing loans (13.1; 12.1).  In addition, loans to \"weaker sections\" such as small and marginal farmers, artisans, beneficiaries of government schemes (NRLM, SRMS, etc.), Scheduled Castes/Tribes, DRI beneficiaries, SHGs/JLGs, individual women (up to ₹2 lakh), distressed farmers, persons with disabilities, transgenders, and notified minority communities are also treated as PSL (17.1).  The categories of PSL further include loans listed in Annex II, start‑ups engaged in agriculture and allied services up to ₹50 crore, and food/agro‑processing loans up to ₹100 crore per borrower (i.).  Finally, any loan that was classified as PSL under the earlier Master Directions (2020) will remain so until it matures (4.3).",
+    "reference_answer": "Commercial banks are required to allocate a minimum target of 40% of Adjusted Net Bank Credit (ANBC) or Credit Equivalent Amount of Off-Balance Sheet Exposure (CEOBE), whichever is higher, to designated priority sectors including agriculture and MSMEs.",
+    "retrieved_contexts": [
+      "13.1. Bank loans to Housing sector as per limits prescribed below are eligible for\npriority sector classification:",
+      "17.1 Priority sector loans to the following borrowers will be considered as lending\nto Weaker Sections (overlapping category):\n(i) Small and Marginal Farmers\n(ii) Artisans, village and cottage industries where individual credit limits do not\nexceed ₹2 lakh\n(iii) Beneficiaries under Government Sponsored Schemes such as National\nRural Livelihood Mission (NRLM), [****]19 and Self Employment Scheme for\nRehabilitation of Manual Scavengers (SRMS)\n(iv) Scheduled Castes and Scheduled Tribes\n(v) Beneficiaries of Differential Rate of Interest (DRI) scheme\n(vi) Self Help Groups/Joint Liability Groups\n(vii) Individuals and individual members of SHGs/JLGs [availing microfinance loans\nsatisfying the criteria as prescribed in Reserve Bank of India (Credit Facilities)\n17 Substituted vide Reserve Bank of India (Priority Sector Lending – Targets and Classification) (Amendment)\nDirections, 2026 dated January 19, 2026\n18 As per definition of Ministry of Commerce and Industry, Govt. of India\n19 Deleted vid…",
+      "4.3 All loans categorised as Priority Sector Lending (PSL) under the erstwhile\nMaster Directions on PSL dated September 04, 2020 (updated as on June 21,\n2024) shall continue to be eligible for such categorisation under these\nDirections till maturity.\nCHAPTER – II\nCATEGORIES AND TARGETS UNDER PRIORITY SECTOR\n5. Categories under Priority Sector\nThe categories under priority sector are as follows:",
+      "i. Loans specified in Annex II (Item 2)\n9\nMaster Directions - Priority Sector Lending – Targets and Classification - 2025\nii. Loans up to ₹50 crore to Start-ups8 that are engaged in agriculture and\nallied services\niii. Loans for Food and Agro-processing up to an aggregate sanctioned limit\nof ₹100 crore per borrower from the banking system (eligible activities\nas given in Annex III)\niv. [********]9",
+      "12.1 Bank loans to Housing sector as per limits prescribed below are eligible for\npriority sector classification:\n(i) Loans to individuals up to ₹35 lakh in metropolitan centres (with population\nof ten lakh and above) and up to ₹25 lakh in other centres for\npurchase/construction of a dwelling unit per family provided the overall\ncost of the dwelling unit in the metropolitan centre and at other centres\ndoes not exceed ₹45 lakh and ₹30 lakh respectively. Existing individual\nhousing loans of UCBs presently classified under PSL will continue as\nPSL till maturity or repayment.\n12\nMaster Directions - Priority Sector Lending – Targets and Classification - 2020\n(ii) Housing loans to banks’ own employees will not be eligible for\nclassification under the priority sector.\n(iii) Since Housing loans which are backed by long term bonds are exempted\nfrom ANBC, banks should not classify such loans under priority sector.\nInvestments made by UCBs in bonds issued by NHB / HUDCO on or after\nApril 1, 2007 …"
+    ],
+    "pipeline_time_s": 2.52
+  },
+  {
+    "question_id": 7,
+    "question": "What are the norms for classification of NPAs?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A.",
+      "B."
+    ],
+    "citations_count": 2,
+    "final_answer": "The classification of NPAs is governed by the asset classification norms outlined in clauses A. and B.",
+    "reference_answer": "An asset is classified as a Non-Performing Asset (NPA) if interest or principal installment remains overdue for a period of more than 90 days in respect of a term loan, or if an account remains out of order for 90 days.",
+    "retrieved_contexts": [
+      "A. Asset classification norms ................................................................................. 60",
+      "A. Asset classification norms ................................................................................. 61",
+      "C. Interest application after NPA classification .................................................. 45",
+      "B. Asset classification norms ................................................................................. 56",
+      "Chapter IV - Additional Prudential Norms applicable to a NBFC classified as\nNBFC–Middle Layer (NBFC–ML)"
+    ],
+    "pipeline_time_s": 1.39
+  },
+  {
+    "question_id": 8,
+    "question": "What are the exposure limits for a single borrower?",
+    "expected_clause_id": "D.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "D.",
+      "C."
+    ],
+    "citations_count": 2,
+    "final_answer": "For banks, the Large Exposure limit for a single counter‑party (borrower) is 20 % of the bank’s available eligible capital base, with the board able to permit an additional 5 % in exceptional cases (D). For Special Purpose Devices (SPDs), the exposure to a single borrower/counter‑party may not exceed 25 % of Tier 1 capital (or 50 % of Tier 1 capital for AAA‑rated corporate bonds) (C).",
+    "reference_answer": "The exposure limit for a single borrower is capped at 20% of a bank's or NBFC's eligible capital base (Tier I capital), which can be extended by an additional 5% under exceptional circumstances approved by the Board.",
+    "retrieved_contexts": [
+      "D. The Large Exposure limits\nD.1 Single Counterparty\n15. The sum of all the exposure values of a bank to a single counterparty shall not be\nhigher than 20 percent of the bank’s available eligible capital base at all times.\nIn exceptional cases, the Board of the bank may allow an additional five percent\nexposure of the bank’s available eligible capital base. The bank shall lay down a\nBoard approved policy in this regard.\nD.2 Group of Connected Counterparties:\n16. The sum of all the exposure values of a bank to a group of connected counterparties\n(as defined in paragraphs 19 to 31) shall not be higher than 25 percent of the bank’s\navailable eligible capital base at all times.\n11\n17. The exposures shall be measured as specified in paragraphs 32 to 85 of these\nDirections. It may be noted that the LE limits will be modulated in case of certain\ncounterparties as mentioned in paragraphs 73 to 85 of these Directions.\n18. Any breach of the LE limits prescribed in paragraphs 15 and 16 above shal…",
+      "J. Reporting Requirements\n21. SPDs should report “total exposure” in all cases where they have assumed\n82\nexposures against borrowers in excess of the normal single / group exposure limits\ndue to the credit protections obtained by them through CDS or any other permitted\ninstruments of credit risk transfer, to the Department of Supervision (DoS) on a\nquarterly basis.",
+      "I. ‘Aggregated exposure’ in this context means gross amount (i.e. not taking any\nbenefit for credit risk mitigation into account) of all forms of retail exposures\nexcluding residential real estate exposures.\nII. ‘One counterpart’ means one or several entities that may be considered as a\nsingle beneficiary (e.g. in the case of a MSME that is affiliated to another\nMSME, the limit shall apply to the bank's aggregated exposure on both\nbusinesses).\nIII. To apply the 0.2 per cent threshold of the granularity criterion, banks must:\nfirst, identify the full set of exposures in the retail exposure class (as defined\nby the orientation criterion in paragraph 14(3)(i)); second, identify the subset\nof exposure that meet product criterion and do not exceed the threshold for\nthe value of aggregated exposures to one counterparty; and third, exclude any\nexposures that have a value greater than 0.2 per cent of the subset before\nexclusions.\n(4) The following claims, both fund-based and non-fund-based, sh…",
+      "C. Exposure Norms\n159. The extant exposure norms for SPDs are as follows:\n(1) The exposure shall not exceed 25 per cent of Tier 1 capital as per last audited\naccounts in case of a single borrower / counterparty and 40 per cent of Tier 1\ncapital in case of a group borrower / counterparty except for investments in AAA\nrated corporate bonds wherein exposure shall not exceed 50 per cent of Tier 1\n57\ncapital as per last audited accounts in case of a single borrower / counterparty\nand 65 per cent of Tier 1 capital in case of a group borrower / counterparty.\n(2) The ceilings on single / group exposure limit shall not be applicable where\nprincipal and interest are fully guaranteed by the Government of India.\n(3) SPDs shall include credit risk exposures to all other categories of non-\nGovernment securities including investments in mutual funds, commercial\npapers, certificate of deposits, positions in OTC derivatives not settled through\nQualifying CCP (QCCP) etc. to compute extent of credit expo…",
+      "E. Limit on Total Retained Exposures by Originators\n24. The total exposure of an originator to the securitisation exposures belonging to a\nparticular securitisation structure or scheme should not exceed 20 per cent of the\ntotal securitisation exposures created by such structure or scheme. However, the\nexposure of originators to credit enhancing interest only strip shall be excluded\nfrom this limit.\n25. Credit exposure on account of interest rate swaps/currency swaps entered into\nwith the SPE will be excluded from this limit.\n13\n26. The 20 per cent limit on total retained exposures will not be deemed to have been\nbreached if it is exceeded due to amortisation of securitisation notes issued."
+    ],
+    "pipeline_time_s": 17.83
+  },
+  {
+    "question_id": 9,
+    "question": "What is the SLR requirement for banks?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "B."
+    ],
+    "citations_count": 1,
+    "final_answer": "Banks must maintain SLR assets whose value is at least 18 percent of their total net demand and time liabilities in India as on the last day of the second preceding fortnight (i.e., the SLR requirement is a minimum of 18%). [B.]",
+    "reference_answer": "Every bank must maintain Statutory Liquidity Ratio (SLR) eligible assets—such as cash, gold, or unencumbered approved government securities—amounting to at least 18% of its total Net Demand and Time Liabilities (NDTL) at the close of business on any day.",
+    "retrieved_contexts": [
+      "B. SLR - Eligible Assets\n25. Every bank shall maintain in India assets (hereinafter referred to as ‘SLR assets’)\nthe value of which shall not, at the close of business on any day, be less than 18 per\ncent of its total net demand and time liabilities in India as on the last day of the second\npreceding fortnight in accordance with the method of valuation specified by RBI from\ntime to time.",
+      "Chapter III - Statutory Liquidity Ratio (SLR)",
+      "A. General Requirements for bank-LSP Arrangements .................................. 18",
+      "A. Computation of NDTL for SLR\n29. The procedure for computation of NDTL for SLR shall be as below:\n(1) Total NDTL for the purpose of SLR under Section 24 (2A) of Banking Regulation\nAct, 1949, shall be computed on the similar procedure as followed for CRR.\n(2) The liabilities mentioned under paragraph 19 of these Directions shall not form\npart of liabilities for the purpose of SLR also.\n(3) SCBs are required to include inter-bank term deposits / term borrowing liabilities\nof all maturities in 'Liabilities to the Banking System'.\n(4) Banks shall include their inter-bank assets of term deposits and term lending of\nall maturities in 'Assets with the Banking System' for computation of NDTL for SLR\npurpose.\n(5) Additionally, liabilities mentioned at paragraphs 20 (4), (5), (6), (7), 7(8) and 8(9)\nare exempt from SLR requirement.",
+      "C. Marginal Standing Facility (MSF)\n26. Banks permitted by Reserve Bank shall have the option to participate in the\nMarginal Standing Facility (MSF) Scheme introduced by the Reserve Bank. The\nfeatures of the scheme are:\n(1) The eligible banks shall have the option to borrow up to two percent of their\nrespective NDTL outstanding at the end of the second preceding fortnight.\n(2) The eligible entities shall also continue to access overnight funds under this facility\nagainst their excess SLR holdings.\n(3) In the event of a bank’s SLR holding falling below the statutory requirement up to\ntwo percent of its NDTL, the bank shall not have the obligation to seek a specific waiver\nfor default in SLR compliance arising out of use of this facility in terms of notification\nissued under sub section (2A) of Section 24 of the Banking Regulation Act, 1949.\n27. Within the mandatory SLR requirement, Government securities to the extent\nallowed by the Reserve Bank under Marginal Standing Facility (MSF) are…"
+    ],
+    "pipeline_time_s": 7.58
+  },
+  {
+    "question_id": 10,
+    "question": "What are the dividend distribution rules for NBFCs?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "B.",
+      "C.",
+      "C.",
+      "C."
+    ],
+    "citations_count": 4,
+    "final_answer": "An NBFC can declare a dividend only after meeting the minimum prudential requirements set out in the eligibility criteria: it must satisfy the applicable capital‑adequacy norms (CRAR, Tier I/II, leverage ratio, ANW) for each of the last three financial years (or since registration if younger), keep the net‑NPA ratio below 6 % in each of those years, and comply with Section 45IC of the RBI Act (or the sector‑specific provisions) [B.]. If an NBFC (other than an SPD) fails to meet these prudential requirements for the three years, it may still declare a dividend but only up to a 10 % payout ratio and only if it meets the capital‑adequacy requirement [C.].\n\nWhen a dividend is declared, the payout must include dividends on both equity shares and compulsorily convertible preference shares that are part of Tier 1 capital/Owned Fund. Any extraordinary or exceptional profit, or any auditor‑qualified statement indicating profit overstatement, must be deducted from net profit before calculating the payout ratio [C.].\n\nThe maximum dividend payout ratio is capped as follows: \n- Type I NBFC (holding a Certificate of Registration) – no ceiling; \n- Core Investment Companies (CIC) – 60 %; \n- Small Finance NBFCs (SPD) – 60 %; \n- All other NBFCs – 50 % (except NBFC‑Base Layer entities with customer interface but not accepting public funds, which have no ceiling) [C.].\nThe Board must ensure that the total dividend proposed for the financial year does not exceed the applicable ceiling, and the RBI or NHB will not consider any ad‑hoc dispensation requests [C.].\nAdditionally, NBFC‑P2P entities must comply with the specific RBI directions on dividend declaration for peer‑to‑peer platforms [C.].",
+    "reference_answer": "NBFCs must satisfy minimum prudential requirements—including maintaining a capital adequacy ratio (CRAR) of at least 15% and net NPAs under 6%—to be eligible to declare and pay dividends from current year profits.",
+    "retrieved_contexts": [
+      "C. Quantum of dividend payable\n9. An NBFC eligible to declare dividend as per paragraph 8, may pay dividend,\nsubject to the following:\n6\n(i) Proposed dividend shall include dividend on both equity shares\nand compulsorily convertible preference shares eligible for inclusion in Tier\n1 Capital / Owned Fund, as applicable.\n(ii) In case the net profit for the relevant period includes any exceptional and /\nor extra-ordinary profits / income or the financial statements are qualified\n(including ’emphasis of matter’) by the statutory auditor that indicates an\noverstatement of net profit, the same shall be reduced from net profit while\ndetermining the dividend payout ratio.\n(iii) The ceilings on dividend payout ratios for the NBFC eligible to declare\ndividend shall be as under:\nTable 2: Ceilings on dividend payout ratio\nSr. Type of NBFC Maximum dividend payout\nNo. ratio (percentage)\n(a) 1[NBFC holding Certificate of Registration as No ceiling specified\n‘Type I NBFC’]\n(b) CIC 60\n(c) SPD 60\n(d) Ot…",
+      "B. Eligibility criteria\n8. An NBFC shall comply with the following minimum prudential requirements to\nbe eligible to declare dividend:\nTable 1: Declaration of dividend: Minimum prudential requirements\nSr. No. Parameter Requirement\n(1) Capital Adequacy 1. An NBFC (other than SPD) should have met the\napplicable regulatory capital requirement (including CRAR,\nTier I capital, Tier II capital, leverage ratio, and ANW, as\napplicable) for each of the last three financial years including\nthe financial year for which the dividend is proposed.\nProvided that where an NBFC has been in existence for less\nthan three financial years, the above requirement shall be\nsince registration.\n2. An SPD shall have maintained a minimum CRAR of 20\nper cent for the financial year (each of the four quarters) for\nwhich dividend is proposed.\nNote:\nNBFC-D, NBFC-ICC, NBFC-Factor, NBFC-IFC, IDF-NBFC,\nNBFC-MFI shall refer to the Reserve Bank of India (Non-\nBanking Financial Companies – Prudential Norms on Capital\nAdequa…",
+      "C. Raising Money through Private Placement by NBFCs\n9. NBFCs shall follow the guidelines on private placement of Non-Convertible Debentures\n(NCDs) given as under. The provisions of Companies Act, 2013 and Rules framed\nthereunder shall be applicable wherever not contradictory.\nC.1 Guidelines on Private Placement of NCDs (maturity more than one year) by\nNBFCs\n10. NBFCs shall put in place a Board approved policy for resource planning which, inter-\nalia, shall cover the planning horizon and the periodicity of private placement.\n5\n11. The issues shall be governed by the following instructions:\n(1) The minimum subscription per investor shall be ₹20,000 (Rupees Twenty\nthousand);\n(2) The issuance of private placement of NCDs shall be in two separate categories,\nthose with a maximum subscription of less than ₹1 crore and those with a minimum\nsubscription of ₹1 crore and above per investor;\n(3) There shall be a limit of 200 subscribers for every financial year, for issuance of\nNCDs with a maximu…",
+      "Annex I - Reporting format for an NBFC declaring dividend ........................................... 11",
+      "C. Declaration of dividends\n31. An NBFC-P2P shall comply with the provisions of Reserve Bank of India (Non-\nBanking Financial Companies – Prudential Norms on Declaration of Dividends)\nDirections, 2025."
+    ],
+    "pipeline_time_s": 18.82
+  },
+  {
+    "question_id": 11,
+    "question": "What is the process for opening a new bank branch?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "B.",
+      "D.",
+      "Annex IV"
+    ],
+    "citations_count": 3,
+    "final_answer": "To open a new bank branch, the bank must submit an application through the RBI’s Pravaah portal using the prescribed form (Form III) and provide all required information and annexes. The submission should include a detailed branch expansion plan (annual for foreign banks) and meet any capital requirements (e.g., a foreign bank must bring US$25 million upfront for its first branch). The proforma for a new brick‑and‑mortar (B&M) branch must be completed as outlined in Annex IV, which specifies the Uniform Code Number and other branch details. After receiving in‑principle approval, the bank must establish the branch within the stipulated timeframe (e.g., 12 months from approval).",
+    "reference_answer": "Domestic commercial banks are granted general permission to open banking outlets in Tier 1 to Tier 6 centers subject to maintaining at least 25% of total outlets in unbanked rural centers and submitting annual branch expansion plans to the RBI.",
+    "retrieved_contexts": [
+      "B. Foreign Banks (operating in branch mode)\nB.1 Opening of branches\n28. The general permission granted to domestic commercial bank vide paragraph 8\nabove for opening branches in India shall not be applicable to a foreign bank\noperating in India in branch mode.\n29. Accordingly, such a bank shall submit its Annual Branch Expansion Plan to DoR,\nCO using the Pravaah portal (https://pravaah.rbi.org.in). The Branch Authorisation\nPolicy applicable to a foreign bank is subject to the following conditions:\n(i) A bank shall bring an assigned capital of US$25 million upfront at the time of\n16\nopening the first branch in India.\n(ii) An existing bank having only one branch shall comply with the above\nrequirement prior to the request for opening of second branch is considered.\n(iii) A bank shall submit its branch expansion plan on an annual basis.\n(iv) In addition to the parameters laid down for Indian banks, the following\nparameters shall also be considered:\n(a) A bank and its groups’ track record …",
+      "5.1. If B&M Branch (Staffed by bank)",
+      "D. Procedure for application\n39. In terms of Rule 11 of the Banking Regulation (Companies) Rules, 1949\napplications shall be submitted through PRAVAAH in the prescribed form (Form\nIII). In addition, the applicants should furnish the requisite information as per\nthe Annex I. The applicant should also furnish a plan and methodologies they\nwould adopt to comply with all the requirements of the guidelines. After the ‘in-\nprinciple approval’ is accorded by RBI for setting up of a bank, the\nPromoters/Promoter Group will have to comply with all the requirements within 18\n12\nmonths from the date of in-principle approval or as on the date of commencement\nof operations whichever is earlier. Applications submitted without the required\ninformation will not be entertained.\n40. Applications for setting up banks in the private sector, along with other details as\nmentioned above, should be addressed to:\nThe Chief General Manager,\nDepartment of Regulation,\nReserve Bank of India, Central Office,\nCentral…",
+      "Annex IV\nInstructions For Filling Proforma\n1. Proforma should be submitted for\na) Opening of new Banking Outlets (Bos) viz. Brick & Mortar (B&M)\nbranch/fixed point BC outlet / offices / NAIO / other fixed customer service\npoints (CSPs) i.e. other than Bos like ATMs, Cash Deposit Machines, Other\nCustomer Services, etc.\nb) a planned banking outlet (B&M branch/ fixed point BC outlet) / offices /\nNAIO/ other fixed customer service points (CSPs) i.e. other than Bos like\nATMs, etc. (in this case Part-I code will not be generated).\nc) for reporting change in status/postal address, closure / merger / conversion\n/ relocation / upgradation, etc. of existing banking outlet / offices / NAIO /\nCSPs.\n2. Uniform Code Number (UNC) comprises two parts as Part-I code and Part-II code\nof 7 digit each\na) Part-I code is defined as follows:\ni) for B&M branches/offices: 7 digits alphanumeric code of which:\n• first three digits from the left stand for bank code\n• next four digits stand for branch code\nii) Non…",
+      "A. Opening of branches\nA1. 2Opening of branch in India\n5. 2An NBFC is generally permitted to open branches without having the need to\nobtain prior approval from RBI, unless otherwise specifically restricted.\n6. 2A deposit-taking NBFC registered with RBI and otherwise entitled to accept\npublic deposits as per the Reserve Bank of India (Non-Banking Financial\nCompanies – Acceptance of Public Deposits) Directions, 2025, shall be\npermitted as under:\n(i) If its NOF is up to ₹ 50 crore or has a credit rating below AA then it may\nopen a branch or appoint agents within the State where its registered office\nis situated; and\n(ii) If its NOF is more than ₹ 50 crore and its credit rating is AA or above, then it\nmay open a branch or appoint agents anywhere in India.\nExplanation: An NBFC with NOF greater than ₹ 50 crore and credit rating\nbelow AA, shall be eligible to open branches only within the state where its\nregistered office is situated.\nA2. 3Deleted\n7. 3Deleted.\n8. 3Deleted.\nA3. 3Deleted\n9. 3D…"
+    ],
+    "pipeline_time_s": 18.41
+  },
+  {
+    "question_id": 12,
+    "question": "What are the outsourcing guidelines for banks?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "D.",
+      "G.",
+      "F."
+    ],
+    "citations_count": 3,
+    "final_answer": "Banks must adopt a comprehensive, Board‑approved outsourcing policy that sets out criteria for selecting activities and service providers, defines material outsourcing, delegates authority based on risk and materiality, and includes systems for monitoring and review (D.). Senior Management is responsible for evaluating outsourcing risks and materiality, developing and implementing prudent policies and procedures, periodically reviewing their effectiveness, communicating material risks to the Board, maintaining realistic contingency plans, ensuring independent audit and compliance review, and continuously identifying new material risks (D.). When outsourcing within a group or conglomerate, banks must document arrangements in written agreements covering scope, charges and data confidentiality, avoid customer confusion, preserve the bank’s ability to manage risk on a stand‑alone basis, ensure safety and soundness, allow RBI access to supervisory information, include a clause obligating the service provider to follow RBI directions, and ensure operations remain sound if group services become unavailable; they must also clearly identify the group entity to customers and avoid any advertising that suggests the bank is responsible for the group entity’s obligations (G.). For offshore or cross‑border outsourcing, banks may only engage parties in jurisdictions that uphold confidentiality, must continuously monitor country‑specific risks and have mitigation procedures, specify the governing law, ensure records remain accessible to the bank and RBI even on provider liquidation, grant RBI audit and inspection rights, and comply with all applicable statutes and RBI regulations (F.). Additionally, IT services outsourced within a group require Board‑approved policies, appropriate SLAs, objective selection criteria, and an arm‑length relationship, with risk management practices identical to those for non‑related parties (F.).",
+    "reference_answer": "Banks are prohibited from outsourcing core management functions such as policy formulation, loan sanctioning, and compliance monitoring, and must ensure service providers adhere to strict data privacy, security, and audit access standards.",
+    "retrieved_contexts": [
+      "D. Governance Framework\nD.1 Outsourcing Policy\n20. A bank intending to outsource any of its financial services shall put in place a\ncomprehensive outsourcing policy, approved by its Board, which shall incorporate,\ninter alia, the following:\n(i) criteria for selection of such activities, and service providers;\n(ii) parameters for defining ‘material outsourcing’ based on the broad criteria\nindicated in paragraph 14 of these Directions;\n(iii) delegation of authority depending on risks, and materiality; and\n(iv) systems to monitor and review these activities.\nD.2 Role of Senior Management\n21. The Senior Management of a bank shall, inter alia, be responsible for:\n(i) evaluating the risks and materiality of all existing and prospective outsourcing,\nbased on the framework approved by the Board or a Committee of the Board;\n(ii) developing and implementing sound and prudent outsourcing policies and\nprocedures commensurate with the nature, scope, and complexity of the\noutsourcing;\n(iii) reviewin…",
+      "Chapter III – Outsourcing of Financial Services",
+      "G. Specific Outsourcing Arrangements\nG.1 Outsourcing within a Group / Conglomerate\n45. (1) In a group structure, a bank may have back-office and service arrangements or\nagreements with group entities such as sharing of premises, legal and other\nprofessional services, hardware and software applications and centralized back-office\nfunctions; outsourcing certain financial services to other group entities. In principle,\nthe risk management practices to be adopted by a bank while outsourcing to a related\nparty (i.e., party within the group / conglomerate) shall be identical to those for a non-\nrelated party.\n(2) While entering into such arrangements, a bank shall ensure that these:\n(i) are appropriately documented in written agreements with details like scope of\nservices, charges for the services and maintaining confidentiality of the\ncustomer's data;\n(ii) do not lead to any confusion to the customers on whose products / services\nthey are availing;\n(iii) do not compromise the ability of the…",
+      "F. Specific Outsourcing Arrangements\nF.1 Outsourcing within a Group / Conglomerate\n85. A bank may outsource any IT service within its business group / conglomerate,\nprovided that such an arrangement is backed by the Board-approved policy and\nappropriate SLAs / agreements with its group entities are in place.\n86. The selection of a group entity shall be based on objective reasons that are similar\nto selection of a third-party, and the bank shall appropriately deal with any conflicts\nof interest that such an outsourcing arrangement may entail.\n87. A bank, at all times, shall maintain an arm's length relationship in dealings with its\ngroup entities. Risk management practices being adopted by the bank while\noutsourcing to a group entity shall be identical to those specified for a non-related\nparty.\nF.2 Offshore or Cross-Border outsourcing\n88. In principle, outsourcing arrangements shall only be entered into with parties\noperating in jurisdictions that uphold confidentiality clauses and agr…"
+    ],
+    "pipeline_time_s": 18.32
+  },
+  {
+    "question_id": 13,
+    "question": "What are the rules for digital lending?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "Chapter III"
+    ],
+    "citations_count": 1,
+    "final_answer": "The rules for digital lending are set out in Chapter III – Digital Lending Guidelines [Chapter III].",
+    "reference_answer": "Digital lending operations must ensure all loan disbursements and repayments execute directly between the bank/NBFC bank account and the borrower without third-party pass-through, and key fact statements (KFS) detailing APR must be provided.",
+    "retrieved_contexts": [
+      "Chapter III - Digital Lending Guidelines",
+      "Chapter III - Digital Lending",
+      "Chapter III - Digital Lending Guidelines .................................................................... 18",
+      "Chapter III - Digital Lending ...................................................................................... 14",
+      "H. Guidelines on conduct towards Microfinance borrowers ................................ 26"
+    ],
+    "pipeline_time_s": 2.26
+  },
+  {
+    "question_id": 14,
+    "question": "What are the fit and proper criteria for bank directors?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "D."
+    ],
+    "citations_count": 1,
+    "final_answer": "Bank directors must meet the following 'fit and proper' criteria: (i) Age between 35 and 67 years as of the nomination cut‑off date; (ii) At least a graduate qualification; (iii) Possess special knowledge or practical experience in one or more of the listed areas – agriculture and rural economy, banking, co‑operation, economics, finance, law, small‑scale industry, information technology, payment & settlement systems, human resources, risk management, business management, or any other relevant field; and (iv) Not be disqualified under the provisions of the SBI Act or the Nationalised Banks scheme, which includes not being a member of the board of any other bank, RBI, financial institution, insurance company, or holding any other conflicting position (e.g., connections with hire‑purchase arrangements).",
+    "reference_answer": "Directors of banking companies must fulfill fit and proper criteria assessing formal qualifications, professional experience, track record of integrity, absence of criminal/regulatory convictions, and conflict of interest disclosures.",
+    "retrieved_contexts": [
+      "A. Fit and Proper Criteria\n6. A banking company shall put in place a board-approved ‘fit and proper’ criterion for\nmajor shareholders, which shall consider, at a minimum, the criteria mentioned\nherein.\nExplanation: The illustrative criteria for determining ‘fit and proper’ status of\napplicants/major shareholders shall include, at a minimum:\n(1) For acquisition of five per cent or more but less than 10 per cent in the banking\ncompany:\n(i) Integrity, reputation and track record in financial/non-financial matters and\ncompliance with tax laws,\n(ii) Any proceedings of a serious nature, or has been notified of any such\nimpending proceedings or of any investigation which may lead to such\nproceedings,\n(iii) Record or evidence of previous business conduct and activities resulting in\nconviction for an offence under any legislation designed to protect members of\nthe public from financial loss due to dishonesty, incompetence, or malpractice,\n(iv) Outcome of due diligence conducted with the relevan…",
+      "D. Fit and Proper’ Criteria for Elected Directors ...................................................... 11",
+      "D. Fit and Proper’ Criteria for Elected Directors\n23. A Public Sector Bank (PSB) shall obtain necessary information, and a declaration\nand undertaking, in the format enclosed at Annex I, from persons who file their\nnominations for election to the post of Director under sub-section (c) of Section\n19 of the SBI Act / clause (i) of sub-section (3) of Section 9 of the Banking\nCompanies (Acquisition and Transfer of Undertakings) Act, 1970 / 1980.\n24. The Nomination and Remuneration Committee, constituted in terms of paragraph\n22 of these Directions, shall meet after the last date prescribed for acceptance of\naforementioned nominations and examine the information provided in the signed\ndeclarations to determine whether or not the person's candidature should be\naccepted, based on the 'Fit and Proper' Criteria mentioned at paragraph 25 of\nthese Directions. The NRC’s discussions shall be properly recorded as formal\nminutes of the meeting and the voting, if done, shall also be noted. The NRC sha…",
+      "E. Fit and Proper Criteria\n48. NBFC-AA shall:\n(1) ensure that a policy is put in place with the approval of the Board of Directors\nfor ascertaining the fit and proper criteria of the directors / managing director / CEO\nat the time of appointment, and on a continuing basis. The policy on the fit and\nproper criteria shall be on the lines of the Directions as prescribed in paragraphs 12\nand 13 of Reserve Bank of India (Non-Banking Financial Companies - Governance)\nDirections, 2025.\n(2) furnish to the Reserve Bank an annual statement on change of directors /\nmanaging director / CEO duly certified by the Statutory Auditors that fit and proper\ncriteria in selection of the directors has been followed. The statement must reach\nthe Regional Office of the Reserve Bank within 15 days of the close of the year.",
+      "B. ‘Fit and Proper’ Criteria for directors of CICs - Guidelines\n59. Reserve Bank had issued a Directive in June 2004 to banks on undertaking due\ndiligence on the persons before appointing them on the Boards of banks based on the\n‘Report of the Consultative Group of directors of Banks / Financial Institutions’. Specific\n‘fit and proper’ criteria to be fulfilled by the directors were also advised.\n60. The importance of due diligence of directors to ascertain suitability for the post by\nway of qualifications, technical expertise, track record, integrity, etc. needs no emphasis\nfor any financial institution. It is proposed to follow the same guidelines mutatis mutandis\nin case of a CIC also. While the Reserve Bank does carry out due diligence on directors\nbefore issuing Certificate of Registration to a CIC, it is necessary that a CIC puts in place\nan internal supervisory process on a continuing basis. Further, in order to streamline and\nbring in uniformity in the process of due diligence, …"
+    ],
+    "pipeline_time_s": 18.07
+  },
+  {
+    "question_id": 15,
+    "question": "What reporting must banks submit to RBI?",
+    "expected_clause_id": "E.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "E.",
+      "D.",
+      "A.",
+      "B."
+    ],
+    "citations_count": 4,
+    "final_answer": "Banks must submit a range of regulatory reports to the RBI. They must follow the RBI Commercial Banks – Financial Statements: Presentation and Disclosures Directions, 2025 for all disclosure requirements and report each loan‑transfer transaction to the RBI‑designated trade‑reporting platform, maintaining a database of such transactions (clause E.). They must also report their share of loan accounts to credit information companies as required under the Credit Information Companies (Regulation) Act, 2005 (clause D.). Under the Department of Supervision (DoS) they must submit, in the prescribed format and frequency, a list of all group entities (including overseas entities with material transactions), details of intra‑group support arrangements, intra‑group exposure data, and any breaches of prudential limits along with reasons (clause E.). Additionally, banks must prepare and submit a monthly Interest Rate Risk (IRS) Statement under the TGA and DGA approaches, adhering to the RBI Filing of Supervisory Returns Directions, 2024 for timelines (clause B.).",
+    "reference_answer": "Banks must regularly submit statutory returns to RBI including Form A (fortnightly CRR), Form VIII (monthly SLR), quarterly financial returns, asset classification/NPA statements, and suspicious transaction reports.",
+    "retrieved_contexts": [
+      "E. Disclosures and Reporting\n94. The banks should be guided by Reserve Bank of India (Commercial Banks –\nFinancial Statements: Presentation and Disclosures) Directions, 2025 for all disclosure\nrelated requirements.\n95. Banks shall report each loan transfer transaction undertaken under these\ndirections to a trade reporting platform as notified by the Reserve Bank. The detailed\ninstructions in this regard will be issued separately. In anticipation of the same, bank\nshall maintain a database of loan transfer transactions with adequate MIS concerning\neach transaction till the reporting platform is notified and the related instructions are\nissued.\n29\nPART B: CO-LENDING ARRANGEMENTS (CLAs)",
+      "D. Reporting to credit information companies (CICs)\n121. Banks shall adhere to the extant requirements of reporting to CICs for their\nshare of the loan account, as per the provisions of the Credit Information Companies\n(Regulation) Act, 2005 and the Rules and Regulations issued by RBI therein, from time\nto time.",
+      "A. Reporting Requirements\n68. The reporting requirements as prescribed by Department of Supervision of the\nReserve Bank shall be adhered to by all NBFCs\n29\nभारतीय �रज़वर् बैंक\nRESERVE BANK OF INDIA\nChapter-VI – Repeal and Other Provisions",
+      "E. Reporting\n128. A bank shall submit the following data / information to the RBI (DOS, CO) in the\nformat and at the frequency prescribed by the DoS.\n(1) The bank shall prepare and submit a list of the group entities. The list shall include\nall group entities established and operating in India and those overseas entities with\nwhich it has material transactions (threshold for ‘material’ transaction would be ₹10 crore\nfor fund-based transactions and ₹25 crore for non-fund based transaction) during last\nthree financial years. Any exclusion and / or inclusion of group entities should be reported\nat the earliest.\n(2) The bank shall submit the details of intra-group support arrangements / agreements\n(e.g. a specific guarantee of the obligations of an entity in the group or a letter of comfort).\n(3) The bank shall operate within the stipulated limits on an ongoing basis and report its\nintra-group exposures.\n(4) If the intra-group exposures, either at the single entity level or at the aggregat…",
+      "B. Interest Rate Risk\nB.1 Preparation and Review of Statements\n285. A bank shall prepare the IRS Statement, under TGA and DGA, as per reporting\nformat of provided in Annex-III.\nB.2 Regulatory Reporting and Periodicity of Returns\n286. A bank shall submit IRS Statement under TGA and DGA approaches on a\nmonthly basis. Further, bank shall refer Reserve Bank of India (Filing of\nSupervisory Returns) Directions, 2024, for submission timelines for all regulatory\nreturns.\n103"
+    ],
+    "pipeline_time_s": 12.21
+  },
+  {
+    "question_id": 16,
+    "question": "What are the KYC requirements and capital adequacy norms for NBFCs?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A.",
+      "C."
+    ],
+    "citations_count": 2,
+    "final_answer": "The excerpts do not mention any KYC (Know Your Customer) requirements for NBFCs. Regarding capital adequacy, an NBFC‑MFI must maintain a capital adequacy ratio of at least 15 % of its aggregate risk‑weighted assets (including on‑balance sheet and risk‑adjusted off‑balance sheet items) and Tier 2 capital may not exceed 100 % of Tier 1 capital. The treatment of assets for capital adequacy follows the RBI (Non‑Banking Financial Companies – Prudential Norms on Capital Adequacy) Directions, 2025, and other related provisions apply. Additionally, loan transfers affect CET 1 capital, with unrealised profits from such transfers being deducted from CET 1 until maturity (see clause C).",
+    "reference_answer": "NBFCs must establish a Board-approved KYC policy covering customer identification, risk management, and transaction monitoring, while maintaining a minimum capital adequacy ratio (CRAR) of 15% of risk-weighted assets.",
+    "retrieved_contexts": [
+      "Chapter II - Prudential Norms applicable to all NBFCs",
+      "A. Capital Requirement\n16. An NBFC-MFI shall maintain a capital adequacy ratio consisting of Tier 1 and Tier\n2 capital which shall not be less than 15 per cent of its aggregate risk weighted assets of\non-balance sheet and of risk adjusted value of off-balance sheet items.\n17. The total of Tier 2 capital at any point of time, shall not exceed 100 percent of Tier\n1 capital.\n18. The treatment to on-balance and off-balance sheet assets for capital adequacy\nshall be as provided in the Reserve Bank of India (Non-Banking Financial Companies –\nPrudential Norms on Capital Adequacy) Directions, 2025 respectively.\n19. An NBFC-MFI shall also adhere to provisions of the Reserve Bank of India (Non-\nBanking Financial Companies – Prudential Norms on Capital Adequacy) Directions, 2025\non treatment of deferred tax assets and deferred tax liabilities for computation of capital.\n20. For loans guaranteed under any existing or future schemes launched by CGTMSE,\nCRGFTLIH and NCGTC, an NBFC-MFI shall assign r…",
+      "C. Capital Adequacy and Other prudential norms\n47. Any loss or profit arising because of transfer of loans, which is realised, should\nbe accounted for accordingly and reflected in the Profit & Loss account of the transferor\nfor the accounting period during which the transfer is completed. However, unrealised\n16\nprofits, if any, arising out of such transfers, shall be deducted from CET 1 capital for\nmeeting regulatory capital adequacy requirements till the maturity of such loans.\n48. In case of transfer of a pool of loans, the transferee(s), and the transferor(s) in\ncase of retention of economic interest, should maintain borrower-wise accounts. Thus,\nthe exposures of the transferor(s) and the transferee(s) would be to the individual\nobligors in a pool of loans.\n49. The capital adequacy treatment for loans acquired, in respect of the economic\ninterest held by the transferor and transferee(s) post such transfer, will be as per the\ninstructions applicable to loans directly originated by th…",
+      "Chapter V Internal Capital Adequacy Assessment Process (ICAAP) [Applicable to\nNBFC-ML and above] ........................................................................................................ 56",
+      "B. Provisioning Requirements\n54. These requirements shall be in addition to the instructions contained in\nparagraphs 28 to 36.\n55. An NBFC-ML shall make provisions for standard assets at 0.40 per cent of the\noutstanding, which shall not be reckoned for arriving at net NPAs.\nExplanation: The above rate of standard asset provisioning shall be applicable\nin respect of microfinance loans as well.\n21"
+    ],
+    "pipeline_time_s": 19.44
+  },
+  {
+    "question_id": 17,
+    "question": "What are the governance guidelines for commercial bank boards and what are the credit facility limits for NBFCs?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A.",
+      "J."
+    ],
+    "citations_count": 2,
+    "final_answer": "The supplied excerpts do not contain specific governance guidelines for commercial bank boards. For NBFCs, the credit facility limits are outlined in clause A: the previous ceiling on bank credit linked to Net Owned Fund (NOF) has been removed, allowing banks to provide need‑based working‑capital facilities and term loans to NBFCs engaged in asset financing, infrastructure financing, equipment leasing, hire‑purchase, loan, factoring and investment activities, subject to the provisions of paragraph 232 of these Directions; however, banks must not finance the activities listed in paragraphs 224, 225, 228, 229 and 230. (see clause A.)",
+    "reference_answer": "Commercial bank boards require independent directors and mandatory committee structures, while credit facility limits for NBFCs restrict single borrower exposures to 20% of Tier I capital and regulate group exposures.",
+    "retrieved_contexts": [
+      "A. Role of the Board\n6. An NBFC in the base layer shall put in place comprehensive Board-approved policy on\nconcentration risk management, which shall inter-alia include.\n(1) Credit / investment concentration limits for both single borrower / party and single group\nof borrowers / parties.\n(2) Limits in respect of various sub-segments under consumer credit, particularly limits for\nunsecured consumer credit exposures.",
+      "A. Role of Board of Directors\n9. The NBFC-P2P shall put in place Board approved policies and establish periodic\nreview mechanisms to ensure sound processes and systems. An illustrative list of such\n4\npolicies, to be approved by the Board or its Committee(s), is provided below. The specific\naspects to be addressed in these policies are detailed in the relevant paragraphs of these\nDirections.\n(1) Operational Guidelines:\n(i) Setting out the eligibility criteria for participants on it,\n(ii) determining the pricing of services provided by it, and\n(iii) setting out the rules for matching / mapping lenders with borrowers in an\nequitable and non-discriminatory manner.\n(2) Fair Practices Code.\n(3) Participant Grievance Redressal Mechanism.\n(4) Business Continuity Plan: Safekeeping of information and documents and\nservicing of loans for full tenure in case of closure of platform.\n(5) ‘Fit and Proper’ criteria for directors.\n10. An illustrative list of reviews to be carried out by the Board or it…",
+      "J. Internal Guidelines on Corporate Governance\n40. An NBFC shall frame internal guidelines on corporate governance with the\napproval of its Board of Directors, enhancing the scope of these Directions but\nwithout sacrificing the spirit underlying the provisions of this Chapter and it shall\nbe published on the company's website, if any, for the information of various\nstakeholders.\n16\nChapter-V Directions applicable to NBFCs-Upper Layer (NBFCs-UL)\n41. An NBFC shall ensure that its Board members are competent to manage its\naffairs. Hence, the composition of the Board shall ensure mix of educational\nqualification and experience within the Board. Specific expertise of Board\nmembers shall be a prerequisite, depending on the type of business pursued by\nthe NBFC.\n42. An NBFC shall be required to report to the supervisors in case any Independent\nDirector is removed / resigns before completion of his normal tenure.\n43. An NBFC-UL shall be mandatorily listed within three years of its identificatio…",
+      "A. Finance to NBFCs registered with RBI\n220. The ceiling on bank credit linked to Net Owned Fund (NOF) of NBFCs has been\nwithdrawn in respect of all NBFCs which are statutorily registered with the Reserve\nBank and are engaged in principal business of asset financing, loan, factoring and\ninvestment activities. Accordingly, the bank shall extend need based working\ncapital facilities as well as term loans to all NBFCs registered with the Reserve\nBank and engaged in infrastructure financing, equipment leasing, hire-purchase,\nloan, factoring and investment activities subject to provisions of paragraph 232 of\nthese Directions.\n221. In the light of the experience gained by NBFCs in financing second hand assets,\nthe bank shall also extend finance to NBFCs against second hand assets financed\nby them.\n222. The bank shall formulate suitable loan policy with the approval of their Boards\nof Directors within the prudential guidelines and exposure norms prescribed by the\nReserve Bank to extend variou…",
+      "E. Other Prohibitions on Finance to NBFCs ................................................... 97"
+    ],
+    "pipeline_time_s": 9.71
+  },
+  {
+    "question_id": 18,
+    "question": "What are the minimum capital adequacy ratio rules for NBFCs and what are the specific loan outflow limits for households under NBFC-MFIs?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A.",
+      "B."
+    ],
+    "citations_count": 2,
+    "final_answer": "An NBFC-MFI must keep its capital adequacy ratio (CAR) of Tier 1 + Tier 2 capital at not less than 15 % of its aggregate risk‑weighted assets, and Tier 2 capital may not exceed 100 % of Tier 1 capital [A.]. For household loan outflows, the NBFC‑MFI must cap the total monthly repayment (principal + interest) of all loans at a maximum of 50 % of the household’s monthly income [B.].",
+    "reference_answer": "NBFCs must maintain a minimum CRAR of 15%, whereas NBFC-MFIs must ensure that microfinance loans are granted to households with annual income not exceeding INR 3,00,000, with total qualifying assets meeting 75% of net assets.",
+    "retrieved_contexts": [
+      "B. Limit on Loan Repayment Obligations of a Household\n55. The NBFC shall have a board-approved policy regarding the limit on the outflows\non account of repayment of monthly loan obligations of a household as a\npercentage of the monthly household income. This shall be subject to a limit of\nmaximum 50 per cent of the monthly household income.\nExplanation: Any future expected income from the asset/ activity financed by a\nmicrofinance loan shall not be included in the household income for the purpose\nof calculating the indebtedness of the household.\n56. The computation of loan repayment obligations shall take into account all\noutstanding loans (collateral-free microfinance loans as well as any other type of\ncollateralized loans) of the household. The outflows capped at 50 per cent of the\nmonthly household income shall include repayments (including both principal as\nwell as interest component) towards all existing loans as well as the loan under\nconsideration.\n57. Existing loans, for which …",
+      "A. Capital Requirement\n16. An NBFC-MFI shall maintain a capital adequacy ratio consisting of Tier 1 and Tier\n2 capital which shall not be less than 15 per cent of its aggregate risk weighted assets of\non-balance sheet and of risk adjusted value of off-balance sheet items.\n17. The total of Tier 2 capital at any point of time, shall not exceed 100 percent of Tier\n1 capital.\n18. The treatment to on-balance and off-balance sheet assets for capital adequacy\nshall be as provided in the Reserve Bank of India (Non-Banking Financial Companies –\nPrudential Norms on Capital Adequacy) Directions, 2025 respectively.\n19. An NBFC-MFI shall also adhere to provisions of the Reserve Bank of India (Non-\nBanking Financial Companies – Prudential Norms on Capital Adequacy) Directions, 2025\non treatment of deferred tax assets and deferred tax liabilities for computation of capital.\n20. For loans guaranteed under any existing or future schemes launched by CGTMSE,\nCRGFTLIH and NCGTC, an NBFC-MFI shall assign r…",
+      "C. Limit on Loan Repayment Obligations of a Household\n66. Each bank shall have a board-approved policy regarding the limit on the outflows\non account of repayment of monthly loan obligations of a household as a\npercentage of the monthly household income. The limit on the outflows on account\nof repayment of monthly loan obligations of a household shall be limited to a\nmaximum 50 per cent of the monthly household income.\nExplanation: Any future expected income from the asset/ activity financed by a\nmicrofinance loan shall not be included in the household income for the purpose\nof calculating the indebtedness of the household.\n67. The computation of loan repayment obligations shall take into account all\noutstanding loans (collateral-free microfinance loans as well as any other type of\ncollateralized loans) of the household. The outflows capped at 50 per cent of the\nmonthly household income shall include repayments (including both principal as\nwell as interest component) towards all existi…",
+      "A. Qualifying Assets Criteria\n12. The definition of ‘qualifying assets’ of NBFC-MFIs has been aligned with the\ndefinition of ‘microfinance loans’ specified at paragraph 8(2) above. Qualifying assets of\nNBFC-MFIs shall constitute a minimum of 60 percent of the total assets (netted off by\nintangible assets), on an ongoing basis. If an NBFC-MFI fails to maintain the qualifying\nassets as aforesaid for four consecutive quarters, it shall approach the Reserve Bank\nwith a remediation plan for taking a view in the matter.",
+      "21.3 Loans disbursed by banks under para 21.1 and 21.2 above are eligible for\ncategorisation as priority sector advance under respective categories viz.,\nAgriculture, MSME, Social Infrastructure and Others, provided the MFIs adhere to\nthe conditions prescribed in Chapter II (xx) and Chapter VIII of Master Directions\nDNBR PD.007 and Chapter II (xx) and Chapter IX of Master Directions DNBR\n18\nMaster Directions - Priority Sector Lending – Targets and Classification - 2020\nPD.008/03.10.119/2016-17 dated September 1, 2016, as updated from time to\ntime.\n22. Bank loans to NBFCs for on-lending (not applicable to RRBs, UCBs, SFBs\nand LABs)\nBank credit to registered NBFCs (other than MFIs) for on-lending will be eligible for\nclassification as priority sector under respective categories subject to the following\nconditions:\n(i) Agriculture: On-lending by NBFCs for ‘Term lending’ component under\nAgriculture will be allowed up to ₹ 10 lakh per borrower.\n(ii) Micro & Small enterprises: On-lending by …"
+    ],
+    "pipeline_time_s": 19.41
+  },
+  {
+    "question_id": 19,
+    "question": "How did the Priority Sector Lending (PSL) guidelines change between the 2020 Master Direction and the 2025 Master Direction regarding agriculture sub-targets?",
+    "expected_clause_id": "1.1",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "4.3",
+      "09.01"
+    ],
+    "citations_count": 2,
+    "final_answer": "The only change reflected in the provided excerpts is that loans classified as Priority Sector Lending under the earlier Master Direction of September 4 2020 (as updated on June 21 2024) will continue to be eligible under the newer directions until they mature, indicating continuity of the existing categorisation, including agriculture‑related targets. No specific amendment to agriculture sub‑targets between the 2020 and 2025 Master Directions is detailed in the given clauses.",
+    "reference_answer": "The 2020 PSL guidelines mandated a phased increase in agriculture sub-targets for small and marginal farmers up to 10% of ANBC, whereas the 2025 Master Direction consolidated higher baseline sub-targets and updated calculation metrics for non-performing or revised credit exposures.",
+    "retrieved_contexts": [
+      "4.3 All loans categorised as Priority Sector Lending (PSL) under the erstwhile\nMaster Directions on PSL dated September 04, 2020 (updated as on June 21,\n2024) shall continue to be eligible for such categorisation under these\nDirections till maturity.\nCHAPTER – II\nCATEGORIES AND TARGETS UNDER PRIORITY SECTOR\n5. Categories under Priority Sector\nThe categories under priority sector are as follows:",
+      "9.01/2024-25 Amendments to the Master\nDirections\n4. DOR.CRE.REC.18/07.10.00 June 8, 2023 Priority Sector Lending (PSL)\n2/2023-24 targets / sub-targets and\ncontribution against shortfall in\nachievement of PSL targets –\nPrimary (Urban) Co-operative\nBanks (UCBs) - Extension of time\n5. CO.FIDD.PCD.No.S725/ August 11, 2022 Priority Sector Lending (PSL)-",
+      "09.01/2021-22 0 lending to NBFCs for on-lending –\nril Extension of facility\np\n8. CO.FIDD.PCD.No.S414/04- AuguAst 17, 2021 Priority Sector Lending (PSL) -\n09-001/2021-22 f Target for Non-Corporate Farmers\n.\ne\n. FY2021-22\nw\n9. FIDD.CO.Plan.BC.No.10/04. May 5, 2021 Priority Sector Lending (PSL) - On-\nn",
+      "04.09.001/2024-25 Certificates\n3 DOR.CRE.REC. March 24, 2025 Review of Priority Sector\n69/07.10.002/2024-25 Lending (PSL) Target – Urban\nCo-operative Banks (UCBs)\n4 FIDD.CO.PSD.BC.No.7 June 21, 2024 Priority Sector Lending –\n/04.09.01/2024-25 Amendments to the Master\nDirections\n5 DOR.CRE.REC.18/07.10. June 8, 2023 Priority Sector Lending (PSL)\n002/2023-24 targets/sub-targets and\ncontribution against shortfall in\nachievement of PSL targets –\nPrimary (Urban) Co-operative\nBanks (UCBs) - Extension of\ntime\n6 CO.FIDD.PCD.No.S725/ August 11, 2022 Priority Sector Lending (PSL)-",
+      "04.09.01/2021-22 lending to NBFCs for on-lending\n– Extension of facility\n9 CO.FIDD.PCD.No.S414/0 August 17, 2021 Priority Sector Lending (PSL) -\n4-09-001/2021-22 Target for Non-Corporate\nFarmers FY2021-22\n10 FIDD.CO.Plan.BC.No.10/ May 5, 2021 Priority Sector Lending (PSL) -"
+    ],
+    "pipeline_time_s": 8.15
+  },
+  {
+    "question_id": 20,
+    "question": "What are the net owned fund (NOF) requirements for registering a new NBFC?",
+    "expected_clause_id": "Chapter II",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "B."
+    ],
+    "citations_count": 1,
+    "final_answer": "The Reserve Bank generally requires a Net Owned Fund (NOF) of ₹10 crore for a new NBFC to commence or carry on its business, unless a specific requirement applies to the category of NBFC. For NBFC‑P2P, NBFC‑AA and NBFCs holding a Certificate of Registration as ‘Type I NBFC’, the NOF is ₹2 crore. For NBFC‑ICC, NBFC‑MFI and NBFC‑Factor the NOF is also ₹10 crore. For NBFC‑IFC and IDF‑NBFC the NOF is ₹300 crore. (see clauses B.)",
+    "reference_answer": "A non-banking financial company must possess a minimum Net Owned Fund (NOF) of INR 10 crore (or INR 2 crore for specific legacy categories) to obtain a certificate of registration from the Reserve Bank of India.",
+    "retrieved_contexts": [
+      "B. Net Owned Fund Requirement\n39. In exercise of the powers conferred under clause (b) of sub-section (1) of section\n45IA of the RBI Act,1934 and all the powers enabling it in that behalf, the Reserve Bank,\nhereby specifies ₹10 crore as the Net Owned Fund (NOF) required for an NBFC-ICC,\nNBFC-MFI and NBFC-Factor to commence or carry on the business of non-banking\nfinancial institution.\n40. For NBFC-P2P, NBFC-AA, and 18[NBFC holding Certificate of Registration as\n‘Type I NBFC’], the NOF shall be ₹2 crore.\n41. For NBFC-IFC and IDF-NBFC, the NOF shall be ₹300 crore.\n42. The following glide path is provided for the existing NBFCs, viz., NBFC-ICC,\nNBFC-MFI (without distinction in the NOF requirement for NBFCs registered in the North\nEast Region) and NBFC-Factor to achieve the NOF of ₹10 crore:\nNBFCs Current NOF By March 31, 2025 By March 31, 2027\nNBFC-ICC ₹2 crore ₹5 crore ₹10 crore\nNBFC-MFI ₹5 crore ₹7 crore ₹10 crore\n(₹2 crore in NE (₹5 crore in NE\nRegion) Region)\n18 Substituted with effec…",
+      "B. Registration with the Reserve Bank\n13. In exercise of the powers conferred under clause (b) of sub-section (1) of section\n45-IA of the Reserve Bank of India Act, 1934 (Act 2 of 1934) and all the powers\nenabling it in that behalf, the Reserve Bank, hereby specifies ₹10 crore as the net\n7\nowned fund (NOF) required for a non-banking financial company to commence or\ncarry on the business of non-banking financial institution, except wherever otherwise\na specific requirement as to NOF is prescribed by the Reserve Bank. Authorisation to\nact as a SPD is subject to the NBFC fulfilling the eligibility conditions as prescribed by\nInternal Debt Management Department of the Reserve Bank from time to time.",
+      "B. Registration\n11. The registration requirements for an NBFC-AA shall be as under:\n(1) No entity other than a company shall undertake the business of an Account\nAggregator.\n(2) No company shall commence or carry on the business of an Account\nAggregator without obtaining a certificate of registration from the Reserve\nBank.\nProvided that, entities being regulated by other financial sector regulators\nand aggregating only those accounts relating to the financial information\npertaining to customers of that particular sector will be excluded from the\nabove registration requirement.\n(3) Every company seeking registration with the Reserve Bank as an NBFC-AA\nshall have a net owned fund of not less than rupees two crore, or such higher\namount as the Reserve Bank may specify.\nProvided that, those companies not having a Net Owned Fund of minimum\nof Rupees two crore at the time of seeking registration, shall meet the Net\n8\nOwned Fund criteria within the period of validity of the in-principle appro…",
+      "A. Eligibility\n7. Non-Banking Financial Companies registered with the Reserve Bank shall not\nundertake credit card business without prior approval of the Reserve Bank. Any\ncompany including a non-deposit taking company intending to engage in this\nactivity shall require a Certificate of Registration, apart from specific permission\nto enter into this business, the pre-requisite for which is a minimum net owned\nfund of ₹100 crore and subject to such terms and conditions as the Reserve Bank\nmay specify in this regard from time to time. Without obtaining prior approval from\nthe Reserve Bank, NBFCs shall not issue, credit cards, charge cards, or similar\nproducts virtually or physically.",
+      "B. Net Owned Fund (NOF) Requirement\n16. In exercise of the powers conferred by clause (b) of sub-section (1) of Section 29A\nof the National Housing Bank Act, 1987, and all powers enabling it in that behalf, the\nReserve Bank hereby specifies ₹20 crore as the minimum net owned funds required for\na company to commence housing finance as its principal business or carry on the\nbusiness of housing finance as its principal business.\n13\nProvided that an HFC holding a Certificate of Registration (CoR) and having net owned\nfund of less than ₹20 crore, may continue to carry on the business of housing finance, if\nsuch company achieves net owned fund of ₹15 crore by March 31, 2022 and ₹20 crore\nby March 31, 2023. It will be incumbent upon such HFCs whose NOF currently stands\nbelow ₹20 crore, to submit a statutory auditor's certificate to Reserve Bank within a period\nof one month evidencing compliance with the prescribed levels as at the end of the period\nindicated above. HFCs failing to achieve the…"
+    ],
+    "pipeline_time_s": 18.96
+  },
+  {
+    "question_id": 21,
+    "question": "What are the concentration risk management guidelines for NBFCs under Scale Based Regulation?",
+    "expected_clause_id": "D.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A."
+    ],
+    "citations_count": 1,
+    "final_answer": "Under the Scale Based Regulation (SBR), each NBFC layer must have a Board‑approved concentration risk management policy. For NBFCs in the base layer, the policy must set credit/investment concentration limits for a single borrower or group of borrowers and also prescribe limits for unsecured consumer credit exposures. For NBFCs in the middle layer, the policy must define internal limits for sensitive sector exposure (SSE) – separately for capital‑market and commercial‑real‑estate exposures – and allow the Board to fix sub‑limits within the overall SSE limits. For NBFCs in the upper layer, the policy must cover conditions for exposure beyond 20 % (or 25 % for IFCs) to a single counterparty, a methodology to identify groups of connected counterparties, internal exposure limits on other important sectors, and specific limits for exposure to the NBFC sector.",
+    "reference_answer": "Under Scale Based Regulation, upper layer and middle layer NBFCs must restrict aggregate exposure to a single counterparty to 20% of Tier 1 capital and to a group of connected counterparties to 25% of Tier 1 capital.",
+    "retrieved_contexts": [
+      "A. Role of the Board\n25. NBFCs in the upper layer shall put in place comprehensive Board-approved policy\non concentration risk management, which shall inter-alia include:\n(1) Conditions under which exposure beyond 20 per cent (for NBFCs other than IFCs) / 25\nper cent (for IFCs) to a single counterparty.\n(2) Policy to determine the existence of a group of connected counterparties.\n(3) Internal exposure limits (in addition to SSE internal limits) on other important sectors to\nwhich credit is extended.\n(4) Limits for exposure to the NBFC sector.",
+      "A. Role of the Board\n6. An NBFC in the base layer shall put in place comprehensive Board-approved policy on\nconcentration risk management, which shall inter-alia include.\n(1) Credit / investment concentration limits for both single borrower / party and single group\nof borrowers / parties.\n(2) Limits in respect of various sub-segments under consumer credit, particularly limits for\nunsecured consumer credit exposures.",
+      "C. Concentration Risk Management\n37. An NBFC-MFI shall adhere to provisions of the Reserve Bank of India (Non-\nBanking Financial Companies – Concentration Risk Management) Directions, 2025.",
+      "A. Role of the Board\n12. An NBFC in the middle layer shall put in place comprehensive Board-approved\npolicy on concentration risk management, which shall inter-alia include.\n(1) Internal limits for sensitive sector exposure (SSE) separately for capital market and\ncommercial real estate exposures.\n(2) Fixing of various sub-limits, at the discretion of the Board, within the overall SSE internal\nlimits subject to conditions",
+      "D. Risk Management\nD.1 Risk Management Framework\n65. An NBFC shall put in place a risk management framework that comprehensively\ndeals with the processes and responsibilities for identification, measurement,\nmitigation, management, and reporting of risks associated with such IT\noutsourcing arrangements.\n66. An NBFC shall suitably document risk assessments with necessary approvals in\nline with the roles and responsibilities of the Board of Directors, Senior\nManagement, and IT Function and subject the same to internal and external\nquality assurance on a periodic basis as determined by the Board-approved policy.\n67. An NBFC shall effectively assess the impact of concentration risk posed by\nmultiple outsourcing arrangements to the same service provider and the\nconcentration risk posed by outsourcing critical or material functions to a limited\nnumber of service providers.\nD.2 Confidentiality and Security of Information\n68. An NBFC shall be responsible for the confidentiality and integrity o…"
+    ],
+    "pipeline_time_s": 10.15
+  },
+  {
+    "question_id": 22,
+    "question": "What are the rules regarding liquidity risk management and LCR for NBFCs?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "E.",
+      "H."
+    ],
+    "citations_count": 2,
+    "final_answer": "NBFCs must have a Board‑approved liquidity risk management framework that sets entity‑level risk tolerance, funding strategies, prudential limits, systems for measuring, assessing, reporting and reviewing liquidity, stress‑testing procedures, liquidity planning under alternative scenarios, and regular management reporting and review of assumptions (E.). They must maintain a sound process for identifying, measuring, monitoring and controlling liquidity risk, quantify liquidity costs for pricing and product approval, project cash flows from assets, liabilities and off‑balance‑sheet items, and give special attention to off‑balance‑sheet exposures such as SPVs, derivatives, guarantees and commitments (E.). A diversified funding strategy with ongoing market presence and the ability to raise funds quickly from varied sources is also required (E.). In addition, NBFCs must adopt a “stock” approach to liquidity risk measurement, monitoring critical ratios (e.g., short‑term liabilities to total assets, commercial papers to total assets, etc.) and set internal limits approved by the Board (H.). The provided excerpts do not contain any specific rule on the Liquidity Coverage Ratio (LCR) for NBFCs.",
+    "reference_answer": "Non-deposit taking NBFCs with asset size of INR 5,000 crore and above must maintain a Liquidity Coverage Ratio (LCR) of high-quality liquid assets (HQLA) to withstand a 30-day stressed cash outflow scenario.",
+    "retrieved_contexts": [
+      "E. Liquidity Risk Management\n21 The Board of the NBFC shall frame a liquidity risk management framework that\nensures the maintenance of adequate liquidity, including a cushion of\nunencumbered, high quality liquid assets to withstand a range of stress events,\nincluding those involving the loss or impairment of both unsecured and secured\nfunding sources.\n22 The framework shall clearly mention the entity-level liquidity risk tolerance; funding\nstrategies; prudential limits; system for measuring, assessing and reporting /\nreviewing liquidity; framework for stress testing; liquidity planning under alternative\nscenarios / formal contingent funding plan; nature and frequency of management\nreporting; and periodical review of assumptions used in liquidity projection.\n23 An NBFC shall have a sound process for identifying, measuring, monitoring, and\ncontrolling liquidity risk. It should clearly articulate a liquidity risk tolerance that is\nappropriate for its business strategy and its role in the…",
+      "I. Currency Risk Management\n44 The Board of an NBFC having foreign assets or liabilities on its Balance Sheet shall\nrecognise the liquidity risk arising out of such exposures and develop suitable\npreparedness for managing the risk.",
+      "H. Liquidity Risk Measurement – Stock Approach\n43 An NBFC shall adopt a ‘stock’ approach to liquidity risk measurement and monitor\ncertain critical ratios related to liquidity risk management by putting in place internally\ndefined limits, as approved by its Board. The ratios and internal limits shall be based\non an NBFC’s liquidity risk management capabilities, experience, and profile. An\nindicative list of critical ratios includes short-term liability to total assets, short-term\nliability to long term assets, commercial papers to total assets, non-convertible\ndebentures (NCDs) (original maturity of less than one year) to total assets, short-\nterm liabilities to total liabilities, and long-term assets to total assets.",
+      "Chapter III – Liquidity Risk Management",
+      "C. Liquidity Risk Management Policy .................................................................... 14"
+    ],
+    "pipeline_time_s": 13.94
+  },
+  {
+    "question_id": 23,
+    "question": "What are the Tier 1 capital composition requirements for commercial banks?",
+    "expected_clause_id": "Chapter III",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "Chapter III"
+    ],
+    "citations_count": 1,
+    "final_answer": "For commercial banks, Tier 1 capital (the going‑concern capital) must be composed of Common Equity Tier 1 (CET1) capital and Additional Tier 1 (AT1) capital, as set out in the regulatory capital framework. [Chapter III]",
+    "reference_answer": "Common Equity Tier 1 (CET1) capital must comprise paid-up equity capital, statutory reserves, discloseable free reserves, and capital reserves, accounting for at least 5.5% of risk-weighted assets.",
+    "retrieved_contexts": [
+      "Chapter III\nRegulatory capital\nA Composition of regulatory capital\nA.1 General\n9. The capital adequacy framework shall be based on three components or three\nPillars. Pillar 1 is the Minimum Capital Requirement while Pillar 2 and Pillar 3 are\nthe Supervisory Review and Evaluation Process (SREP) and Market Discipline,\nrespectively. A bank shall maintain a minimum Pillar 1 Capital to Risk-weighted\nAssets Ratio (CRAR) of 9 per cent on an on-going basis (other than capital\nbuffers) as prescribed under these Directions. The Reserve Bank will take into\naccount the relevant risk factors and the internal capital adequacy assessments\nof each bank to ensure that the capital held by a bank is commensurate with its\noverall risk profile. This would include, among others, the effectiveness of the\nbank’s risk management systems in identifying, assessing / measuring,\nmonitoring, and managing various risks including interest rate risk in the banking\nbook, liquidity risk, concentration risk, and residual…",
+      "Chapter II\nRegulatory capital\nA Limits and minima\n6. An NBFC shall meet the following minimum capital requirements on an ongoing\nbasis:\n(1) An NBFC primarily engaged in lending against gold jewellery shall maintain a\nminimum Tier 1 capital and Capital to Risk-weighted Asset Ratio (CRAR) of 12\nper cent and 15 per cent respectively of the aggregate Risk Weighted Assets\n(RWAs). The Tier 2 capital of the NBFC, at any point of time, shall not exceed\n100 per cent of Tier 1 capital.\nExplanation -\nTier 1 capital +Tier 2 capital\nCRAR =\n(2) An NBFC - Middle Layer (NBFC – ML) andR WabAosve shall maintain a minimum Tier\n1 capital of 10 per cent of the aggregate RWAs.\nExplanation - For paragraph 6(1) and 6(2) above:\nTier 1 capital\nTier 1 Capital Ratio =\n(3) An NBFC – ML and above shall maintain a minimRuWmA Cs RAR of 15 per cent of the\naggregate RWAs. The Tier 2 capital of the NBFC, at any point of time, shall not\nexceed 100 per cent of Tier 1 capital.\n(4) An NBFC – Upper Layer (NBFC – UL) shall al…",
+      "A. Capital Requirement\n20. A housing finance company shall, maintain a minimum capital ratio on an ongoing\nbasis consisting of Tier 1 and Tier 2 capital which shall not be less than 15 per cent of its\naggregate risk weighted assets and of risk adjusted value of off-balance sheet items. The\nTier 1 capital, at any point of time, shall not be less than 10 per cent. The total of Tier 2\ncapital, at any point of time, shall not exceed 100 per cent of Tier 1 capital.\nA.1 Internal Capital Adequacy Assessment Process (ICAAP)\n21. HFCs shall comply with the directions as prescribed in paragraph 54 of Reserve\nBank of India (Non-Banking Financial Companies – Prudential Norms on Capital\nAdequacy) Directions, 2025.\nA.2 On balance sheet assets:\n22. In these directions, degree of credit risk expressed as percentage weightages have\nbeen assigned to balance sheet assets. Hence, the value of each asset/ item requires to\nbe multiplied by the relevant risk weights to arrive at risk adjusted value of assets.…",
+      "A. Capital Funds\n15. Capital funds include Tier 1 and Tier 2 capital.",
+      "6.75 per cent shall be required to conserve 80 per cent of its earnings in the\nsubsequent financial year (i.e., payout no more than 20 per cent in terms of\ndividends, share buybacks and discretionary bonus payments is allowed).\n(5) The CET1 ratio includes amounts used to meet the minimum CET1 capital\nrequirement of 5.5 per cent but excludes any additional CET1 needed to meet\nthe 7 per cent Tier 1 and 9 per cent total capital requirements. For example, a\nbank maintains CET1 capital of 9 per cent and has no AT1 or Tier 2 capital.\nTherefore, the bank shall meet all minimum capital requirements, but shall have\na zero-conservation buffer and therefore, the bank shall be subject to 100 per\ncent constraint on distributions of capital by way of dividends, share-buybacks\nand discretionary bonuses.\n(6) The capital conservation buffer can be drawn down only when a bank faces a\nsystemic or idiosyncratic stress.\n(7) A bank shall not choose in normal times to operate in the buffer range simply to\nco…"
+    ],
+    "pipeline_time_s": 22.03
+  },
+  {
+    "question_id": 24,
+    "question": "What are the guidelines on interest rate risk in the banking book (IRRBB)?",
+    "expected_clause_id": "CHAPTER III",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A.",
+      "M.",
+      "F."
+    ],
+    "citations_count": 3,
+    "final_answer": "The guidelines require banks to identify all elements of IRRBB, measure its impact on Economic Value of Equity (ΔEVE) and Net Interest Income (ΔNII) using prescribed interest‑rate shock scenarios, and continuously monitor and control the risk (A.). Disclosure of IRRBB is mandatory for all banks on an annual basis and must include both qualitative and quantitative information such as the bank’s definition of IRRBB, its management and mitigation strategies, the frequency and specific measures used, the shock and stress scenarios applied, key modelling assumptions, and a high‑level description of hedging practices (M.). In addition, banks must obtain Board/ALCO approval for internal limits on Earnings at Risk and volatility in market value of equity, regularly review and update material assumptions, treat a 200‑basis‑point shock causing a >20% drop in equity as excessive, conduct periodic model validation with independent audit, and maintain thorough documentation of all assumptions and methodologies (F.).",
+    "reference_answer": "Banks must measure, monitor, and manage interest rate risk exposures across earnings and economic value of equity perspectives using standardized duration and repricing gap analyses.",
+    "retrieved_contexts": [
+      "A. Introduction\n46. Interest Rate Risk in Banking Book (IRRBB) refers to the current or prospective\nrisk to bank’s capital and earnings arising from adverse movements in interest\nrates that affect its banking book positions. When interest rates change, the\npresent value and timing of future cash flows change. These changes in turn\naffect the underlying value of a bank’s rate sensitive assets, liabilities, and off-\nbalance sheet items and, hence, its economic value (EV). Changes in interest\nrates also affect a bank’s earnings by altering interest rate-sensitive income and\nexpenses, affecting its net interest income (NII). Excessive IRRBB can pose a\nsignificant risk to a bank’s current capital base and / or future earnings if not\nmanaged appropriately. These guidelines, accordingly, require a bank to\nmeasure, monitor, and disclose its exposure to IRRBB in terms of potential\nchange in Economic Value of Equity (ΔEVE) and Net Interest Income (ΔNII),\ncomputed based on a set of prescribed int…",
+      "Chapter VII – Interest Rate Risk (IRR) Management",
+      "Chapter V - Governance, Measurement and Management of Interest Rate Risk\nin Banking Book",
+      "M. Formats for disclosure of IRRBB\nTable 19\nPurpose: To provide a description of the risk management objectives and policies\nconcerning IRRBB\nScope of application: Mandatory for all banks\nContent: Qualitative and quantitative information\nFrequency: Annual\nFormat: Flexible\nQualitative disclosure\nA A description of how the bank defines IRRBB for purposes of risk control\nand measurement.\nB A description of the bank’s overall IRRBB management and mitigation\nstrategies. Examples are: monitoring of EVE and NII in relation to established\nlimits, hedging practices, conduct of stress testing, outcomes analysis, the role\nof independent audit, the role and practices of the ALCO, the bank’s practices\nto ensure appropriate model validation, and timely updates in response to\nchanging market conditions.\nC The periodicity of the calculation of the bank’s IRRBB measures, and a\ndescription of the specific measures that the bank uses to gauge its\nsensitivity to IRRBB.\nD A description of the interest rate…",
+      "F. Interest rate risk management\n274. A bank shall, with the approval of its Board / RMC, set appropriate internal limits\non Earnings at Risk (EaR) and volatility in the MVE, based on its risk bearing and\nrisk management capacity. These limits shall be linked to MVE for DGA and the\nNII for TGA. The Board / ALCO shall periodically review the above limits after\nassessing various scenarios of interest rates and the resultant volatility of\nearnings in terms of NII and volatility in Net Worth.\n275. The ALCO prior approval shall be obtained for deciding upon yields, assumptions\nused / proposed to be used, bucketing, behavioural studies, etc. for DGA. A bank\nshall ensure that such decisions are compliant with regulatory guidelines.\n276. A bank shall update material assumptions on a regular basis to reflect the current\nmarket and operating environment. The process for developing such material\nassumptions shall be formalized and reviewed at least annually.\n277. In accordance with Reserve Bank o…"
+    ],
+    "pipeline_time_s": 19.11
+  },
+  {
+    "question_id": 25,
+    "question": "What are the prompt corrective action (PCA) framework triggers for banks?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [],
+    "citations_count": 0,
+    "final_answer": "The provided context does not contain any information about the prompt corrective action (PCA) framework triggers for banks.",
+    "reference_answer": "The PCA framework is triggered when a bank breaches mandatory thresholds for capital ratios (CRAR/CET1), Net NPA ratios, or leverage ratios, invoking supervisory actions like dividend restrictions and branch expansion halts.",
+    "retrieved_contexts": [
+      "A. General Instructions on Asset Classification\n27. A bank shall classify a loan or an advance as a standard asset or a NPA, as the\ncase may be.\n28. A bank shall put in place a robust Management Information System (MIS)\nmechanism for early detection of signs of distress at individual account level as\nwell as at segment level (asset class, industry, geographic, size, etc.). Such early\nwarning signals should be used for putting in place an effective preventive asset\nquality management framework, including a transparent restructuring\nmechanism for viable accounts under distress within the prevailing regulatory\nframework, for preserving the economic value of those entities in all segments.\n29. The Information Technology (IT) and MIS system of a bank should be robust and\nable to generate reliable and quality information with regard to its asset quality\nfor effective decision making. There should be no inconsistencies between\ninformation furnished under regulatory / statutory reporting and i…",
+      "L. Indicative methodology for computing ΔEVE\n90. Banks have been provided with flexibility to develop their own system to compute\nΔEVE. However, it is expected that banks’ systems and parameters used to\ncompute ΔEVE are not significantly different from the methodology and process\nprovided in this paragraph Wherever, significant deviation is considered\ndesirable by a bank, a well-reasoned argument for the same shall be recorded\nand made available to RBI when requested.\n91. Steps involved in computation:\nThe steps involved in measuring a bank’s ΔEVE for IRRBB would be as follows:\n87\nStep 1: Interest rate-sensitive banking book positions are allocated to one of\nthree categories (i.e., amenable, less amenable and not amenable to\nstandardisation).\nStep 2: Determination of slotting of cash flows based on repricing maturities.\nThis is a straightforward translation for positions amenable to standardisation.\nFor positions less amenable to standardisation, they are excluded from this step.\nFor p…",
+      "A. Board of Directors / Policies related guidelines:\n6. Know Your Customer (KYC) Policy:\n(1) The bank shall have a KYC policy. The Board of Directors of the bank, or any\ncommittee to which the Board has delegated power, shall duly approve the KYC policy.\n(2) The KYC policy shall include following four key elements:\n(i) Customer Acceptance Policy;\n(ii) Risk Management\n(iii) Customer Identification Procedures (CIP); and\n(iv) Monitoring of Transactions\n(3) The KYC policy shall, inter alia include:\n(i) Periodic updation of KYC\n(ii) Any exceptional measures for KYC updation, such as requiring a recent\nphotograph, physical presence, or a more frequent updation schedule than the\nminimum prescribed.\n(iii) Obtaining a copy of OVD or deemed OVD, for the purpose of proof of change\nof address during KYC updation.\n(iv) Providing facility of updation / periodic updation of KYC at any branch.\n(4) Furthermore, the bank shall have the following:\n(i) Policies approved by the Board detailing a robust due…",
+      "H. Model Calibration\n131. The models shall be validated before implementation to ensure suitability, and\nthe bank shall perform post-implementation back-testing to compare predictions\nwith actual outcomes, refining parameters to enhance accuracy. Recalibration shall\nbe triggered by explicit numerical indicators, with choices documented and aligned\nwith model objectives. Post-model adjustments (PMAs) or management overlays\nshall address model limitations, supported by qualitative reasoning and a\nconsistent governance framework. PMAs shall be documented, including\njustification, calculation criteria, and validation triggers, and validated proportional\nto their materiality, assessing relevance, assumptions, and root causes of\ndeficiencies.",
+      "b. the appropriate follow-up action including seeking further information and if the\ntransaction is found to be suspicious, reporting to FIU-IND in accordance with the PML\nRules.\n(iii) Beneficiary bank:\n(a) Beneficiary bank shall take reasonable measures, including post-event monitoring\nor real-time monitoring where feasible, to identify cross- border wire transfers and\nqualifying domestic wire transfers {viz., transactions as per sub-clauses (iii) and (iv) of\nclause (1) above}, that lack required originator information or required beneficiary\ninformation.\n(b) Beneficiary bank shall have effective risk-based policies and procedures for\ndetermining: (a) when to execute, reject, or suspend a wire transfer lacking required\noriginator or required beneficiary information; and (b) the appropriate follow-up action\nfollow-up action including seeking further information and if the transaction is found to\nbe suspicious, reporting to FIU-IND in accordance with the PML Rules.\n(iv) Money Transfer S…"
+    ],
+    "pipeline_time_s": 18.48
+  },
+  {
+    "question_id": 26,
+    "question": "What are the cyber security framework requirements for commercial banks?",
+    "expected_clause_id": "Chapter III",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "C.",
+      "Chapter III",
+      "B."
+    ],
+    "citations_count": 3,
+    "final_answer": "Commercial banks must ensure adequate safeguards for cyber security of their Digital Banking Units (DBUs) and must comply with the prescribed Cyber Security Framework for banks. The framework is referenced in the list of applicable guidelines for digital banking services, which includes the \"Cyber Security Framework in Banks\" (Chapter III). Additionally, banks must ensure that any cyber incidents reported by service providers are communicated to the bank without undue delay so that the bank can report the incident to the RBI within six hours of detection (B.).",
+    "reference_answer": "Banks must establish a Board-approved Cyber Security Policy, set up a 24x7 Security Operations Centre (SOC), conduct regular vulnerability assessments, and report cyber incidents to RBI within 6 hours.",
+    "retrieved_contexts": [
+      "C. Cyber Security\n57. In addition to ensuring physical security of the infrastructure of the DBU, a bank\nshall also ensure adequate safeguards for cyber security of the DBUs.",
+      "Chapter III – Guidelines on Technological Issues in Digital Banking\n8. The following instructions shall be applicable for banks offering digital banking\nservices:\n(1) Guidelines on Outsourcing of Information Technology Services as specified in\nReserve Bank of India (Commercial Banks – Managing Risks in Outsourcing)\nDirections, 2025 dated November 28, 2025, as amended from time to time.\n(2) DoS.CO.CSITEG/SEC.7/31.01.015/2023-24 dated November 07, 2023 – Master\nDirection on Information Technology Governance, Risk, Controls and Assurance\nPractices, as amended from time to time.\n(3) DoS.CO.CSITE.SEC.No.1852/31.01.015/2020-21 dated February 18, 2021 –\nMaster Direction on Digital Payment Security Controls, as amended from time to\ntime.\n(4) DBS.CO/CSITE/BC.11/33.01.001/2015-16 dated June 02, 2016 – Cyber Security\nFramework in Banks, as amended from time to time.\n(5) DOS.CO.FMG.SEC.No.5/23.04.001/2024-25 dated July 15, 2024 - Master\nDirection on Fraud Risk Management in Commercial Banks (inclu…",
+      "F. Data Security\n30. NBFC-AA shall adhere to the following:\n(1) Business of an Account Aggregator will be entirely Information Technology\n(IT) driven. NBFC-AA shall adopt required IT framework and interfaces to ensure\nsecure data flows from the Financial Information Providers to its own systems\nand onwards to the Financial Information Users.\n(2) NBFC-AA shall not request or store customer credentials (like passwords,\nPINs, private keys) which may be used for authenticating customers to the\nFinancial Information providers. Access by an NBFC-AA to customer’s\ninformation shall only be based on consent-based authorisation.\n15\n(3) The technology should also be scalable to cover any other financial\ninformation or Financial Information Provider as may be specified by the Reserve\nBank in future.\n(4) There shall be adequate safeguards built in its IT systems to ensure that it is\nprotected against unauthorised access, alteration, destruction, disclosure or\ndissemination of records and data.\n(5) …",
+      "B. Authorisation, Accountability, and Oversight\n54. In addition to adhering to the requirements stipulated in subparagraphs (i) to (v) of\nparagraph 18 of these Directions, a bank shall ensure that the service provider, if\nnot a group company, shall not be owned or controlled by any director, or key\nmanagerial personnel, or approver of the outsourcing arrangement of the bank, or\ntheir relatives. The terms ‘control’, ‘director’, ‘key managerial personnel’, and\n‘relative’ shall have the same meaning as assigned under the Companies Act, 2013\nand the Rules framed thereunder from time to time.\nProvided that an exception to the above requirement may be made with the\napproval of Board or a Committee of the Board, followed by appropriate disclosure,\noversight and monitoring of such arrangements.\n55. A bank shall evaluate the need for outsourcing of IT services based on a\ncomprehensive assessment of attendant benefits, risks, and availability of\ncommensurate processes to manage those risks. For …",
+      "J. Information Technology Framework, Data Security and Business Continuity Plan\n54. Business of an NBFC-P2P shall be primarily Information Technology (IT) driven. The\ntechnology should be scalable to handle growth in business.\n55. There should be adequate safeguards built in its IT systems to ensure that it is\nprotected against unauthorized access, alteration, destruction, disclosure or\ndissemination of records and data. The Reserve Bank may from time to time, prescribe\ntechnical specifications, as deemed fit.\n56. An NBFC-P2P should have a Board approved Business Continuity Plan in place for\nsafekeeping of information and documents and servicing of loans for full tenure in case\nof closure of platform.\n57. Information System Audit of the internal systems and processes shall be in place and\nshall be conducted at least once in two years by CISA certified external auditors. Report\nof the external auditor shall be submitted to the Regional Office of the Department of\nSupervision of the Rese…"
+    ],
+    "pipeline_time_s": 18.12
+  },
+  {
+    "question_id": 27,
+    "question": "What is the minimum priority sector lending requirement for Small Finance Banks?",
+    "expected_clause_id": "C.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "9.001",
+      "09.01",
+      "4.09.001"
+    ],
+    "citations_count": 3,
+    "final_answer": "The provided excerpts do not specify the minimum priority sector lending requirement for Small Finance Banks; they only mention that SFBs may on‑lend to priority sectors (see clauses 9.001, 09.01, 4.09.001).",
+    "reference_answer": "Small Finance Banks are required to extend at least 75% of their Adjusted Net Bank Credit (ANBC) to sectors eligible for classification as Priority Sector Lending.",
+    "retrieved_contexts": [
+      "13.1. Bank loans to Housing sector as per limits prescribed below are eligible for\npriority sector classification:",
+      "9.001/2022-23 NBFCs and Small Finance Banks\n(SFBs) to NBFC-MFIs, for the\n5purpose of on-lending to priority\n2\n0 sectors\n2\n7. FIDD.CO.Plan.BC.No.15/04. October 8, 20,2 1 Priority Sector Lending- Banks’\n1",
+      "09.01/2021-22 w lending by Small Finance Banks\na\nr (SFBs) to NBFC-MFIs\nd\n10. FIDD.CO.Plan.BC.No.7/0h4.0 April 7, 2021 Priority Sector Lending (PSL) –\nt",
+      "4.09.001/2022-23 to NBFCs and Small Finance\nBanks (SFBs) to NBFC-MFIs,\nfor the purpose of on-lending to\npriority sectors\n8 FIDD.CO.Plan.BC.No.15/ October 8, 2021 Priority Sector Lending- Banks’",
+      "12.1 Bank loans to Housing sector as per limits prescribed below are eligible for\npriority sector classification:\n(i) Loans to individuals up to ₹35 lakh in metropolitan centres (with population\nof ten lakh and above) and up to ₹25 lakh in other centres for\npurchase/construction of a dwelling unit per family provided the overall\ncost of the dwelling unit in the metropolitan centre and at other centres\ndoes not exceed ₹45 lakh and ₹30 lakh respectively. Existing individual\nhousing loans of UCBs presently classified under PSL will continue as\nPSL till maturity or repayment.\n12\nMaster Directions - Priority Sector Lending – Targets and Classification - 2020\n(ii) Housing loans to banks’ own employees will not be eligible for\nclassification under the priority sector.\n(iii) Since Housing loans which are backed by long term bonds are exempted\nfrom ANBC, banks should not classify such loans under priority sector.\nInvestments made by UCBs in bonds issued by NHB / HUDCO on or after\nApril 1, 2007 …"
+    ],
+    "pipeline_time_s": 2.48
+  },
+  {
+    "question_id": 28,
+    "question": "What are the eligibility criteria for a Small Finance Bank to transition into a Universal Bank?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "B.",
+      "A."
+    ],
+    "citations_count": 2,
+    "final_answer": "The eligibility criteria for a Small Finance Bank (SFB) to transition into a Universal Bank are: (1) it must have scheduled status with a satisfactory track record of performance for at least five years; (2) its shares must be listed on a recognised stock exchange; (3) it must have a minimum net worth of ₹1,000 crore as at the end of the previous quarter (audited); (4) it must meet the prescribed CRAR requirements for SFBs; (5) it must have posted a net profit in each of the last two financial years; and (6) its GNPA and NNPA must be ≤3% and ≤1% respectively over the last two financial years [B.]. The background also notes that transition is not automatic and requires an RBI application, a minimum paid‑up capital/net‑worth as applicable to Universal Banks, a five‑year performance track record, and RBI due‑diligence [A.].",
+    "reference_answer": "An SFB must have a minimum 5-year satisfactory operational track record, listing on a recognized stock exchange, a minimum net worth of INR 1,000 crore, CRAR of 15%, and Net NPAs of less than or equal to 1% for the preceding two fiscal years.",
+    "retrieved_contexts": [
+      "Chapter II: Voluntary transition of Small Finance Banks to Universal Banks",
+      "Chapter II: Voluntary transition of Small Finance Banks to Universal Banks ............... 15",
+      "B. Provisions\n51. The eligibility criteria for an SFB to transition into a Universal bank will be as\nfollows:\n(1) scheduled status with a satisfactory track record of performance for a minimum\nperiod of five years;\n(2) shares of the bank should have been listed on a recognised stock exchange;\n(3) having a minimum net worth of ₹1,000 crore as at the end of the previous\nquarter (audited);\n(4) meeting the prescribed CRAR requirements for SFBs;\n(5) having a net profit in the last two financial years; and\n(6) having GNPA and NNPA of less than or equal to 3% and 1% respectively in the\nlast two financial years.\n52. The following conditions shall be applicable with regard to shareholding pattern:\n(1) There is no mandatory requirement for an eligible SFB to have an identified\npromoter. However, the existing promoters of the eligible SFB, if any, shall\ncontinue as the promoters on transition to Universal Bank.\n(2) Addition of new promoters or change in promoters shall not be permitted for an\neli…",
+      "A. Background:\nThe small finance bank may continue as a differentiated bank. However, if it aspires\nto transit into a universal bank, such transition will not be automatic and will require an\napplication to the RBI for conversion. Such conversion shall be subject to the SFB’s\nfulfilling minimum paid-up capital/ net worth requirement as applicable to Universal\nBanks, satisfactory track record of performance as an SFB for a minimum period of\nfive years and RBI’s due diligence exercise. In this regard, the instructions, in exercise\nof the powers conferred on the Reserve Bank of India under Section 22 (1) of the\nBanking Regulation Act, 1949, was issued on April 26, 2024.",
+      "C. Guidelines\nC.1 Eligible Promoters\n6. Individuals / professionals who are residents [as defined in FEMA Rules and\nRegulations, as amended from time to time] having 10 years of experience in\nbanking and finance at a senior level would be eligible to promote banks, singly or\njointly.\n7. Entities / groups in the private sector that are ‘owned and controlled by residents’\n[as defined in FEMA Rules and Regulations, as amended from time to time] and\nhave a successful track record for at least 10 years, provided that if such entity /\ngroup has total assets of ₹5000 crore or more, the non-financial business of the\ngroup does not account for 40% or more in terms of total assets / in terms of gross\nincome.\n8. Existing non-banking financial companies (NBFCs), that are ‘controlled by\nresidents’ [as defined in FEMA Rules and Regulations, as amended from time to\ntime], and that have a successful track record for at least 10 years will be eligible\nto convert into a bank or promote a new bank. For t…"
+    ],
+    "pipeline_time_s": 17.33
+  },
+  {
+    "question_id": 29,
+    "question": "What is the maximum loan size restriction for Small Finance Banks?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [],
+    "citations_count": 0,
+    "final_answer": "The provided context does not contain information on a maximum loan size restriction for Small Finance Banks.",
+    "reference_answer": "At least 50% of the loan portfolio of a Small Finance Bank must consist of loans and advances of up to INR 25 lakh to promote micro-credit and small borrower financial inclusion.",
+    "retrieved_contexts": [
+      "C. Loans against security of shares\n106. The NBFC with asset size of ₹100 crore and above shall comply with the\nfollowing conditions while lending against the collateral of listed shares:\n(1) maintain a LTV ratio of 50 per cent for loans granted against the collateral of\nshares. LTV ratio of 50 per cent is required to be maintained at all times. Any\nshortfall in the maintenance of the 50 percent LTV occurring on account of\nmovement in the share prices shall be made good within seven working days.\n(2) The NBFC with asset size of ₹100 crore and above shall also comply with the\nfollowing additional conditions:\n(i) in case where lending is being done for investment in capital markets,\naccept only Group 1 securities (specified in SMD/ Policy/ Cir - 9/ 2003\ndated March 11, 2003 issued by SEBI as amended from time to time) as\ncollateral for loans of value more than ₹5 lakh, subject to review by the\nReserve Bank.\n(ii) report on-line to stock exchanges on a quarterly basis, information on the\ns…",
+      "B. Limit on Loan Repayment Obligations of a Household\n55. The NBFC shall have a board-approved policy regarding the limit on the outflows\non account of repayment of monthly loan obligations of a household as a\npercentage of the monthly household income. This shall be subject to a limit of\nmaximum 50 per cent of the monthly household income.\nExplanation: Any future expected income from the asset/ activity financed by a\nmicrofinance loan shall not be included in the household income for the purpose\nof calculating the indebtedness of the household.\n56. The computation of loan repayment obligations shall take into account all\noutstanding loans (collateral-free microfinance loans as well as any other type of\ncollateralized loans) of the household. The outflows capped at 50 per cent of the\nmonthly household income shall include repayments (including both principal as\nwell as interest component) towards all existing loans as well as the loan under\nconsideration.\n57. Existing loans, for which …",
+      "Chapter II – Liquidity Risk Management Framework\nProvisions of this Chapter shall not apply to NBFCs having asset size less than ₹100\ncrore as per their last audited Balance Sheet. However, NBFCs that are exempt from the\nprovisions of this Chapter are encouraged to adopt these guidelines on a voluntary basis.",
+      "B. Limit on Loan Repayment Obligations of a Household .............................. 36",
+      "13.2. # Bank loans to MFIs extended for on-lending to individuals and also to\nmembers of SHGs/JLGs for water and sanitation facilities subject to the\ncriteria laid down in paragraph 21 of these Master Directions.\n# not applicable to RRBs, UCBs and SFBs.\n14. Renewable Energy\nBank loans up to a limit of ₹30 crore to borrowers for purposes like solar based\npower generators, biomass-based power generators, wind mills, micro-hydel\nplants and for non-conventional energy based public utilities, viz., street lighting\nsystems and remote village electrification etc., will be eligible for Priority Sector\nclassification. For individual households, the loan limit will be ₹10 lakh per\nborrower.\n15. Others 5\n2\n0\nThe following loans as per the prescribed lim2its are eligible for priority sector\n,\n1\n0\nclassification:\nril\np\nA"
+    ],
+    "pipeline_time_s": 8.57
+  },
+  {
+    "question_id": 30,
+    "question": "What is the maximum balance limit per individual customer in a Payments Bank?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [],
+    "citations_count": 0,
+    "final_answer": "The provided context does not specify the maximum balance limit per individual customer in a Payments Bank.",
+    "reference_answer": "Payments Banks are restricted from holding a maximum end-of-day balance exceeding INR 2,00,000 per individual customer.",
+    "retrieved_contexts": [
+      "A. Inter-branch account - provisioning for net debit balance ................................. 89",
+      "C. Limit on Loan Repayment Obligations of a Household\n66. Each bank shall have a board-approved policy regarding the limit on the outflows\non account of repayment of monthly loan obligations of a household as a\npercentage of the monthly household income. The limit on the outflows on account\nof repayment of monthly loan obligations of a household shall be limited to a\nmaximum 50 per cent of the monthly household income.\nExplanation: Any future expected income from the asset/ activity financed by a\nmicrofinance loan shall not be included in the household income for the purpose\nof calculating the indebtedness of the household.\n67. The computation of loan repayment obligations shall take into account all\noutstanding loans (collateral-free microfinance loans as well as any other type of\ncollateralized loans) of the household. The outflows capped at 50 per cent of the\nmonthly household income shall include repayments (including both principal as\nwell as interest component) towards all existi…",
+      "B. Limit on Loan Repayment Obligations of a Household\n55. The NBFC shall have a board-approved policy regarding the limit on the outflows\non account of repayment of monthly loan obligations of a household as a\npercentage of the monthly household income. This shall be subject to a limit of\nmaximum 50 per cent of the monthly household income.\nExplanation: Any future expected income from the asset/ activity financed by a\nmicrofinance loan shall not be included in the household income for the purpose\nof calculating the indebtedness of the household.\n56. The computation of loan repayment obligations shall take into account all\noutstanding loans (collateral-free microfinance loans as well as any other type of\ncollateralized loans) of the household. The outflows capped at 50 per cent of the\nmonthly household income shall include repayments (including both principal as\nwell as interest component) towards all existing loans as well as the loan under\nconsideration.\n57. Existing loans, for which …",
+      "D. Limiting Liability of Customers in Unauthorised Electronic Banking\nTransactions\nD.1 Strengthening of systems and procedures\n64. Broadly, electronic banking transactions can be divided into two categories:\n(1) Remote / online payment transactions (transactions that do not require physical\npayment instruments to be presented at the point of transactions, e.g., internet\nbanking, mobile banking, card not present (CNP) transactions, Pre-paid Payment\nInstruments (PPI), and\n(2) Face-to-face/ proximity payment transactions (transactions which require the\nphysical payment instrument such as a card or mobile phone to be present at the\npoint of transaction, e.g., ATM, POS, etc.).\n65. The systems and procedures in a bank shall be designed to make customers feel\nsafe about carrying out electronic banking transactions. To achieve this, the bank shall\nput in place:\n(1) appropriate systems and procedures to ensure safety and security of electronic\nbanking transactions carried out by customers;\n(2) …",
+      "B. SERVICE CHARGES:\nMinimum\nCharges for non-\nBalance\nSr.No. Type of Account maintenance\nRequirement\nthereof (₹)\n(₹)\n1 Savings Account"
+    ],
+    "pipeline_time_s": 8.58
+  },
+  {
+    "question_id": 31,
+    "question": "Are Payments Banks allowed to undertake lending activities or issue credit cards?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [],
+    "citations_count": 0,
+    "final_answer": "The provided excerpts do not contain any information regarding whether Payments Banks can engage in lending activities or issue credit cards.",
+    "reference_answer": "Payments Banks are explicitly prohibited from undertaking lending operations, advancing loans, or issuing credit cards to customers.",
+    "retrieved_contexts": [
+      "C. Activities not eligible for Bank Credit\n224. The following activities undertaken by NBFCs, are not eligible for bank credit:\n(1) Bills discounted / rediscounted by NBFCs, except for rediscounting of bills\ndiscounted by NBFCs arising from sale of -\n(i) commercial vehicles (including light commercial vehicles), and\n(ii) two-wheeler and three-wheeler vehicles, subject to the following conditions:\n(a) the bills shall be drawn by the manufacturer on dealers only;\n(b) the bills shall represent genuine sale transactions as may be\nascertained from the chassis / engine number; and\n(c) before rediscounting the bills, the bank shall satisfy themselves about\nthe bona fides and track record of NBFCs which have discounted the\nbills.\n(2) Investments of NBFCs both of current and long-term nature, in any company /\nentity by way of shares, debentures, etc. However, Stock Broking Companies\nshall be provided need-based credit against shares and debentures held by\nthem as stock-in- trade.\nIn this contex…",
+      "C. Compliance with Other instructions\n76. The issue of cards as a payment mechanism shall also be subject to relevant\ninstructions on cash withdrawal, issue of international card, security issues and\nrisk mitigation measures, card-to-card fund transfers, merchant discount rates\nstructure, failed ATM transactions, etc, issued by the Department of Payment and\nSettlement Systems, Reserve Bank of India under the Payment and Settlement\nSystems Act, 2007, and the Foreign Exchange Department, Reserve Bank of\nIndia under Foreign Exchange Management Act, 1999, as amended from time to\ntime.",
+      "C. Compliance with Other instructions\n82. The issue of cards as a payment mechanism shall also be subject to relevant instructions\non cash withdrawal, issue of international card, security issues and risk mitigation\nmeasures, card-to-card fund transfers, merchant discount rates structure, failed ATM\ntransactions, etc, issued by the Department of Payment and Settlement Systems,\nReserve Bank of India under the Payment and Settlement Systems Act, 2007, and the\n27\nForeign Exchange Department, Reserve Bank of India under Foreign Exchange\nManagement Act, 1999, as amended from time to time.",
+      "C. Activities not eligible for Bank Credit .......................................................... 96",
+      "Chapter IIA: Credit Facilities Linked to Specific Payment Instruments ..................... 17"
+    ],
+    "pipeline_time_s": 17.84
+  },
+  {
+    "question_id": 32,
+    "question": "Where must Payments Banks invest their customer demand deposit balances?",
+    "expected_clause_id": "C.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [],
+    "citations_count": 0,
+    "final_answer": "The provided context does not contain information on where Payments Banks must invest their customer demand deposit balances.",
+    "reference_answer": "Payments Banks must invest at least 75% of customer demand deposit balances in Statutory Liquidity Ratio (SLR) eligible Government securities/Treasury Bills with maturity up to one year, and hold the remaining 25% in demand/time deposits with operational commercial banks.",
+    "retrieved_contexts": [
+      "C. Prohibition from Accepting Demand Deposit:\n15. No NBFC shall accept any public deposit which is repayable on demand.",
+      "A. Inter-branch account - provisioning for net debit balance ................................. 89",
+      "A. Banking outlets / branches / offices / Customer Service Points (CSPs) etc. ...... 38",
+      "B. Customer Service: Institutional Framework\nB.1 Need for Board's involvement\n7. Matters relating to customer service shall be deliberated by the Board to ensure\n10\nthat the instructions are implemented meaningfully. Commitment to hassle-free\nservice to the customer at large and the common person in particular shall be a major\nresponsibility of the Board.\nB.2 Policies on Customer Service\n8. Customer service shall be projected as a priority objective of banks along with profit,\ngrowth and fulfilment of social obligations. A bank shall have policies for the following:\nB.2.1 Comprehensive Deposit Policy\n9. A bank shall formulate a transparent and comprehensive policy setting out the rights\nof the depositors in general and small depositors in particular. The policy shall cover\nall aspects of operations of deposit accounts, charges leviable and other related issues\nto facilitate interaction of depositors at branch levels. Such a policy shall also be\nexplicit regarding secrecy and confidenti…",
+      "G. Ceiling on the rate of interest\n19. No NBFC shall invite or accept or renew public deposit at a rate of interest\nexceeding twelve and half per cent per annum. Interest may be paid or\ncompounded at rests which shall not be shorter than monthly rests."
+    ],
+    "pipeline_time_s": 2.22
+  },
+  {
+    "question_id": 33,
+    "question": "What are the customer protection and grievance redressal mechanisms mandated for digital lending platforms across banks and NBFCs?",
+    "expected_clause_id": "A.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "G.",
+      "H."
+    ],
+    "citations_count": 2,
+    "final_answer": "Both banks and NBFCs must provide a robust, digital‑first grievance redressal framework for customers of digital lending platforms.  A bank must ensure an adequate digital mechanism that offers real‑time assistance and redress for grievances arising from its digital business units or through facilitators (G.).  For outsourced services, the bank must (i) state in product literature that a service provider may be used, (ii) maintain a grievance redressal mechanism that is not weakened by outsourcing and remains the bank’s responsibility (H.), (iii) set up a Grievance Redressal Machinery as per RBI Responsible Business Conduct Directions 2025, (iv) prominently display the name and contact details of the grievance officer at branches and on its website, (v) resolve complaints within a maximum of 30 days and publish this time‑frame online, and (vi) offer escalation to the RBI Integrated Ombudsman Scheme if the customer is not satisfied (H.).  Similarly, an NBFC must (i) assure that outsourcing does not affect customer rights (H.), (ii) disclose the use of service providers in its literature, (iii) maintain a robust grievance redressal mechanism with responsibility resting on the NBFC (H., G.), (iv) constitute a Grievance Redressal Machinery under the RBI NBFC Responsible Business Conduct Directions 2025, (v) display the grievance officer’s contact details at business locations and on its website, (vi) provide a 30‑day resolution window and publish the procedure online, and (vii) allow further redressal options as prescribed (H., G.).",
+    "reference_answer": "Regulated entities must appoint a dedicated Nodal Grievance Redressal Officer, display contact details prominently on digital lending apps, and resolve customer complaints within a maximum period of 30 days.",
+    "retrieved_contexts": [
+      "G. Customer Grievance Redressal\n64. A bank shall ensure adequate digital mechanism to offer real time assistance and\nredress customer grievances arising from business and services offered by the\nDBUs directly or through Business Facilitators / Correspondents.\n25",
+      "H. Redressal of Grievances related to Outsourced Services\n54. Outsourcing arrangements entered into by an NBFC shall not affect the rights of its\ncustomers against the NBFC, including the ability of the customers to obtain\nredressal as applicable under relevant laws.\n55. In cases where customers are required to deal with a service provider in the\nprocess of dealing with an NBFC, the NBFC shall incorporate a clause in the\ncorresponding product literature and brochures, stating that services of the service\nprovider, including in sales, and marketing of the products, may be used. The role\nof the service provider may be indicated in broad terms.\n56. An NBFC shall have a robust grievance redressal mechanism that shall not be\ncompromised in any manner on account of outsourcing, i.e., responsibility for\nredressal of customers’ grievances related to outsourced services shall rest with\nthe NBFC. In case of microfinance loans, a declaration that, (i) the NBFC shall be\naccountable for inappropria…",
+      "H. Redressal of Grievances related to Outsourced Services\n49. Outsourcing arrangements entered into by a bank shall not affect the rights of its\ncustomers against the bank, including the ability of the customers to obtain redressal\nas applicable under relevant laws.\n50. In cases where customers are required to deal with a service provider in the process\nof dealing with a bank, the bank shall incorporate a clause in the corresponding\nproduct literature, and brochures, stating that services of the service provider,\nincluding in sales and marketing of the products, may be used. The role of the\nservice provider may be indicated in broad terms.\n51. A bank shall have a robust grievance redressal mechanism that shall not be\ncompromised in any manner on account of outsourcing, i.e., responsibility for\nredressal of customers’ grievances related to outsourced services shall rest with the\nbank. In case of microfinance loans, a declaration that, (i) the bank shall be\naccountable for inappropriate …",
+      "G. Redressal of Grievances related to Outsourced Services\n98. An NBFC shall have a robust grievance redressal mechanism that shall not be\ncompromised in any manner on account of outsourcing, i.e., responsibility for\nredressal of customers’ grievances related to outsourced services shall rest with\nthe NBFC.\n99. Outsourcing arrangements entered into by an NBFC shall not affect the rights of its\ncustomers against the NBFC, including the ability of the customers to obtain\nredressal as applicable under relevant laws.\n44",
+      "G. Redressal of Grievances related to Outsourced Services\n93. A bank shall have a robust grievance redressal mechanism that shall not be\ncompromised in any manner on account of outsourcing, i.e., responsibility for\nredressal of customers’ grievances related to outsourced services shall rest with the\nbank.\n94. Outsourcing arrangements entered into by a bank shall not affect the rights of its\ncustomers against the bank, including the ability of the customers to obtain redressal\nas applicable under relevant laws.\n42"
+    ],
+    "pipeline_time_s": 18.28
+  },
+  {
+    "question_id": 34,
+    "question": "How do capital adequacy requirements differ between commercial banks and NBFCs?",
+    "expected_clause_id": "Chapter III",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "A.",
+      "Chapter V"
+    ],
+    "citations_count": 2,
+    "final_answer": "NBFCs are subject to sector‑specific capital adequacy rules that differ from the Basel‑III framework applied to commercial banks. For example, an NBFC‑MFI must maintain a CRAR of at least 15% of its risk‑weighted assets and its Tier 2 capital cannot exceed 100% of Tier 1 capital (clause A). NBFCs must also conduct an Internal Capital Adequacy Assessment Process (ICAAP) that is modelled on the banks’ Pillar 2 ICAAP, but unlike commercial banks they are not required to hold Pillar 2 capital; the ICAAP is intended mainly to ensure that the NBFC has sufficient capital to cover its risks (Chapter V). In contrast, commercial banks are required to meet the full Basel‑III Pillar 2 capital requirements, including a minimum Pillar 2 capital buffer, as part of their ICAAP under the RBI Commercial Banks – Prudential Norms on Capital Adequacy Directions, 2025.",
+    "reference_answer": "Commercial banks are subject to a minimum CRAR of 9% (plus capital conservation buffer) under Basel III rules, whereas NBFCs are required to maintain a higher minimum CRAR of 15% of risk-weighted assets.",
+    "retrieved_contexts": [
+      "A. Capital Requirement\n16. An NBFC-MFI shall maintain a capital adequacy ratio consisting of Tier 1 and Tier\n2 capital which shall not be less than 15 per cent of its aggregate risk weighted assets of\non-balance sheet and of risk adjusted value of off-balance sheet items.\n17. The total of Tier 2 capital at any point of time, shall not exceed 100 percent of Tier\n1 capital.\n18. The treatment to on-balance and off-balance sheet assets for capital adequacy\nshall be as provided in the Reserve Bank of India (Non-Banking Financial Companies –\nPrudential Norms on Capital Adequacy) Directions, 2025 respectively.\n19. An NBFC-MFI shall also adhere to provisions of the Reserve Bank of India (Non-\nBanking Financial Companies – Prudential Norms on Capital Adequacy) Directions, 2025\non treatment of deferred tax assets and deferred tax liabilities for computation of capital.\n20. For loans guaranteed under any existing or future schemes launched by CGTMSE,\nCRGFTLIH and NCGTC, an NBFC-MFI shall assign r…",
+      "B. Eligibility criteria\n8. An NBFC shall comply with the following minimum prudential requirements to\nbe eligible to declare dividend:\nTable 1: Declaration of dividend: Minimum prudential requirements\nSr. No. Parameter Requirement\n(1) Capital Adequacy 1. An NBFC (other than SPD) should have met the\napplicable regulatory capital requirement (including CRAR,\nTier I capital, Tier II capital, leverage ratio, and ANW, as\napplicable) for each of the last three financial years including\nthe financial year for which the dividend is proposed.\nProvided that where an NBFC has been in existence for less\nthan three financial years, the above requirement shall be\nsince registration.\n2. An SPD shall have maintained a minimum CRAR of 20\nper cent for the financial year (each of the four quarters) for\nwhich dividend is proposed.\nNote:\nNBFC-D, NBFC-ICC, NBFC-Factor, NBFC-IFC, IDF-NBFC,\nNBFC-MFI shall refer to the Reserve Bank of India (Non-\nBanking Financial Companies – Prudential Norms on Capital\nAdequa…",
+      "Chapter V\nInternal Capital Adequacy Assessment Process (ICAAP) [Applicable to NBFC-\nML and above]\n54. An NBFC shall make a thorough internal assessment of the need for capital,\ncommensurate with the risks in its business. This internal assessment shall be\non similar lines as ICAAP prescribed for commercial banks under Pillar 2 under\nReserve Bank of India (Commercial Banks - Prudential Norms on Capital\nAdequacy) Directions, 2025. While Pillar 2 capital will not be insisted upon, an\nNBFC shall make a realistic assessment of risks. Internal capital assessment\nshall factor in credit risk, market risk, operational risk, and all other residual risks\nas per methodology to be determined internally. The methodology for internal\nassessment of capital shall be proportionate to the scale and complexity of\noperations as per its Board approved policy. The objective of ICAAP is to ensure\navailability of adequate capital to support all risks in business as also to\nencourage an NBFC to develop and use …",
+      "Chapter V Internal Capital Adequacy Assessment Process (ICAAP) [Applicable to\nNBFC-ML and above] ........................................................................................................ 56",
+      "C. Capital Adequacy and Other prudential norms\n47. Any loss or profit arising because of transfer of loans, which is realised, should\nbe accounted for accordingly and reflected in the Profit & Loss account of the transferor\nfor the accounting period during which the transfer is completed. However, unrealised\n16\nprofits, if any, arising out of such transfers, shall be deducted from CET 1 capital for\nmeeting regulatory capital adequacy requirements till the maturity of such loans.\n48. In case of transfer of a pool of loans, the transferee(s), and the transferor(s) in\ncase of retention of economic interest, should maintain borrower-wise accounts. Thus,\nthe exposures of the transferor(s) and the transferee(s) would be to the individual\nobligors in a pool of loans.\n49. The capital adequacy treatment for loans acquired, in respect of the economic\ninterest held by the transferor and transferee(s) post such transfer, will be as per the\ninstructions applicable to loans directly originated by th…"
+    ],
+    "pipeline_time_s": 18.45
+  },
+  {
+    "question_id": 35,
+    "question": "What are the restrictions on loans and advances to directors and senior officers across banking entities?",
+    "expected_clause_id": "B.",
+    "status": "answered",
+    "confidence": 0.0,
+    "was_decomposed": false,
+    "citations": [
+      "B."
+    ],
+    "citations_count": 1,
+    "final_answer": "Banks are prohibited from entering into any commitment to grant loans or advances to any of their directors, or to any firm in which a director has an interest as partner, manager, employee, guarantor, or holds a substantial interest, including companies where the director is a director, managing agent, manager, employee or guarantor (Section 20(1)(b) of the Banking Regulation Act, 1949) [B.]. The prohibition does not apply if the loan or advance was granted before the individual became a director; however, the bank may not renew, enhance, or alter the terms of such a facility after the director’s appointment until the director relinquishes the directorship of either the bank or the borrower company [B.].",
+    "reference_answer": "Banks and NBFCs are prohibited from granting credit facilities or loans to their own directors, directors of other banks, or relatives of directors without prior Board or Management Committee approval beyond specified threshold limits.",
+    "retrieved_contexts": [
+      "B. Advances to Bank’s Directors\n14. In terms of Section 20(1)(b) of the BR Act, 1949, a bank is prohibited from\nentering into any commitment for granting any loans or advances to or on behalf\nof any of its directors, or any firm in which any of its directors is interested as\npartner, manager, employee or guarantor, or any company [not being a\nsubsidiary of the banking company or a company registered under Section 8 of\nthe Companies Act, 2013, or a Government company] of which, or the subsidiary\nor the holding company of which any of the directors of the bank is a director,\nmanaging agent, manager, employee or guarantor or in which he holds\nsubstantial interest, or any individual in respect of whom any of its directors is a\npartner or guarantor.\nB.1 Clarifications on Applicability of Section 20(1)(b) of BR Act\n15. 12[*****]\n13[15A. In exercise of the powers conferred by clause (a) of the Explanation under sub-\nsection 4 of Section 20 of the Banking Regulation Act, 1949, the following\nex…",
+      "Annex I\nLoans to Directors, Senior Officers and relatives of Directors\n(₹ crore)\nCurrent Year Previous Year\nDirectors and their relatives\nEntities associated with directors and their\nrelatives\nSenior Officers and their relatives\n29",
+      "B. Restrictions and Ceilings\n36. A bank shall not grant any advance or loan:\n(1) For purchase of gold in any form including primary gold, ornaments, jewellery,\nor coins, or for purchase of financial assets backed by gold, e.g., units of\nExchange-traded funds (ETFs) or units of Mutual Funds; and\n(2) against primary gold or silver or financial assets backed by primary gold or\nsilver.\nProvided that a bank may extend need-based working capital finance to\nborrowers who use gold or silver as a raw material or as an input in their\nmanufacturing or industrial processing activity, where such gold or silver can\nalso be accepted as security. A bank extending such finance shall ensure that\nborrowers do not acquire or hold gold for investment or speculative purposes.\n37. A bank shall not extend a loan where ownership of the collateral is doubtful. A\nsuitable document or declaration shall be obtained from the borrower in all cases\nto the effect that the borrower is the rightful owner of the eligible…",
+      "A. Advances against Bank’s own Shares\n13. In terms of Section 20(1)(a) of the Banking Regulation Act (BR Act), 1949, a bank\ncannot grant any loans and advances on the security of its own shares.",
+      "B. Restrictions and Ceilings\n35. The NBFC shall not grant any advance or loan:\n(1) For purchase of gold in any form including primary gold, ornaments, jewellery,\nor coins, or for purchase of financial assets backed by gold, e.g., units of\nExchange-traded funds (ETFs) or units of Mutual Funds; and\n(2) against primary gold or silver or financial assets backed by primary gold or\nsilver.\n36. The NBFC shall not extend a loan where ownership of the collateral is doubtful. A\nsuitable document or declaration shall be obtained from the borrower in all cases\nto the effect that the borrower is the rightful owner of the eligible collateral. Multiple\nor frequent sanction of loans against eligible collateral to the same borrower,\naggregating to a value in excess of a threshold to be decided by the lender, must\nbe examined closely as part of the transaction monitoring under the anti-money\nlaundering (AML) framework.\n37. The NBFC shall not:\n(1) Avail loans by re-pledging gold or silver pledged to it b…"
+    ],
+    "pipeline_time_s": 19.25
+  }
+]

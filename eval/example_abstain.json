@@ -1,0 +1,12 @@
+Query: "What is RBI's policy on cryptocurrency exchanges?"
+
+Running pipeline: retrieve → generate → verify → finalize …
+
+── Final response ────────────────────────────────────
+{
+  "status": "abstain",
+  "reason": "insufficient grounded evidence",
+  "confidence": 0.0
+}
+─────────────────────────────────────────────────────
+

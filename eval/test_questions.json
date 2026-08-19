@@ -1,0 +1,17 @@
+[
+  {"question": "What are the KYC requirements for NBFCs?", "expected_clause_id": "A."},
+  {"question": "What is the capital adequacy requirement for Commercial Banks?", "expected_clause_id": "Chapter III"},
+  {"question": "What are the penalties for non-compliance?", "expected_clause_id": "Chapter VI"},
+  {"question": "What are the governance requirements for Small Finance Banks?", "expected_clause_id": "C."},
+  {"question": "What is the minimum CRR that banks must maintain?", "expected_clause_id": "A."},
+  {"question": "What are the rules for priority sector lending?", "expected_clause_id": "A."},
+  {"question": "What are the norms for classification of NPAs?", "expected_clause_id": "B."},
+  {"question": "What are the exposure limits for a single borrower?", "expected_clause_id": "D."},
+  {"question": "What is the SLR requirement for banks?", "expected_clause_id": "A."},
+  {"question": "What are the dividend distribution rules for NBFCs?", "expected_clause_id": "B."},
+  {"question": "What is the process for opening a new bank branch?", "expected_clause_id": "A."},
+  {"question": "What are the outsourcing guidelines for banks?", "expected_clause_id": "B."},
+  {"question": "What are the rules for digital lending?", "expected_clause_id": "A."},
+  {"question": "What are the fit and proper criteria for bank directors?", "expected_clause_id": "B."},
+  {"question": "What reporting must banks submit to RBI?", "expected_clause_id": "E."}
+]

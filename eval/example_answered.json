@@ -1,0 +1,68 @@
+Query: "What are the KYC requirements for NBFCs?"
+
+Running pipeline: retrieve → generate → verify → finalize …
+
+── Final response ────────────────────────────────────
+{
+  "status": "answered",
+  "answer": "NBFCs must adopt a Board\u2011approved KYC policy that contains four key elements \u2013 a Customer Acceptance Policy, Risk Management, Customer Identification Procedures (CIP) and Transaction Monitoring. The policy must provide for periodic KYC updates, exceptional update measures (e.g., recent photograph, physical presence, more frequent updates), collection of a copy of OVD or deemed OVD for address change, the ability to update KYC at any branch, and change of the registered mobile number for accounts opened non\u2011face\u2011to\u2011face. The policy must be documented as part of the NBFC\u2019s internal KYC policy approved by the Board or its delegated committee. Periodic KYC updation must follow a risk\u2011based schedule: at least once every 2\u202fyears for high\u2011risk customers, once every 8\u202fyears for medium\u2011risk customers and once every 10\u202fyears for low\u2011risk customers, with the schedule recorded in the approved policy.",
+  "citations": [
+    {
+      "text": "The NBFC shall have a KYC policy approved by the Board of Directors or a delegated committee.",
+      "cited_clause_id": "A.",
+      "supported": true,
+      "seq_score": 0.5448,
+      "kw_score": 1.0,
+      "nums_ok": true,
+      "reason": ""
+    },
+    {
+      "text": "The KYC policy must include Customer Acceptance Policy, Risk Management, Customer Identification Procedures, and Monitoring of Transactions.",
+      "cited_clause_id": "A.",
+      "supported": true,
+      "seq_score": 0.0905,
+      "kw_score": 0.9333,
+      "nums_ok": true,
+      "reason": ""
+    },
+    {
+      "text": "The KYC policy shall incorporate provisions for periodic updation of KYC and exceptional measures such as requiring a recent photograph, physical presence, or a more frequent updation schedule.",
+      "cited_clause_id": "A.",
+      "supported": true,
+      "seq_score": 0.6494,
+      "kw_score": 1.0,
+      "nums_ok": true,
+      "reason": ""
+    },
+    {
+      "text": "The policy must require obtaining a copy of OVD or deemed OVD for proof of change of address during KYC updation.",
+      "cited_clause_id": "A.",
+      "supported": true,
+      "seq_score": 0.2891,
+      "kw_score": 0.9444,
+      "nums_ok": true,
+      "reason": ""
+    },
+    {
+      "text": "The policy must provide for updation/periodic updation of KYC at any branch and change of registered mobile number for non\u2011face\u2011to\u2011face accounts.",
+      "cited_clause_id": "A.",
+      "supported": true,
+      "seq_score": 0.3724,
+      "kw_score": 0.9524,
+      "nums_ok": true,
+      "reason": ""
+    },
+    {
+      "text": "The periodic KYC updation schedule must be documented in the NBFC\u2019s internal KYC policy approved by the Board or its delegated committee.",
+      "cited_clause_id": "E.",
+      "supported": true,
+      "seq_score": 0.3893,
+      "kw_score": 0.85,
+      "nums_ok": true,
+      "reason": ""
+    }
+  ],
+  "confidence": 85.71428571428571
+}
+─────────────────────────────────────────────────────
+

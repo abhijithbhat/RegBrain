@@ -1,0 +1,177 @@
+[
+  {
+    "question": "What are the KYC requirements for NBFCs?",
+    "expected_clause_id": "A.",
+    "reference_answer": "NBFCs must formulate a Board-approved KYC policy that incorporates a Customer Acceptance Policy, Risk Management, Customer Identification Procedures (CIP), and Transaction Monitoring. Additionally, periodic KYC updation must be conducted based on customer risk categorization."
+  },
+  {
+    "question": "What is the capital adequacy requirement for Commercial Banks?",
+    "expected_clause_id": "Chapter III",
+    "reference_answer": "Commercial Banks are required to maintain a minimum total capital ratio (CRAR) of 9% of risk-weighted assets under Pillar 1 of the regulatory capital framework, along with applicable capital conservation buffers."
+  },
+  {
+    "question": "What are the penalties for non-compliance?",
+    "expected_clause_id": "Chapter VI",
+    "reference_answer": "Penalties for non-compliance include monetary fines, penal interest charges levied by the RBI for statutory shortfalls (such as CRR/SLR defaults), and potential regulatory restrictions on business operations."
+  },
+  {
+    "question": "What are the governance requirements for Small Finance Banks?",
+    "expected_clause_id": "C.",
+    "reference_answer": "Small Finance Banks must maintain strong governance led by a majority of independent directors on their Board, establish dedicated Board committees (Audit, Risk, Nomination), and comply with RBI fit and proper criteria for directors."
+  },
+  {
+    "question": "What is the minimum CRR that banks must maintain?",
+    "expected_clause_id": "D.",
+    "reference_answer": "Every scheduled commercial bank must maintain a minimum Cash Reserve Ratio (CRR) specified by the RBI as a percentage of its Net Demand and Time Liabilities (NDTL) on an average daily basis during a fortnight."
+  },
+  {
+    "question": "What are the rules for priority sector lending?",
+    "expected_clause_id": "A.",
+    "reference_answer": "Commercial banks are required to allocate a minimum target of 40% of Adjusted Net Bank Credit (ANBC) or Credit Equivalent Amount of Off-Balance Sheet Exposure (CEOBE), whichever is higher, to designated priority sectors including agriculture and MSMEs."
+  },
+  {
+    "question": "What are the norms for classification of NPAs?",
+    "expected_clause_id": "B.",
+    "reference_answer": "An asset is classified as a Non-Performing Asset (NPA) if interest or principal installment remains overdue for a period of more than 90 days in respect of a term loan, or if an account remains out of order for 90 days."
+  },
+  {
+    "question": "What are the exposure limits for a single borrower?",
+    "expected_clause_id": "D.",
+    "reference_answer": "The exposure limit for a single borrower is capped at 20% of a bank's or NBFC's eligible capital base (Tier I capital), which can be extended by an additional 5% under exceptional circumstances approved by the Board."
+  },
+  {
+    "question": "What is the SLR requirement for banks?",
+    "expected_clause_id": "B.",
+    "reference_answer": "Every bank must maintain Statutory Liquidity Ratio (SLR) eligible assets—such as cash, gold, or unencumbered approved government securities—amounting to at least 18% of its total Net Demand and Time Liabilities (NDTL) at the close of business on any day."
+  },
+  {
+    "question": "What are the dividend distribution rules for NBFCs?",
+    "expected_clause_id": "B.",
+    "reference_answer": "NBFCs must satisfy minimum prudential requirements—including maintaining a capital adequacy ratio (CRAR) of at least 15% and net NPAs under 6%—to be eligible to declare and pay dividends from current year profits."
+  },
+  {
+    "question": "What is the process for opening a new bank branch?",
+    "expected_clause_id": "A.",
+    "reference_answer": "Domestic commercial banks are granted general permission to open banking outlets in Tier 1 to Tier 6 centers subject to maintaining at least 25% of total outlets in unbanked rural centers and submitting annual branch expansion plans to the RBI."
+  },
+  {
+    "question": "What are the outsourcing guidelines for banks?",
+    "expected_clause_id": "B.",
+    "reference_answer": "Banks are prohibited from outsourcing core management functions such as policy formulation, loan sanctioning, and compliance monitoring, and must ensure service providers adhere to strict data privacy, security, and audit access standards."
+  },
+  {
+    "question": "What are the rules for digital lending?",
+    "expected_clause_id": "A.",
+    "reference_answer": "Digital lending operations must ensure all loan disbursements and repayments execute directly between the bank/NBFC bank account and the borrower without third-party pass-through, and key fact statements (KFS) detailing APR must be provided."
+  },
+  {
+    "question": "What are the fit and proper criteria for bank directors?",
+    "expected_clause_id": "B.",
+    "reference_answer": "Directors of banking companies must fulfill fit and proper criteria assessing formal qualifications, professional experience, track record of integrity, absence of criminal/regulatory convictions, and conflict of interest disclosures."
+  },
+  {
+    "question": "What reporting must banks submit to RBI?",
+    "expected_clause_id": "E.",
+    "reference_answer": "Banks must regularly submit statutory returns to RBI including Form A (fortnightly CRR), Form VIII (monthly SLR), quarterly financial returns, asset classification/NPA statements, and suspicious transaction reports."
+  },
+  {
+    "question": "What are the KYC requirements and capital adequacy norms for NBFCs?",
+    "expected_clause_id": "A.",
+    "reference_answer": "NBFCs must establish a Board-approved KYC policy covering customer identification, risk management, and transaction monitoring, while maintaining a minimum capital adequacy ratio (CRAR) of 15% of risk-weighted assets."
+  },
+  {
+    "question": "What are the governance guidelines for commercial bank boards and what are the credit facility limits for NBFCs?",
+    "expected_clause_id": "B.",
+    "reference_answer": "Commercial bank boards require independent directors and mandatory committee structures, while credit facility limits for NBFCs restrict single borrower exposures to 20% of Tier I capital and regulate group exposures."
+  },
+  {
+    "question": "What are the minimum capital adequacy ratio rules for NBFCs and what are the specific loan outflow limits for households under NBFC-MFIs?",
+    "expected_clause_id": "B.",
+    "reference_answer": "NBFCs must maintain a minimum CRAR of 15%, whereas NBFC-MFIs must ensure that microfinance loans are granted to households with annual income not exceeding INR 3,00,000, with total qualifying assets meeting 75% of net assets."
+  },
+  {
+    "question": "How did the Priority Sector Lending (PSL) guidelines change between the 2020 Master Direction and the 2025 Master Direction regarding agriculture sub-targets?",
+    "expected_clause_id": "1.1",
+    "reference_answer": "The 2020 PSL guidelines mandated a phased increase in agriculture sub-targets for small and marginal farmers up to 10% of ANBC, whereas the 2025 Master Direction consolidated higher baseline sub-targets and updated calculation metrics for non-performing or revised credit exposures."
+  },
+  {
+    "question": "What are the net owned fund (NOF) requirements for registering a new NBFC?",
+    "expected_clause_id": "Chapter II",
+    "reference_answer": "A non-banking financial company must possess a minimum Net Owned Fund (NOF) of INR 10 crore (or INR 2 crore for specific legacy categories) to obtain a certificate of registration from the Reserve Bank of India."
+  },
+  {
+    "question": "What are the concentration risk management guidelines for NBFCs under Scale Based Regulation?",
+    "expected_clause_id": "D.",
+    "reference_answer": "Under Scale Based Regulation, upper layer and middle layer NBFCs must restrict aggregate exposure to a single counterparty to 20% of Tier 1 capital and to a group of connected counterparties to 25% of Tier 1 capital."
+  },
+  {
+    "question": "What are the rules regarding liquidity risk management and LCR for NBFCs?",
+    "expected_clause_id": "B.",
+    "reference_answer": "Non-deposit taking NBFCs with asset size of INR 5,000 crore and above must maintain a Liquidity Coverage Ratio (LCR) of high-quality liquid assets (HQLA) to withstand a 30-day stressed cash outflow scenario."
+  },
+  {
+    "question": "What are the Tier 1 capital composition requirements for commercial banks?",
+    "expected_clause_id": "Chapter III",
+    "reference_answer": "Common Equity Tier 1 (CET1) capital must comprise paid-up equity capital, statutory reserves, discloseable free reserves, and capital reserves, accounting for at least 5.5% of risk-weighted assets."
+  },
+  {
+    "question": "What are the guidelines on interest rate risk in the banking book (IRRBB)?",
+    "expected_clause_id": "CHAPTER III",
+    "reference_answer": "Banks must measure, monitor, and manage interest rate risk exposures across earnings and economic value of equity perspectives using standardized duration and repricing gap analyses."
+  },
+  {
+    "question": "What are the prompt corrective action (PCA) framework triggers for banks?",
+    "expected_clause_id": "B.",
+    "reference_answer": "The PCA framework is triggered when a bank breaches mandatory thresholds for capital ratios (CRAR/CET1), Net NPA ratios, or leverage ratios, invoking supervisory actions like dividend restrictions and branch expansion halts."
+  },
+  {
+    "question": "What are the cyber security framework requirements for commercial banks?",
+    "expected_clause_id": "Chapter III",
+    "reference_answer": "Banks must establish a Board-approved Cyber Security Policy, set up a 24x7 Security Operations Centre (SOC), conduct regular vulnerability assessments, and report cyber incidents to RBI within 6 hours."
+  },
+  {
+    "question": "What is the minimum priority sector lending requirement for Small Finance Banks?",
+    "expected_clause_id": "C.",
+    "reference_answer": "Small Finance Banks are required to extend at least 75% of their Adjusted Net Bank Credit (ANBC) to sectors eligible for classification as Priority Sector Lending."
+  },
+  {
+    "question": "What are the eligibility criteria for a Small Finance Bank to transition into a Universal Bank?",
+    "expected_clause_id": "B.",
+    "reference_answer": "An SFB must have a minimum 5-year satisfactory operational track record, listing on a recognized stock exchange, a minimum net worth of INR 1,000 crore, CRAR of 15%, and Net NPAs of less than or equal to 1% for the preceding two fiscal years."
+  },
+  {
+    "question": "What is the maximum loan size restriction for Small Finance Banks?",
+    "expected_clause_id": "A.",
+    "reference_answer": "At least 50% of the loan portfolio of a Small Finance Bank must consist of loans and advances of up to INR 25 lakh to promote micro-credit and small borrower financial inclusion."
+  },
+  {
+    "question": "What is the maximum balance limit per individual customer in a Payments Bank?",
+    "expected_clause_id": "B.",
+    "reference_answer": "Payments Banks are restricted from holding a maximum end-of-day balance exceeding INR 2,00,000 per individual customer."
+  },
+  {
+    "question": "Are Payments Banks allowed to undertake lending activities or issue credit cards?",
+    "expected_clause_id": "A.",
+    "reference_answer": "Payments Banks are explicitly prohibited from undertaking lending operations, advancing loans, or issuing credit cards to customers."
+  },
+  {
+    "question": "Where must Payments Banks invest their customer demand deposit balances?",
+    "expected_clause_id": "C.",
+    "reference_answer": "Payments Banks must invest at least 75% of customer demand deposit balances in Statutory Liquidity Ratio (SLR) eligible Government securities/Treasury Bills with maturity up to one year, and hold the remaining 25% in demand/time deposits with operational commercial banks."
+  },
+  {
+    "question": "What are the customer protection and grievance redressal mechanisms mandated for digital lending platforms across banks and NBFCs?",
+    "expected_clause_id": "A.",
+    "reference_answer": "Regulated entities must appoint a dedicated Nodal Grievance Redressal Officer, display contact details prominently on digital lending apps, and resolve customer complaints within a maximum period of 30 days."
+  },
+  {
+    "question": "How do capital adequacy requirements differ between commercial banks and NBFCs?",
+    "expected_clause_id": "Chapter III",
+    "reference_answer": "Commercial banks are subject to a minimum CRAR of 9% (plus capital conservation buffer) under Basel III rules, whereas NBFCs are required to maintain a higher minimum CRAR of 15% of risk-weighted assets."
+  },
+  {
+    "question": "What are the restrictions on loans and advances to directors and senior officers across banking entities?",
+    "expected_clause_id": "B.",
+    "reference_answer": "Banks and NBFCs are prohibited from granting credit facilities or loans to their own directors, directors of other banks, or relatives of directors without prior Board or Management Committee approval beyond specified threshold limits."
+  }
+]
