@@ -103,7 +103,7 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [apiUrl, setApiUrl] = useState(
-    process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001"
+    process.env.NEXT_PUBLIC_API_URL || "https://regbrain.onrender.com"
   );
   const [apiKey, setApiKey] = useState(
     process.env.NEXT_PUBLIC_API_KEY || "regbrain-dev-key"
@@ -111,6 +111,17 @@ export default function Home() {
   const [showSettings, setShowSettings] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    try {
+      const savedUrl = localStorage.getItem("regbrain_api_url");
+      const savedKey = localStorage.getItem("regbrain_api_key");
+      if (savedUrl) setApiUrl(savedUrl);
+      if (savedKey) setApiKey(savedKey);
+    } catch {
+      // Ignore localStorage read errors in SSR/sandboxed mode
+    }
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -296,11 +307,27 @@ export default function Home() {
               <p className="structural-label">Audit connection</p>
               <label className="settings-field">
                 Endpoint
-                <input value={apiUrl} onChange={(event) => setApiUrl(event.target.value)} type="text" />
+                <input
+                  value={apiUrl}
+                  onChange={(event) => {
+                    const val = event.target.value;
+                    setApiUrl(val);
+                    try { localStorage.setItem("regbrain_api_url", val); } catch {}
+                  }}
+                  type="text"
+                />
               </label>
               <label className="settings-field">
                 API key
-                <input value={apiKey} onChange={(event) => setApiKey(event.target.value)} type="text" />
+                <input
+                  value={apiKey}
+                  onChange={(event) => {
+                    const val = event.target.value;
+                    setApiKey(val);
+                    try { localStorage.setItem("regbrain_api_key", val); } catch {}
+                  }}
+                  type="text"
+                />
               </label>
             </section>
           )}
