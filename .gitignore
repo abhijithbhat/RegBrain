@@ -1,29 +1,48 @@
-# Environment
+# Environment & Secrets
 .env
-venv/
+.env.*
+!.env.example
 
-# Python
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Python Cache & Artifacts
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
 *.egg-info/
 dist/
 build/
 
-# Local data
+# Local Raw Data & PDFs (Ignore heavy PDFs, keep manifest)
 data/
 *.pdf
+*.PDF
+*.[pP][dD][fF]
+ingestion/rbi_corpus/*.PDF
+ingestion/rbi_corpus/*.pdf
+!ingestion/rbi_corpus/manifest.csv
 
-# IDE
+# RegBrain Local Artifacts & Caches
+ingestion/chunks/
+retrieval/bm25_index.pkl
+eval/.ragas_cache/
+logs/
+*.log
+
+# Frontend (Next.js)
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env*.local
+node_modules/
+
+# IDE & OS Metadata
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
 .DS_Store
 Thumbs.db
-
-# RegBrain generated artifacts
-ingestion/chunks/
-retrieval/bm25_index.pkl

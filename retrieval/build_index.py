@@ -30,7 +30,7 @@ QDRANT_URL = os.getenv("QDRANT_CLUSTER_ENDPOINT")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
 PAYLOAD_FIELDS = [
-    "doc_id", "category", "clause_id", "clause_label",
+    "doc_id", "chunk_index", "category", "clause_id", "clause_label", "start_page",
     "effective_date", "source_filename", "clause_text",
 ]
 
@@ -73,14 +73,15 @@ def main():
     print(f"Connecting to Qdrant at {QDRANT_URL} ...")
     client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY, timeout=60)
 
-    if not client.collection_exists(COLLECTION):
-        print(f"Creating collection '{COLLECTION}' (size={VECTOR_SIZE}, cosine) ...")
-        client.create_collection(
-            collection_name=COLLECTION,
-            vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
-        )
-    else:
-        print(f"Collection '{COLLECTION}' already exists, upserting ...")
+    if client.collection_exists(COLLECTION):
+        print(f"Recreating collection '{COLLECTION}' from scratch ...")
+        client.delete_collection(COLLECTION)
+
+    print(f"Creating collection '{COLLECTION}' (size={VECTOR_SIZE}, cosine) ...")
+    client.create_collection(
+        collection_name=COLLECTION,
+        vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
+    )
 
     # Build points
     points = []

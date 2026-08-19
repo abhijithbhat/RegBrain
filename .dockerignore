@@ -1,0 +1,37 @@
+# Git
+.git/
+.gitignore
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+
+# Local documents & raw files
+data/
+*.pdf
+eval/
+logs/
+.ragas_cache/
+
+# Frontend application (deployed separately on Vercel)
+frontend/
+
+# IDE & OS metadata
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Ensure required runtime index is NOT ignored
+!retrieval/bm25_index.pkl

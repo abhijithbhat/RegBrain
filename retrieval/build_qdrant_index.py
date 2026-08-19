@@ -28,7 +28,7 @@ QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
 # Payload fields to store alongside each vector
 PAYLOAD_FIELDS = [
-    "doc_id", "category", "clause_id", "clause_label",
+    "doc_id", "chunk_index", "category", "clause_id", "clause_label", "start_page",
     "effective_date", "source_filename", "clause_text",
 ]
 

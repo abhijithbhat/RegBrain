@@ -10,7 +10,7 @@ import pdfplumber
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
-CORPUS_DIR = "rbi_corpus"
+CORPUS_DIR = "ingestion/rbi_corpus"
 OUTPUT_DIR = "ingestion/chunks"
 MANIFEST_PATH = os.path.join(CORPUS_DIR, "manifest.csv")
 
