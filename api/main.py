@@ -303,22 +303,15 @@ class QueryRequest(BaseModel):
 
 @app.get("/health")
 def health_check():
-    """Deep health check verifying Qdrant vector database and Groq API key configuration."""
-    # 1. Check GROQ_API_KEY presence
+    """Lightweight health check — verifies env config without loading heavy ML libraries."""
     groq_key_val = os.getenv("GROQ_API_KEY")
     groq_status = "present" if (groq_key_val and groq_key_val.strip()) else "missing"
 
-    # 2. Check Qdrant connectivity
-    try:
-        qdrant_client = retrieve_module._get_qdrant_client()
-        if qdrant_client.collection_exists("regbrain"):
-            qdrant_status = "connected"
-        else:
-            qdrant_status = "collection_missing"
-    except Exception as err:
-        qdrant_status = f"disconnected: {err}"
+    qdrant_url = os.getenv("QDRANT_CLUSTER_ENDPOINT") or os.getenv("QDRANT_URL") or ""
+    qdrant_key = os.getenv("QDRANT_API_KEY") or ""
+    qdrant_status = "configured" if qdrant_url.strip() else "not_configured"
 
-    overall_status = "ok" if (groq_status == "present" and qdrant_status == "connected") else "degraded"
+    overall_status = "ok" if (groq_status == "present" and qdrant_status == "configured") else "degraded"
     status_code = status.HTTP_200_OK if overall_status == "ok" else status.HTTP_503_SERVICE_UNAVAILABLE
 
     return JSONResponse(

@@ -16,9 +16,6 @@ import sys
 
 import numpy as np
 from dotenv import load_dotenv
-from qdrant_client import QdrantClient
-import torch
-from sentence_transformers import CrossEncoder, SentenceTransformer
 
 load_dotenv()
 
@@ -46,6 +43,8 @@ _bm25_data = None
 def _get_embed_model():
     global _embed_model
     if _embed_model is None:
+        import torch
+        from sentence_transformers import SentenceTransformer
         torch.set_num_threads(1)
         try:
             model = SentenceTransformer(EMBED_MODEL, local_files_only=True)
@@ -64,6 +63,8 @@ def _get_embed_model():
 def _get_reranker():
     global _reranker
     if _reranker is None:
+        import torch
+        from sentence_transformers import CrossEncoder
         torch.set_num_threads(1)
         try:
             model = CrossEncoder(RERANKER_MODEL, local_files_only=True)
@@ -87,6 +88,7 @@ def _get_reranker():
 def _get_qdrant_client():
     global _qdrant_client
     if _qdrant_client is None:
+        from qdrant_client import QdrantClient
         _qdrant_client = QdrantClient(
             url=QDRANT_URL, api_key=QDRANT_API_KEY, timeout=30
         )
