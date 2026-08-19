@@ -32,7 +32,7 @@ RRF_K = 60
 RERANK_TOP = 7           # final results returned (more context for niche topics)
 RRF_SAFETY_CANDIDATES = 1  # retain the strongest hybrid-retrieval result
 
-QDRANT_URL = (os.getenv("QDRANT_CLUSTER_ENDPOINT") or "").strip()
+QDRANT_URL = (os.getenv("QDRANT_CLUSTER_ENDPOINT") or os.getenv("QDRANT_URL") or "").strip()
 QDRANT_API_KEY = (os.getenv("QDRANT_API_KEY") or "").strip()
 
 
