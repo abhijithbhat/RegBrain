@@ -104,7 +104,7 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState("");
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://regbrain.onrender.com";
+  const apiUrl = "/api/backend";
   const apiKey = process.env.NEXT_PUBLIC_API_KEY || "regbrain-dev-key";
 
   useEffect(() => {
