@@ -80,16 +80,8 @@ from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Pre-warm models on startup so first request has 0 latency."""
-    try:
-        from retrieval.retrieve import _get_embed_model, _get_reranker
-        from generation.verify import _get_nli_model
-        _get_embed_model()
-        _get_reranker()
-        _get_nli_model()
-        logger.info(json.dumps({"event": "models_warmed_up", "status": "ready"}))
-    except Exception as e:
-        logger.warning(json.dumps({"event": "warmup_deferred", "error": str(e)}))
+    """Application lifespan. Models load lazily on first request to stay under 512 MB."""
+    logger.info({"event": "startup", "status": "ready", "note": "models load on first request"})
     yield
 
 # ── FastAPI App ─────────────────────────────────────────────────────
@@ -103,11 +95,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_origin_regex=r".*",
-    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"],
 )
 
 
