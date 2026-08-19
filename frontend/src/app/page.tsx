@@ -304,7 +304,7 @@ export default function Home() {
 
           {showSettings && (
             <section className="settings-panel" aria-label="Audit API configuration">
-              <p className="structural-label">Audit connection</p>
+              <p className="structural-label">Audit connection settings</p>
               <label className="settings-field">
                 Endpoint
                 <input
@@ -315,6 +315,7 @@ export default function Home() {
                     try { localStorage.setItem("regbrain_api_url", val); } catch {}
                   }}
                   type="text"
+                  placeholder="https://regbrain.onrender.com"
                 />
               </label>
               <label className="settings-field">
@@ -326,7 +327,8 @@ export default function Home() {
                     setApiKey(val);
                     try { localStorage.setItem("regbrain_api_key", val); } catch {}
                   }}
-                  type="text"
+                  type="password"
+                  placeholder="••••••••••••"
                 />
               </label>
             </section>
