@@ -76,11 +76,28 @@ _file_handler.setFormatter(_json_formatter)
 logger.addHandler(_file_handler)
 
 
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Pre-warm models on startup so first request has 0 latency."""
+    try:
+        from retrieval.retrieve import _get_embed_model, _get_reranker
+        from generation.verify import _get_nli_model
+        _get_embed_model()
+        _get_reranker()
+        _get_nli_model()
+        logger.info(json.dumps({"event": "models_warmed_up", "status": "ready"}))
+    except Exception as e:
+        logger.warning(json.dumps({"event": "warmup_deferred", "error": str(e)}))
+    yield
+
 # ── FastAPI App ─────────────────────────────────────────────────────
 app = FastAPI(
     title="RegBrain API",
     description="Regulatory Compliance RAG with Grounding & Claim Verification",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # Enable CORS for frontend integration
