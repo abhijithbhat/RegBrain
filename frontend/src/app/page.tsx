@@ -140,87 +140,86 @@ export default function Home() {
     abortControllerRef.current = abortController;
 
     try {
-      let receivedResult = false;
-      try {
-        const response = await fetch(`${apiUrl}/query/stream`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-Key": apiKey,
-          },
-          body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
-          signal: abortController.signal,
-        });
+      // 1. Start the asynchronous query job
+      const startRes = await fetch(`${apiUrl}/query/start`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": apiKey,
+        },
+        body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
+        signal: abortController.signal,
+      });
 
-        if (response.ok && response.body) {
-          const reader = response.body.getReader();
-          const decoder = new TextDecoder();
-          let buffer = "";
-
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            buffer += decoder.decode(value, { stream: true });
-            const parts = buffer.split("\n\n");
-            buffer = parts.pop() || "";
-
-            for (const part of parts) {
-              const record = part.trim();
-              if (!record.startsWith("data:")) continue;
-
-              try {
-                const data = JSON.parse(record.replace(/^data:\s*/, ""));
-                if (data.stage) {
-                  setCurrentStage(data.stage as StageType);
-                } else if (data.status || data.answer !== undefined) {
-                  setResult(data);
-                  if (data.session_id) setSessionId(data.session_id);
-                  setCurrentStage(null);
-                  setIsLoading(false);
-                  receivedResult = true;
-                } else if (data.error) {
-                  setErrorMessage(data.message || data.error);
-                  setCurrentStage(null);
-                  setIsLoading(false);
-                  receivedResult = true;
-                }
-              } catch (parseError) {
-                console.error("Error parsing SSE JSON chunk:", parseError, record);
-              }
-            }
-          }
+      if (!startRes.ok) {
+        let detail = `HTTP ${startRes.status}`;
+        try {
+          const errData = await startRes.json();
+          detail = errData.detail?.message || errData.detail || errData.message || detail;
+        } catch {
+          // Keep default detail
         }
-      } catch (streamError) {
-        console.warn("Stream interrupted, falling back to standard endpoint...", streamError);
+        throw new Error(detail);
       }
 
-      // If streaming was interrupted or did not deliver final result, fallback to standard /query
-      if (!receivedResult) {
-        const fallbackRes = await fetch(`${apiUrl}/query`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-Key": apiKey,
-          },
-          body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
-          signal: abortController.signal,
-        });
+      const startData = await startRes.json();
+      const jobId = startData.job_id;
 
-        if (!fallbackRes.ok) {
-          let detail = `HTTP ${fallbackRes.status}`;
-          try {
-            const errorBody = await fallbackRes.json();
-            detail = errorBody.detail?.message || errorBody.detail || errorBody.message || detail;
-          } catch {
-            // Preserve status code
-          }
-          throw new Error(detail);
+      if (!jobId) {
+        throw new Error("No job ID received from query start endpoint.");
+      }
+
+      // 2. Poll for job progress and completion
+      let completed = false;
+      const startTime = Date.now();
+      const MAX_POLL_TIME = 180000; // 3 minutes timeout
+
+      while (!completed && !abortController.signal.aborted) {
+        if (Date.now() - startTime > MAX_POLL_TIME) {
+          throw new Error("Audit request timed out. Please retry.");
         }
 
-        const data = await fallbackRes.json();
-        setResult(data);
-        if (data.session_id) setSessionId(data.session_id);
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        if (abortController.signal.aborted) break;
+
+        try {
+          const pollRes = await fetch(`${apiUrl}/query/result/${jobId}`, {
+            headers: {
+              "X-API-Key": apiKey,
+            },
+            signal: abortController.signal,
+          });
+
+          if (!pollRes.ok) {
+            if (pollRes.status === 404) continue;
+            let detail = `HTTP ${pollRes.status}`;
+            try {
+              const errBody = await pollRes.json();
+              detail = errBody.detail || errBody.message || detail;
+            } catch {}
+            throw new Error(detail);
+          }
+
+          const pollData = await pollRes.json();
+
+          if (pollData.status === "pending") {
+            if (pollData.stage) {
+              setCurrentStage(pollData.stage as StageType);
+            }
+          } else if (pollData.status === "done" || pollData.answer !== undefined) {
+            setResult(pollData);
+            if (pollData.session_id) setSessionId(pollData.session_id);
+            completed = true;
+          } else if (pollData.status === "error" || pollData.error) {
+            setErrorMessage(pollData.message || pollData.error || "Audit processing failed.");
+            completed = true;
+          }
+        } catch (pollErr: unknown) {
+          if (pollErr instanceof Error && pollErr.name === "AbortError") {
+            throw pollErr;
+          }
+          console.warn("Polling retry encountered an issue:", pollErr);
+        }
       }
     } catch (error: unknown) {
       if (!(error instanceof Error && error.name === "AbortError")) {

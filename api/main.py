@@ -324,6 +324,109 @@ def health_check():
     )
 
 
+# ── Async Job Store ─────────────────────────────────────────────────
+# Jobs survive the 30s Render request timeout by running in background threads
+JOBS: dict[str, dict] = {}  # {job_id: {"status": "pending"|"done"|"error", "stage": ..., "result": ..., "created": float}}
+_JOBS_LOCK = threading.Lock()
+MAX_JOBS = 50  # prevent memory leak from uncollected jobs
+
+
+def _cleanup_old_jobs():
+    """Remove jobs older than 5 minutes."""
+    cutoff = time.time() - 300
+    with _JOBS_LOCK:
+        expired = [jid for jid, j in JOBS.items() if j["created"] < cutoff]
+        for jid in expired:
+            del JOBS[jid]
+
+
+@app.post("/query/start", dependencies=[Depends(check_rate_limit)])
+def query_start(request: Request, body: QueryRequest):
+    """Start a query job in the background, return job_id immediately."""
+    _cleanup_old_jobs()
+
+    job_id = str(uuid.uuid4())
+    session_id = body.session_id
+
+    if session_id and session_id in SESSIONS:
+        session_state = SESSIONS[session_id]
+    else:
+        session_id = str(uuid.uuid4())
+        session_state = {}
+
+    with _JOBS_LOCK:
+        JOBS[job_id] = {"status": "pending", "stage": "retrieving", "result": None, "created": time.time()}
+
+    def worker():
+        def update_stage(stage_name: str):
+            with _JOBS_LOCK:
+                if job_id in JOBS and JOBS[job_id]["status"] == "pending":
+                    JOBS[job_id]["stage"] = stage_name
+
+        _thread_local.stage_callback = update_stage
+        _thread_local.retrieved_chunks = []
+        _thread_local.verified_claims = []
+        try:
+            result = handle_query(body.question, session_state)
+
+            if "_error" in result:
+                err_msg = str(result["_error"])
+                with _JOBS_LOCK:
+                    JOBS[job_id] = {"status": "error", "result": {"error": err_msg}, "created": time.time()}
+                return
+
+            SESSIONS[session_id] = session_state
+            result["session_id"] = session_id
+
+            with _JOBS_LOCK:
+                JOBS[job_id] = {"status": "done", "result": result, "created": time.time()}
+
+            logger.info({
+                "event": "async_query_completed",
+                "job_id": job_id,
+                "session_id": session_id,
+                "question": (body.question[:100] + "...") if len(body.question) > 100 else body.question,
+                "status": result.get("status", "abstain"),
+            })
+        except Exception as err:
+            logger.error({
+                "event": "async_query_error",
+                "job_id": job_id,
+                "error": str(err),
+                "traceback": traceback.format_exc(),
+            })
+            with _JOBS_LOCK:
+                JOBS[job_id] = {
+                    "status": "error",
+                    "result": {"error": f"{type(err).__name__}: {str(err)[:300]}"},
+                    "created": time.time(),
+                }
+        finally:
+            _thread_local.stage_callback = None
+
+    thread = threading.Thread(target=worker, daemon=True)
+    thread.start()
+
+    return {"job_id": job_id, "status": "pending", "stage": "retrieving"}
+
+
+@app.get("/query/result/{job_id}")
+def query_result(job_id: str):
+    """Poll for job result. Returns status=pending while processing, status=done with result when complete."""
+    with _JOBS_LOCK:
+        job = JOBS.get(job_id)
+
+    if job is None:
+        raise HTTPException(status_code=404, detail="Job not found or expired")
+
+    if job["status"] == "pending":
+        return {"status": "pending", "stage": job.get("stage", "retrieving")}
+    elif job["status"] == "done":
+        return {"status": "done", **job["result"]}
+    else:
+        return {"status": "error", **job["result"]}
+
+
 @app.post("/query", dependencies=[Depends(check_rate_limit)])
 def query(request: Request, body: QueryRequest):
     start_time = time.perf_counter()
