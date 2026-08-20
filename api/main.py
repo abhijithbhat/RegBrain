@@ -451,7 +451,7 @@ def query_stream(request: Request, body: QueryRequest):
             else:
                 error_payload = {
                     "error": "internal_server_error",
-                    "message": "An unexpected error occurred while processing your request.",
+                    "message": f"{type(err).__name__}: {str(err)[:300]}",
                 }
 
             event_queue.put({"type": "error", "error": error_payload})
