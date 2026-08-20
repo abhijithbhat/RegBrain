@@ -32,67 +32,59 @@ load_dotenv()
 # ── Config ──────────────────────────────────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL = "openai/gpt-oss-120b"
+GROQ_MODELS = [
+    os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
+    "qwen/qwen3.6-27b",
+    "openai/gpt-oss-120b",
+]
 
-MAX_RETRIES = 6
-BASE_DELAY = 6.0
-RATE_LIMIT_SLEEP = 3  # seconds between internal steps (backoff retries handle 429)
+MAX_RETRIES = 3
+BASE_DELAY = 1.0
+RATE_LIMIT_SLEEP = 0.3  # seconds between internal steps
 
 
 # ── Groq helper ─────────────────────────────────────────────────────
 def _groq_json_call(system_prompt: str, user_prompt: str) -> dict:
-    """Send a request to Groq with JSON mode, return parsed dict."""
+    """Send a request to Groq with JSON mode and multi-model failover, return parsed dict."""
     if not GROQ_API_KEY:
         sys.exit("ERROR: GROQ_API_KEY not found in environment. Add it to .env")
 
-    payload = {
-        "model": MODEL,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user",   "content": user_prompt},
-        ],
-        "temperature": 0,
-        "response_format": {"type": "json_object"},
-    }
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
         "Content-Type":  "application/json",
     }
 
-    response = None
-    for attempt in range(1, MAX_RETRIES + 1):
-        try:
-            response = requests.post(GROQ_URL, json=payload, headers=headers, timeout=60)
-            if response.status_code == 200:
-                break
-            elif response.status_code in (429, 500, 502, 503, 504):
-                retry_after = 0.0
-                if "retry-after" in response.headers:
-                    try:
-                        retry_after = float(response.headers["retry-after"])
-                    except Exception:
-                        pass
-                delay = max(retry_after, BASE_DELAY * (2 ** (attempt - 1)))
-                if response.status_code == 429 and delay < 15.0:
-                    delay = 15.0 * attempt
+    raw = None
+    for model_name in GROQ_MODELS:
+        payload = {
+            "model": model_name,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user",   "content": user_prompt},
+            ],
+            "temperature": 0,
+            "response_format": {"type": "json_object"},
+        }
+        for attempt in range(1, MAX_RETRIES + 1):
+            try:
+                response = requests.post(GROQ_URL, json=payload, headers=headers, timeout=25)
+                if response.status_code == 200:
+                    raw = response.json()["choices"][0]["message"]["content"]
+                    break
+                elif response.status_code == 429:
+                    if model_name != GROQ_MODELS[-1]:
+                        break
+                    time.sleep(BASE_DELAY * attempt)
+                elif response.status_code in (500, 502, 503, 504):
+                    time.sleep(BASE_DELAY * attempt)
+            except Exception:
                 if attempt < MAX_RETRIES:
-                    time.sleep(delay)
-                    continue
-                else:
-                    return {"_error": f"Groq API error [{response.status_code}] after {MAX_RETRIES} retries"}
-            else:
-                return {"_error": f"Groq API error [{response.status_code}]: {response.text}"}
-        except Exception as err:
-            delay = BASE_DELAY * (2 ** (attempt - 1))
-            if attempt < MAX_RETRIES:
-                time.sleep(delay)
-                continue
-            return {"_error": f"Groq connection exception: {err}"}
+                    time.sleep(BASE_DELAY)
+        if raw is not None:
+            break
 
-    if response is None or response.status_code != 200:
-        return {"_error": "No valid response from Groq API"}
-
-    raw = response.json()["choices"][0]["message"]["content"]
+    if raw is None:
+        return {"_error": "No valid response from Groq API after model failovers"}
 
     try:
         return json.loads(raw)

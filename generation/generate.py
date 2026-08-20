@@ -29,9 +29,13 @@ load_dotenv()
 # ── Config ──────────────────────────────────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL = "openai/gpt-oss-120b"
-MAX_RETRIES = 6
-BASE_DELAY = 6.0  # seconds exponential backoff base
+GROQ_MODELS = [
+    os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
+    "qwen/qwen3.6-27b",
+    "openai/gpt-oss-120b",
+]
+MAX_RETRIES = 3
+BASE_DELAY = 1.0  # seconds exponential backoff base
 
 _FENCE_RE = re.compile(
     r"^\s*```(?:json|JSON)?\s*\n?(.*?)\n?\s*```\s*$",
@@ -103,64 +107,44 @@ def generate(query: str, chunks: list[dict] | None = None) -> dict:
         f"Question: {query}"
     )
 
-    # ── 2. Call Groq ────────────────────────────────────────────────
-    payload = {
-        "model": MODEL,
-        "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt},
-        ],
-        "temperature": 0,
-        # The planner already uses Groq JSON mode.  The answer generator must
-        # do the same; otherwise a useful prose response is parsed as no
-        # claims and the verifier necessarily abstains.
-        "response_format": {"type": "json_object"},
-    }
-
+    # ── 2. Call Groq with multi-model failover ──────────────────────
+    raw_text = None
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
         "Content-Type": "application/json",
     }
 
-    # ── 2b. Call Groq with retry on rate-limit & server error ──────
-    raw_text = None
-    for attempt in range(1, MAX_RETRIES + 1):
-        try:
-            response = requests.post(GROQ_URL, json=payload, headers=headers, timeout=60)
-            if response.status_code == 200:
-                raw_text = response.json()["choices"][0]["message"]["content"]
-                break
-            elif response.status_code in (429, 500, 502, 503, 504):
-                retry_after = 0.0
-                if "retry-after" in response.headers:
-                    try:
-                        retry_after = float(response.headers["retry-after"])
-                    except Exception:
-                        pass
-                delay = max(retry_after, BASE_DELAY * (2 ** (attempt - 1)))
-                if response.status_code == 429 and delay < 15.0:
-                    delay = 15.0 * attempt
+    for model_name in GROQ_MODELS:
+        payload = {
+            "model": model_name,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
+            "temperature": 0,
+            "response_format": {"type": "json_object"},
+        }
+        for attempt in range(1, MAX_RETRIES + 1):
+            try:
+                response = requests.post(GROQ_URL, json=payload, headers=headers, timeout=25)
+                if response.status_code == 200:
+                    raw_text = response.json()["choices"][0]["message"]["content"]
+                    break
+                elif response.status_code == 429:
+                    # Instant failover to next model if available
+                    if model_name != GROQ_MODELS[-1]:
+                        break
+                    time.sleep(BASE_DELAY * attempt)
+                elif response.status_code in (500, 502, 503, 504):
+                    time.sleep(BASE_DELAY * attempt)
+            except Exception:
                 if attempt < MAX_RETRIES:
-                    time.sleep(delay)
-                    continue
-                else:
-                    return _error_response(
-                        f"Groq API error [{response.status_code}] after {MAX_RETRIES} retries"
-                    )
-            else:
-                return _error_response(
-                    f"Groq API error [{response.status_code}]: {response.text}"
-                )
-        except Exception as err:
-            delay = BASE_DELAY * (2 ** (attempt - 1))
-            if attempt < MAX_RETRIES:
-                time.sleep(delay)
-                continue
-            else:
-                return _error_response(f"Groq API connection error: {err}")
+                    time.sleep(BASE_DELAY)
+        if raw_text is not None:
+            break
 
     if raw_text is None:
-        return _error_response("No response from Groq API")
+        return _error_response("No response from Groq API after model failovers")
 
     # ── 3. Parse JSON (strip markdown fences if present) ────────────
     cleaned = raw_text.strip()
