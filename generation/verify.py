@@ -281,7 +281,7 @@ def verify_claims(
                 s for s in sentences
                 if _keyword_overlap_score(claim["text"], s) >= 0.15
             ]
-            cand_sents = claim_kw_sents if claim_kw_sents else sentences[:5]
+            cand_sents = claim_kw_sents[:2] if claim_kw_sents else sentences[:2]
             claim_sentence_map.append((i, cand_sents))
             for s in cand_sents:
                 all_pairs.append((s, claim["text"]))
