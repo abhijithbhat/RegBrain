@@ -24,10 +24,9 @@ EMBED_MODEL = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
 RERANKER_MODEL = os.getenv("RERANKER_MODEL", "Xenova/ms-marco-MiniLM-L-6-v2")
 COLLECTION = "regbrain"
 BM25_PATH = "retrieval/bm25_index.pkl"
-RETRIEVE_K = 15          # candidates per retriever (tuned for low-latency & bounded RAM)
+RETRIEVE_K = 25          # candidates per retriever (tuned for high recall & low latency)
 RRF_K = 60
-RERANK_TOP = 5           # final top results returned
-RRF_SAFETY_CANDIDATES = 1  # retain the strongest hybrid-retrieval result
+RERANK_TOP = 8           # final top results returned to LLM generator
 
 QDRANT_URL = (os.getenv("QDRANT_CLUSTER_ENDPOINT") or os.getenv("QDRANT_URL") or "").strip()
 QDRANT_API_KEY = (os.getenv("QDRANT_API_KEY") or "").strip()

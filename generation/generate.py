@@ -95,7 +95,7 @@ def generate(query: str, chunks: list[dict] | None = None) -> dict:
             "clause_label": c.get("clause_id", ""),
             "clause_text": c["clause_text"][:1200] + ("..." if len(c["clause_text"]) > 1200 else "")
         }
-        for index, c in enumerate(chunks[:5], start=1)
+        for index, c in enumerate(chunks[:8], start=1)
     ]
 
     user_prompt = (

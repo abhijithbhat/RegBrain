@@ -256,15 +256,16 @@ def _filter_ungrounded_sentences(synthesized_text: str, citations: list[dict]) -
             continue
         overlap = len(sent_words.intersection(set(re.findall(r"\b[a-zA-Z]{4,}\b", citation_blob)))) / len(sent_words)
 
-        if overlap >= 0.50:
+        if overlap >= 0.35:
             valid_sentences.append(sent)
-        else:
+        elif nli_model is not None and hasattr(nli_model, "rerank_pairs"):
             pairs = [[ct, sent] for ct in citation_texts]
             if pairs:
-                scores = nli_model.predict(pairs)
-                best_entailment = max(s[0] for s in scores)
-                if best_entailment > 0.0:
+                scores = list(nli_model.rerank_pairs(pairs, batch_size=8))
+                if scores and max(scores) > -1.5:
                     valid_sentences.append(sent)
+        elif overlap >= 0.20:
+            valid_sentences.append(sent)
 
     return " ".join(valid_sentences) if valid_sentences else synthesized_text
 
