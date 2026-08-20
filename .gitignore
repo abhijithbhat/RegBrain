@@ -27,7 +27,7 @@ ingestion/rbi_corpus/*.pdf
 
 # RegBrain Local Artifacts & Caches
 ingestion/chunks/
-retrieval/bm25_index.pkl
+# retrieval/bm25_index.pkl is tracked (required at runtime)
 eval/.ragas_cache/
 logs/
 *.log
