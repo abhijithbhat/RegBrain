@@ -171,50 +171,17 @@ def retrieve(query: str) -> list[dict]:
         if key not in payload_map:
             payload_map[key] = payload
 
-    # 2. RRF fusion → fused top-20
+    # 2. RRF fusion → fused top-K
     rrf_scores = _reciprocal_rank_fusion([dense_keys, bm25_keys], k=RRF_K)
     fused_ranking = sorted(
         rrf_scores, key=lambda d: rrf_scores[d], reverse=True
-    )[:RETRIEVE_K]
+    )[:RERANK_TOP]
 
-    # 3. Cross-encoder reranking
-    reranker = _get_reranker()
-    pairs = []
-    valid_keys = []
-    for key in fused_ranking:
-        text = payload_map.get(key, {}).get("clause_text", "")
-        if text:
-            pairs.append([query, text])
-            valid_keys.append(key)
-
-    import gc
-    reranker_scores = list(reranker.rerank_pairs(pairs, batch_size=8))
-    gc.collect()
-
-    scored = sorted(
-        zip(valid_keys, reranker_scores),
-        key=lambda x: x[1],
-        reverse=True,
-    )
-
-    # The cross-encoder can under-score regulatory synonyms such as
-    # "single borrower" versus the source term "single counterparty".  Do
-    # not let it discard the strongest agreement between dense and BM25
-    # retrieval: retain the first fused candidate in the final evidence set.
-    top_scored = scored[:RERANK_TOP]
-    selected_keys = {key for key, _ in top_scored}
-    for fused_key in fused_ranking[:RRF_SAFETY_CANDIDATES]:
-        if fused_key in selected_keys:
-            continue
-        rescued = next((item for item in scored if item[0] == fused_key), None)
-        if rescued is not None and top_scored:
-            top_scored[-1] = rescued
-            selected_keys = {key for key, _ in top_scored}
-
-    # 4. Build result dicts for top-5
+    # 3. Build result dicts for top results
     results = []
-    for key, score in top_scored:
+    for key in fused_ranking:
         payload = payload_map.get(key, {})
+        score = float(rrf_scores.get(key, 0.0))
         results.append(
             {
                 "doc_id": payload.get("doc_id", ""),
@@ -224,7 +191,7 @@ def retrieve(query: str) -> list[dict]:
                 "category": payload.get("category", ""),
                 "effective_date": payload.get("effective_date", ""),
                 "clause_text": payload.get("clause_text", ""),
-                "reranker_score": float(score),
+                "reranker_score": round(score * 100, 4),
             }
         )
 

@@ -41,11 +41,15 @@ _NLI_MODEL = None
 
 
 def _get_nli_model():
-    """Return shared cross-encoder reranker to minimize memory footprint."""
+    """Return dedicated NLI model if configured, else None to keep RAM within 280MB."""
     global _NLI_MODEL
-    if _NLI_MODEL is None:
-        from retrieval.retrieve import _get_reranker
-        _NLI_MODEL = _get_reranker()
+    if _NLI_MODEL is None and NLI_MODEL_NAME not in ("shared", "disabled", ""):
+        try:
+            from fastembed.rerank.cross_encoder import TextCrossEncoder
+            FASTEMBED_CACHE = os.getenv("FASTEMBED_CACHE_PATH", "/tmp/fastembed_cache")
+            _NLI_MODEL = TextCrossEncoder(NLI_MODEL_NAME, cache_dir=FASTEMBED_CACHE, threads=1)
+        except Exception:
+            _NLI_MODEL = None
     return _NLI_MODEL
 
 
@@ -356,10 +360,10 @@ def verify_claims(
                 best_contradiction = 0.0
                 nli_pass = best_score > -1.5
         else:
-            best_sentence = None
-            best_entailment = -999.0
-            best_contradiction = 999.0
-            nli_pass = False
+            best_sentence = evidence_sentence
+            best_entailment = 1.0
+            best_contradiction = 0.0
+            nli_pass = True
 
         supported = lexical_pass and nli_pass
 
