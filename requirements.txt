@@ -1,7 +1,7 @@
 requests
 beautifulsoup4
 pdfplumber
-sentence-transformers
+fastembed
 rank_bm25
 qdrant-client
 fastapi

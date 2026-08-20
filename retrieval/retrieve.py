@@ -21,7 +21,7 @@ load_dotenv()
 
 # ── Config ────────────────────────────────────────────────────────────
 EMBED_MODEL = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
-RERANKER_MODEL = os.getenv("RERANKER_MODEL", "cross-encoder/ms-marco-MiniLM-L-6-v2")
+RERANKER_MODEL = os.getenv("RERANKER_MODEL", "Xenova/ms-marco-MiniLM-L-6-v2")
 COLLECTION = "regbrain"
 BM25_PATH = "retrieval/bm25_index.pkl"
 RETRIEVE_K = 30          # candidates per retriever (wider pool for fusion)
@@ -43,45 +43,16 @@ _bm25_data = None
 def _get_embed_model():
     global _embed_model
     if _embed_model is None:
-        import torch
-        from sentence_transformers import SentenceTransformer
-        torch.set_num_threads(1)
-        try:
-            model = SentenceTransformer(EMBED_MODEL, local_files_only=True)
-        except Exception:
-            model = SentenceTransformer(EMBED_MODEL)
-        try:
-            model[0].auto_model = torch.quantization.quantize_dynamic(
-                model[0].auto_model, {torch.nn.Linear}, dtype=torch.qint8
-            )
-        except Exception:
-            pass
-        _embed_model = model
+        from fastembed import TextEmbedding
+        _embed_model = TextEmbedding(EMBED_MODEL)
     return _embed_model
 
 
 def _get_reranker():
     global _reranker
     if _reranker is None:
-        import torch
-        from sentence_transformers import CrossEncoder
-        torch.set_num_threads(1)
-        try:
-            model = CrossEncoder(RERANKER_MODEL, local_files_only=True)
-        except Exception:
-            model = CrossEncoder(RERANKER_MODEL)
-        try:
-            if hasattr(model, "model"):
-                model.model = torch.quantization.quantize_dynamic(
-                    model.model, {torch.nn.Linear}, dtype=torch.qint8
-                )
-            elif hasattr(model, "_model"):
-                model._model = torch.quantization.quantize_dynamic(
-                    model._model, {torch.nn.Linear}, dtype=torch.qint8
-                )
-        except Exception:
-            pass
-        _reranker = model
+        from fastembed.rerank.cross_encoder import TextCrossEncoder
+        _reranker = TextCrossEncoder(RERANKER_MODEL)
     return _reranker
 
 
@@ -132,7 +103,7 @@ def _dense_search(query: str, top_k: int) -> list[tuple[str, dict]]:
     model = _get_embed_model()
     client = _get_qdrant_client()
     local_chunks = _get_bm25_data()["chunks"]
-    query_vector = model.encode(query).tolist()
+    query_vector = list(model.embed([query]))[0].tolist()
     results = client.query_points(
         collection_name=COLLECTION,
         query=query_vector,
@@ -213,7 +184,7 @@ def retrieve(query: str) -> list[dict]:
             pairs.append([query, text])
             valid_keys.append(key)
 
-    reranker_scores = reranker.predict(pairs)  # type: ignore[arg-type]
+    reranker_scores = list(reranker.rerank_pairs(pairs))
 
     scored = sorted(
         zip(valid_keys, reranker_scores),

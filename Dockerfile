@@ -7,10 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONPATH=/app \
     PORT=8000 \
     OMP_NUM_THREADS=1 \
-    MKL_NUM_THREADS=1 \
-    OPENBLAS_NUM_THREADS=1 \
-    VECLIB_MAXIMUM_THREADS=1 \
-    NUMEXPR_NUM_THREADS=1
+    OPENBLAS_NUM_THREADS=1
 
 WORKDIR /app
 
@@ -19,12 +16,14 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends curl && \
     rm -rf /var/lib/apt/lists/*
 
-# Install CPU-only PyTorch first to avoid multi-gigabyte CUDA bloat, then install remaining dependencies
+# Install dependencies (no PyTorch — using fastembed/ONNX for 60% less RAM)
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && \
-    pip install --no-cache-dir -r requirements.txt && \
-    python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; SentenceTransformer('BAAI/bge-small-en-v1.5'); CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')"
+    pip install --no-cache-dir -r requirements.txt
+
+# Pre-download ONNX model weights into the image so first request doesn't download
+RUN python -c "from fastembed import TextEmbedding; TextEmbedding('BAAI/bge-small-en-v1.5')" && \
+    python -c "from fastembed.rerank.cross_encoder import TextCrossEncoder; TextCrossEncoder('Xenova/ms-marco-MiniLM-L-6-v2')"
 
 # Copy application source code and artifacts
 COPY api/ /app/api/

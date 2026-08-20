@@ -41,32 +41,11 @@ _NLI_MODEL = None
 
 
 def _get_nli_model():
-    """Return shared cross-encoder or dedicated NLI model to minimize memory footprint."""
+    """Return shared cross-encoder reranker to minimize memory footprint."""
     global _NLI_MODEL
     if _NLI_MODEL is None:
-        if NLI_MODEL_NAME == "shared" or not NLI_MODEL_NAME:
-            from retrieval.retrieve import _get_reranker
-            _NLI_MODEL = _get_reranker()
-        else:
-            import torch
-            torch.set_num_threads(1)
-            from sentence_transformers import CrossEncoder
-            try:
-                model = CrossEncoder(NLI_MODEL_NAME, local_files_only=True)
-            except Exception:
-                model = CrossEncoder(NLI_MODEL_NAME)
-            try:
-                if hasattr(model, "model"):
-                    model.model = torch.quantization.quantize_dynamic(
-                        model.model, {torch.nn.Linear}, dtype=torch.qint8
-                    )
-                elif hasattr(model, "_model"):
-                    model._model = torch.quantization.quantize_dynamic(
-                        model._model, {torch.nn.Linear}, dtype=torch.qint8
-                    )
-            except Exception:
-                pass
-            _NLI_MODEL = model
+        from retrieval.retrieve import _get_reranker
+        _NLI_MODEL = _get_reranker()
     return _NLI_MODEL
 
 
@@ -313,7 +292,7 @@ def verify_claims(
     if all_pairs:
         nli_model = _get_nli_model()
         if nli_model is not None:
-            all_scores = nli_model.predict(all_pairs, batch_size=32, show_progress_bar=False)
+            all_scores = list(nli_model.rerank_pairs(all_pairs))
 
     score_offset = 0
 
