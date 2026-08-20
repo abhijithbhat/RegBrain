@@ -7,7 +7,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONPATH=/app \
     PORT=8000 \
     OMP_NUM_THREADS=1 \
-    OPENBLAS_NUM_THREADS=1
+    OPENBLAS_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    FASTEMBED_CACHE_PATH=/app/.fastembed_cache \
+    MALLOC_ARENA_MAX=2
 
 WORKDIR /app
 
@@ -21,9 +24,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Pre-download ONNX model weights into the image so first request doesn't download
-RUN python -c "from fastembed import TextEmbedding; TextEmbedding('BAAI/bge-small-en-v1.5')" && \
-    python -c "from fastembed.rerank.cross_encoder import TextCrossEncoder; TextCrossEncoder('Xenova/ms-marco-MiniLM-L-6-v2')"
+# Pre-download ONNX model weights into the image cache directory so runtime never downloads
+RUN mkdir -p /app/.fastembed_cache && \
+    python -c "from fastembed import TextEmbedding; TextEmbedding('BAAI/bge-small-en-v1.5', cache_dir='/app/.fastembed_cache', threads=1)" && \
+    python -c "from fastembed.rerank.cross_encoder import TextCrossEncoder; TextCrossEncoder('Xenova/ms-marco-MiniLM-L-6-v2', cache_dir='/app/.fastembed_cache', threads=1)"
 
 # Copy application source code and artifacts
 COPY api/ /app/api/

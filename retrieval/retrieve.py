@@ -40,11 +40,14 @@ _qdrant_client = None
 _bm25_data = None
 
 
+FASTEMBED_CACHE = os.getenv("FASTEMBED_CACHE_PATH", "/tmp/fastembed_cache")
+
+
 def _get_embed_model():
     global _embed_model
     if _embed_model is None:
         from fastembed import TextEmbedding
-        _embed_model = TextEmbedding(EMBED_MODEL)
+        _embed_model = TextEmbedding(EMBED_MODEL, cache_dir=FASTEMBED_CACHE, threads=1)
     return _embed_model
 
 
@@ -52,7 +55,7 @@ def _get_reranker():
     global _reranker
     if _reranker is None:
         from fastembed.rerank.cross_encoder import TextCrossEncoder
-        _reranker = TextCrossEncoder(RERANKER_MODEL)
+        _reranker = TextCrossEncoder(RERANKER_MODEL, cache_dir=FASTEMBED_CACHE, threads=1)
     return _reranker
 
 
@@ -184,7 +187,9 @@ def retrieve(query: str) -> list[dict]:
             pairs.append([query, text])
             valid_keys.append(key)
 
-    reranker_scores = list(reranker.rerank_pairs(pairs))
+    import gc
+    reranker_scores = list(reranker.rerank_pairs(pairs, batch_size=8))
+    gc.collect()
 
     scored = sorted(
         zip(valid_keys, reranker_scores),

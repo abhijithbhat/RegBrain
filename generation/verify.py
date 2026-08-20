@@ -292,7 +292,9 @@ def verify_claims(
     if all_pairs:
         nli_model = _get_nli_model()
         if nli_model is not None:
-            all_scores = list(nli_model.rerank_pairs(all_pairs))
+            import gc
+            all_scores = list(nli_model.rerank_pairs(all_pairs, batch_size=8))
+            gc.collect()
 
     score_offset = 0
 
