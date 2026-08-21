@@ -23,6 +23,7 @@ interface QueryResult {
   citations?: CitationItem[];
   confidence?: number;
   reason?: string;
+  category?: string;
   was_decomposed?: boolean;
   was_rewritten?: boolean;
   original_query?: string;
@@ -67,20 +68,24 @@ const STAGES_ORDER: Exclude<StageType, null>[] = [
 
 const quickQuestions = [
   {
-    label: "Know Your Customer — NBFCs",
-    query: "What are the KYC requirements for NBFCs?",
-  },
-  {
-    label: "Capital adequacy — commercial banks",
+    label: "Capital Adequacy — Commercial Banks",
     query: "What is the capital adequacy requirement for Commercial Banks?",
   },
   {
-    label: "Comparative KYC records",
-    query: "Compare the KYC requirements between Commercial Banks and NBFCs",
+    label: "Prudential Norms & CRAR — Urban Co-op Banks (UCB)",
+    query: "What are the capital adequacy norms for Urban Co-operative Banks?",
   },
   {
-    label: "Dividend distribution — NBFCs",
+    label: "Housing Finance Companies (HFC) Guidelines",
+    query: "What are the regulatory guidelines for Housing Finance Companies (HFCs)?",
+  },
+  {
+    label: "Dividend Distribution — NBFCs",
     query: "What are the dividend distribution rules for NBFCs?",
+  },
+  {
+    label: "3-Way Comparative: Capital Norms (Banks vs NBFCs vs UCBs)",
+    query: "Compare the capital adequacy requirements between Commercial Banks, NBFCs, and Urban Co-operative Banks.",
   },
 ];
 
@@ -336,7 +341,7 @@ export default function Home() {
               </p>
               <p className="rbi-scope">
                 <span>RBI regulatory scope</span>
-                Built solely for Reserve Bank of India directions, circulars, and notifications.
+                Commercial Banks · NBFCs · Housing Finance (HFCs) · Urban Co-operative Banks (UCBs) · 105 Master Directions (15,351 Clauses)
               </p>
             </header>
 
@@ -455,7 +460,12 @@ export default function Home() {
                         <p className="entry-kicker">Synthesized statutory finding</p>
                         <h3 className="entry-title">Finding on the inquiry recorded above</h3>
                         <p className="entry-prose">{result.answer || "No findings recorded."}</p>
-                        <div className="entry-meta">
+                        <div className="entry-meta flex flex-wrap gap-2 items-center">
+                          {result.category && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-[var(--accent-brass)]/15 text-[var(--accent-brass)] border border-[var(--accent-brass)]/30">
+                              {result.category.replace(/_/g, " ")}
+                            </span>
+                          )}
                           {result.was_decomposed && <span>Multi-hop inquiry reconciled</span>}
                           {result.was_rewritten && <span>Follow-up context resolved</span>}
                           {!result.was_decomposed && !result.was_rewritten && <span>Single inquiry review</span>}
