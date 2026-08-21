@@ -24,9 +24,29 @@ EMBED_MODEL = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
 RERANKER_MODEL = os.getenv("RERANKER_MODEL", "Xenova/ms-marco-MiniLM-L-6-v2")
 COLLECTION = "regbrain"
 BM25_PATH = "retrieval/bm25_index.pkl"
-RETRIEVE_K = 25          # candidates per retriever (tuned for high recall & low latency)
+RETRIEVE_K = 40          # candidates per retriever (tuned for high recall & low latency)
 RRF_K = 60
-RERANK_TOP = 8           # final top results returned to LLM generator
+RERANK_TOP = 14          # final top results returned to LLM generator
+
+
+def _expand_query(query: str) -> str:
+    """Expand domain acronyms for higher sparse and dense matching recall."""
+    q_lower = query.lower()
+    expansions = []
+    if "capital adequacy" in q_lower and "crar" not in q_lower:
+        expansions.append("CRAR Capital to Risk Weighted Assets Ratio minimum regulatory capital")
+    if "kyc" in q_lower and "customer due diligence" not in q_lower:
+        expansions.append("Know Your Customer CDD customer due diligence")
+    if "npa" in q_lower and "non-performing" not in q_lower:
+        expansions.append("non-performing assets classification provisioning")
+    if "crr" in q_lower and "cash reserve" not in q_lower:
+        expansions.append("Cash Reserve Ratio")
+    if "slr" in q_lower and "statutory liquidity" not in q_lower:
+        expansions.append("Statutory Liquidity Ratio")
+
+    if expansions:
+        return query + " " + " ".join(expansions)
+    return query
 
 QDRANT_URL = (os.getenv("QDRANT_CLUSTER_ENDPOINT") or os.getenv("QDRANT_URL") or "").strip()
 QDRANT_API_KEY = (os.getenv("QDRANT_API_KEY") or "").strip()
@@ -100,24 +120,47 @@ def _point_key(point_id: object) -> str:
     return f"point-{point_id}"
 
 
-def _dense_search(query: str, top_k: int) -> list[tuple[str, dict]]:
-    """Return [(chunk_key, payload), ...] from Qdrant."""
+def _normalize_category(cat: str | None) -> str | None:
+    """Map user/planner category aliases to canonical corpus category names."""
+    if not cat:
+        return None
+    c = cat.strip().lower()
+    if c in ("commercial_bank", "commercial_banks", "bank", "banks"):
+        return "Commercial_Banks"
+    if c in ("nbfc", "nbfcs"):
+        return "NBFC"
+    if c in ("nbfc_hfc", "hfc", "hfcs", "housing_finance", "housing_finance_company", "housing_finance_companies"):
+        return "NBFC_HFC"
+    if c in ("ucb", "ucbs", "urban_cooperative_bank", "urban_cooperative_banks", "urban_co_operative_bank", "urban_co_operative_banks"):
+        return "UCB"
+    return None
+
+
+def _dense_search(query: str, top_k: int, category: str | None = None) -> list[tuple[str, dict]]:
+    """Return [(chunk_key, payload), ...] from Qdrant with optional category pre-filtering."""
     model = _get_embed_model()
     client = _get_qdrant_client()
     local_chunks = _get_bm25_data()["chunks"]
     query_vector = list(model.embed([query]))[0].tolist()
+
+    norm_cat = _normalize_category(category)
+    query_filter = None
+    if norm_cat:
+        from qdrant_client.http import models as qmodels
+        query_filter = qmodels.Filter(
+            must=[qmodels.FieldCondition(key="category", match=qmodels.MatchValue(value=norm_cat))]
+        )
+
     results = client.query_points(
         collection_name=COLLECTION,
         query=query_vector,
+        query_filter=query_filter,
         limit=top_k,
     )
     out = []
     for hit in results.points:
         payload = hit.payload if hit.payload is not None else {}
         key = _point_key(hit.id)
-        # Older Qdrant payloads do not include chunk_index/start_page.  Point
-        # IDs are verified to match the BM25 corpus order, so enrich the
-        # payload from the local canonical record for stable result metadata.
         try:
             local_chunk = local_chunks[int(hit.id)]
         except (IndexError, TypeError, ValueError):
@@ -132,14 +175,26 @@ def _dense_search(query: str, top_k: int) -> list[tuple[str, dict]]:
     return out
 
 
-def _bm25_search(query: str, top_k: int) -> list[tuple[str, dict]]:
-    """Return [(chunk_key, payload), ...] from BM25 index."""
+def _bm25_search(query: str, top_k: int, category: str | None = None) -> list[tuple[str, dict]]:
+    """Return [(chunk_key, payload), ...] from BM25 index with optional category filtering."""
     data = _get_bm25_data()
     bm25 = data["bm25"]
     chunks = data["chunks"]
     query_tokens = query.lower().split()
     scores = bm25.get_scores(query_tokens)
-    top_indices = np.argsort(scores)[::-1][:top_k]
+
+    norm_cat = _normalize_category(category)
+    if norm_cat:
+        matching_indices = [i for i, c in enumerate(chunks) if c.get("category") == norm_cat]
+        if matching_indices:
+            filtered_scores = [(idx, scores[idx]) for idx in matching_indices]
+            filtered_scores.sort(key=lambda x: x[1], reverse=True)
+            top_indices = [idx for idx, _ in filtered_scores[:top_k]]
+        else:
+            top_indices = np.argsort(scores)[::-1][:top_k]
+    else:
+        top_indices = np.argsort(scores)[::-1][:top_k]
+
     out = []
     for idx in top_indices:
         chunk = chunks[idx]
@@ -149,17 +204,26 @@ def _bm25_search(query: str, top_k: int) -> list[tuple[str, dict]]:
 
 
 # ── Public API ────────────────────────────────────────────────────────
-def retrieve(query: str) -> list[dict]:
+def retrieve(query: str, category: str | None = None) -> list[dict]:
     """
-    Full retrieval pipeline: dense + BM25 → RRF → rerank.
+    Full retrieval pipeline: dense + BM25 → RRF → top results.
 
-    Returns the top-5 results, each as a dict with:
-        doc_id, chunk_index, clause_id, clause_label, category, effective_date,
-        clause_text, reranker_score
+    Parameters
+    ----------
+    query : str
+        Search query string.
+    category : str | None
+        Optional regulatory category filter ("Commercial_Banks", "NBFC", "NBFC_HFC", "UCB").
+
+    Returns
+    -------
+    list[dict]
+        Top results with metadata and reranker_score.
     """
-    # 1. Retrieve from both sources
-    dense_hits = _dense_search(query, RETRIEVE_K)
-    bm25_hits = _bm25_search(query, RETRIEVE_K)
+    # 1. Retrieve from both sources with pre-filtering
+    expanded_q = _expand_query(query)
+    dense_hits = _dense_search(expanded_q, RETRIEVE_K, category=category)
+    bm25_hits = _bm25_search(expanded_q, RETRIEVE_K, category=category)
 
     dense_keys = [key for key, _ in dense_hits]
     bm25_keys = [key for key, _ in bm25_hits]

@@ -85,7 +85,7 @@ def _current_rate_abstention() -> dict:
 
 
 # ── Public API ──────────────────────────────────────────────────────
-def answer_query(query: str) -> dict:
+def answer_query(query: str, category: str | None = None) -> dict:
     """
     End-to-end pipeline: retrieve → generate → verify → finalize.
 
@@ -96,8 +96,8 @@ def answer_query(query: str) -> dict:
         confidence  – percentage of claims that passed verification
         reason      – explanation (only when status == "abstain")
     """
-    # 1. Retrieve top-5 chunks
-    chunks = retrieve(query)
+    # 1. Retrieve top chunks with optional category pre-filtering
+    chunks = retrieve(query, category=category)
 
     # Stop before generation when the evidence only supplies a statutory
     # maximum and delegates the real rate to a separate notification.

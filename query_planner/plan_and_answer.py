@@ -27,100 +27,92 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from generation.answer_query import answer_query  # noqa: E402
 
-load_dotenv()
+from generation.groq_client import groq_json_completion  # noqa: E402
 
-# ── Config ──────────────────────────────────────────────────────────
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODELS = [
-    os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
-    "qwen/qwen3.6-27b",
-    "openai/gpt-oss-120b",
-]
-
-MAX_RETRIES = 3
-BASE_DELAY = 1.0
-RATE_LIMIT_SLEEP = 0.3  # seconds between internal steps
+RATE_LIMIT_SLEEP = 0.2  # seconds between internal steps
 
 
-# ── Groq helper ─────────────────────────────────────────────────────
-def _groq_json_call(system_prompt: str, user_prompt: str) -> dict:
-    """Send a request to Groq with JSON mode and multi-model failover, return parsed dict."""
-    if not GROQ_API_KEY:
-        sys.exit("ERROR: GROQ_API_KEY not found in environment. Add it to .env")
+def extract_category_scope(query: str) -> str:
+    """Classify the query into one of: 'Commercial_Banks', 'NBFC', 'NBFC_HFC', 'UCB', 'cross', or 'general'."""
+    q_lower = query.lower().strip()
 
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type":  "application/json",
-    }
+    entities_present = set()
+    if any(k in q_lower for k in ["commercial bank", "commercial banks", "scheduled commercial bank", "scbs", "scb"]):
+        entities_present.add("Commercial_Banks")
+    elif "bank" in q_lower or "banks" in q_lower:
+        if not any(k in q_lower for k in ["cooperative", "co-operative", "ucb", "small finance", "payments"]):
+            entities_present.add("Commercial_Banks")
 
-    raw = None
-    for model_name in GROQ_MODELS:
-        payload = {
-            "model": model_name,
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user",   "content": user_prompt},
-            ],
-            "temperature": 0,
-            "response_format": {"type": "json_object"},
-        }
-        for attempt in range(1, MAX_RETRIES + 1):
-            try:
-                response = requests.post(GROQ_URL, json=payload, headers=headers, timeout=25)
-                if response.status_code == 200:
-                    raw = response.json()["choices"][0]["message"]["content"]
-                    break
-                elif response.status_code == 429:
-                    if model_name != GROQ_MODELS[-1]:
-                        break
-                    time.sleep(BASE_DELAY * attempt)
-                elif response.status_code in (500, 502, 503, 504):
-                    time.sleep(BASE_DELAY * attempt)
-            except Exception:
-                if attempt < MAX_RETRIES:
-                    time.sleep(BASE_DELAY)
-        if raw is not None:
-            break
+    if any(k in q_lower for k in ["hfc", "hfcs", "housing finance"]):
+        entities_present.add("NBFC_HFC")
+    elif any(k in q_lower for k in ["nbfc", "nbfcs", "non-banking", "non banking"]):
+        entities_present.add("NBFC")
 
-    if raw is None:
-        return {"_error": "No valid response from Groq API after model failovers"}
+    if any(k in q_lower for k in ["ucb", "ucbs", "urban cooperative", "urban co-operative", "cooperative bank", "co-operative bank", "cooperative banks", "co-operative banks"]):
+        entities_present.add("UCB")
 
-    try:
-        return json.loads(raw)
-    except json.JSONDecodeError:
-        return {"_error": f"Unparseable LLM output: {raw}"}
+    # If comparison words or multiple entity categories mentioned:
+    if len(entities_present) > 1 or any(p in q_lower for p in ["compare", "comparative", " vs ", " versus ", "difference between", "differences between"]):
+        return "cross"
+
+    if len(entities_present) == 1:
+        return list(entities_present)[0]
+
+    return "general"
 
 
 # ── Step 38 logic: classify ─────────────────────────────────────────
 CLASSIFY_PROMPT = """\
-You are a query planner for a regulatory Q&A system backed by a
-vector store of RBI circulars and master directions.
+You are a query planner for an RBI regulatory Q&A system.
+Available regulatory categories:
+- Commercial_Banks
+- NBFC
+- NBFC_HFC (Housing Finance Companies)
+- UCB (Urban Co-operative Banks)
 
 Given a user query, decide whether answering it fully requires:
-  • a SINGLE retrieve() call (one topic, one time-frame, one entity lookup), OR
-  • MULTIPLE independent lookups (e.g. comparing across entities like Banks vs NBFCs, comparing across time, or combining separate regulations).
+  • a SINGLE lookup (one topic, one entity category), OR
+  • MULTIPLE independent lookups (comparing across categories like Banks vs NBFCs vs UCBs, comparing across time, or combining separate regulations).
 
-Respond with ONLY a JSON object — no markdown, no explanation outside
-the JSON:
-{"needs_decomposition": true/false, "reasoning": "..."}
+Respond with ONLY a JSON object:
+{"needs_decomposition": true/false, "category": "Commercial_Banks"|"NBFC"|"NBFC_HFC"|"UCB"|"cross"|"general", "reasoning": "..."}
 """
 
 
 def classify_query(query: str) -> dict:
-    """Return {"needs_decomposition": bool, "reasoning": str}."""
-    return _groq_json_call(CLASSIFY_PROMPT, query)
+    """Return {"needs_decomposition": bool, "category": str, "reasoning": str}."""
+    q_lower = query.lower().strip()
+    cat_scope = extract_category_scope(query)
+
+    # Fast-path comparative check across entities
+    if cat_scope == "cross" or any(q_lower.startswith(p) or f" {p}" in q_lower for p in ["compare", "comparative", " vs ", " versus ", "difference between", "differences between"]):
+        return {"needs_decomposition": True, "category": "cross", "reasoning": "Comparative inquiry across distinct regulated entities."}
+
+    # Fast-path multi-topic combination ("X requirements and Y rules")
+    if " and " in q_lower and any(kw in q_lower for kw in ["dividend", "digital lending", "cryptocurrency", "crypto", "ombudsman", "capital adequacy", "kyc"]):
+        return {"needs_decomposition": True, "category": cat_scope, "reasoning": "Multi-topic cross-regulation inquiry."}
+
+    # Single-entity specific fast-path
+    if cat_scope in ("Commercial_Banks", "NBFC", "NBFC_HFC", "UCB"):
+        return {"needs_decomposition": False, "category": cat_scope, "reasoning": f"Single entity lookup for {cat_scope}."}
+
+    result = groq_json_completion(CLASSIFY_PROMPT, query)
+    if "_error" in result:
+        return {"needs_decomposition": False, "category": cat_scope, "reasoning": "Fallback to single-hop."}
+
+    result["category"] = result.get("category") or cat_scope
+    return result
 
 
 # ── Step 39 logic: decompose ────────────────────────────────────────
 DECOMPOSE_PROMPT = """\
-You are a precision query planner for an RBI regulatory retrieval system.
+You are a precision query planner for an RBI regulatory retrieval system covering Commercial Banks, NBFCs, Housing Finance Companies (NBFC-HFC), and Urban Co-operative Banks (UCB).
 
 The user's query requires more than one independent lookup. Decompose it into 2-3 independent, factual, concise sub-queries.
 
 Rules:
-  • Keep sub-queries clean and factual (e.g. "What are the KYC requirements for Commercial Banks?", "What are the KYC requirements for NBFCs?").
-  • Do NOT add conversational boilerplate or meta-phrasing like "according to RBI circulars and master directions" or "search for...".
+  • Keep sub-queries clean, direct, and factual (e.g. "What are the capital adequacy requirements for Commercial Banks?", "What are the capital adequacy requirements for Urban Co-operative Banks?").
+  • Do NOT add conversational boilerplate, meta-phrasing, or suffix tags like "under RBI guidelines", "according to RBI circulars", "search for...", or "in India".
   • Each sub-query must be fully self-contained (no pronouns like "it" or "the same").
   • Return EXACTLY a JSON object — no markdown, no extra text:
     {"sub_queries": ["...", "..."]}
@@ -129,7 +121,7 @@ Rules:
 
 def decompose_query(query: str) -> list[str]:
     """Return a list of 2-3 independent sub-queries."""
-    result = _groq_json_call(DECOMPOSE_PROMPT, query)
+    result = groq_json_completion(DECOMPOSE_PROMPT, query)
     return result.get("sub_queries", [query])
 
 
@@ -212,7 +204,7 @@ def _synthesize(
         "Do NOT add any extra facts, channels, portals, or rules."
     )
 
-    return _groq_json_call(SYNTHESIZE_PROMPT, user_prompt)
+    return groq_json_completion(SYNTHESIZE_PROMPT, user_prompt)
 
 
 def _filter_ungrounded_sentences(synthesized_text: str, citations: list[dict]) -> str:
@@ -286,11 +278,12 @@ def plan_and_answer(query: str) -> dict:
     if "_error" in classification:
         return classification
     needs_decomp = classification.get("needs_decomposition", False)
+    category = classification.get("category")
 
     # ── 2a. Single-hop: answer directly ─────────────────────────────
     if not needs_decomp:
         time.sleep(RATE_LIMIT_SLEEP)  # respect rate limit after classify call
-        result = answer_query(query)
+        result = answer_query(query, category=category)
         if "_error" in result:
             return result
         return {
@@ -298,6 +291,7 @@ def plan_and_answer(query: str) -> dict:
             "citations": result.get("citations", []),
             "confidence": result.get("confidence", 0.0),
             "status": result.get("status", "abstain"),
+            "category": category,
             "was_decomposed": False,
         }
 
@@ -305,17 +299,19 @@ def plan_and_answer(query: str) -> dict:
     time.sleep(RATE_LIMIT_SLEEP)
     sub_queries = decompose_query(query)
 
-    # Fan-out: run each sub-query through the full pipeline
+    # Fan-out: run each sub-query through the full pipeline with category scoping
     sub_results: list[dict] = []
     for i, sq in enumerate(sub_queries):
         if i > 0:
             time.sleep(RATE_LIMIT_SLEEP)
 
-        raw = answer_query(sq)
+        sq_cat = extract_category_scope(sq)
+        raw = answer_query(sq, category=sq_cat)
         if "_error" in raw:
             return raw
         sub_results.append({
             "sub_query": sq,
+            "category": sq_cat,
             "status": raw.get("status", "abstain"),
             "answer": raw.get("answer", raw.get("reason", "")),
             "citations": raw.get("citations", []),

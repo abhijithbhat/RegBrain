@@ -173,5 +173,20 @@
     "question": "What are the restrictions on loans and advances to directors and senior officers across banking entities?",
     "expected_clause_id": "B.",
     "reference_answer": "Banks and NBFCs are prohibited from granting credit facilities or loans to their own directors, directors of other banks, or relatives of directors without prior Board or Management Committee approval beyond specified threshold limits."
+  },
+  {
+    "question": "What are the capital adequacy norms for Urban Co-operative Banks?",
+    "expected_clause_id": "Chapter III",
+    "reference_answer": "Urban Co-operative Banks (UCBs) are categorized into tiers with minimum CRAR requirements ranging from 9% (Tier 1 UCBs) to 12% (Tier 2 to 4 UCBs) of risk-weighted assets."
+  },
+  {
+    "question": "What are the regulatory guidelines for Housing Finance Companies (HFCs)?",
+    "expected_clause_id": "Section II",
+    "reference_answer": "Housing Finance Companies (HFCs) regulated under the NBFC framework must maintain a minimum Net Owned Fund (NOF), allocate at least 60% of total assets to housing finance (with at least 50% for individual housing loans), and maintain a minimum CRAR of 15%."
+  },
+  {
+    "question": "Compare the capital adequacy requirements between Commercial Banks, NBFCs, and Urban Co-operative Banks.",
+    "expected_clause_id": "Chapter III",
+    "reference_answer": "Commercial Banks must maintain a minimum CRAR of 9% plus capital conservation buffers under Basel III; NBFCs are required to maintain a 15% CRAR; and Urban Co-operative Banks must maintain 9% for Tier 1 UCBs and 12% for Tier 2-4 UCBs."
   }
 ]

@@ -6,6 +6,7 @@ import pickle
 import time
 import traceback
 from dotenv import load_dotenv
+import torch
 from sentence_transformers import SentenceTransformer
 from rank_bm25 import BM25Okapi
 from qdrant_client import QdrantClient
@@ -22,11 +23,11 @@ BM25_PATH = "retrieval/bm25_index.pkl"
 
 COLLECTION = "regbrain"
 VECTOR_SIZE = 384
-EMBED_BATCH = 64
-UPLOAD_BATCH = 20
+EMBED_BATCH = 256
+UPLOAD_BATCH = 250
 MAX_RETRIES = 3
 
-QDRANT_URL = os.getenv("QDRANT_CLUSTER_ENDPOINT")
+QDRANT_URL = os.getenv("QDRANT_CLUSTER_ENDPOINT") or os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 
 PAYLOAD_FIELDS = [
@@ -59,13 +60,14 @@ def main():
     texts = [c["clause_text"] for c in chunks]
     print(f"Loaded {len(chunks)} chunks\n")
 
-    # ── 2. Embed ───────────────────────────────────────────────────────
-    print(f"Loading model: {MODEL_NAME} ...")
-    model = SentenceTransformer(MODEL_NAME)
+    # ── 2. Embed with SentenceTransformer (Fast multi-core CPU) ────────
+    print(f"Loading model: {MODEL_NAME} on CPU ...")
+    model = SentenceTransformer(MODEL_NAME, device="cpu")
 
     print(f"Embedding {len(texts)} chunks (batch_size={EMBED_BATCH}) ...")
     t0 = time.time()
-    embeddings = model.encode(texts, batch_size=EMBED_BATCH, show_progress_bar=True)
+    embed_inputs = [t[:500] for t in texts]
+    embeddings = model.encode(embed_inputs, batch_size=256, device="cpu", show_progress_bar=True)
     t_embed = time.time() - t0
     print(f"Embedding done in {t_embed:.1f}s ({len(texts)/t_embed:.0f} chunks/sec)\n")
 
@@ -81,6 +83,11 @@ def main():
     client.create_collection(
         collection_name=COLLECTION,
         vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
+    )
+    client.create_payload_index(
+        collection_name=COLLECTION,
+        field_name="category",
+        field_schema="keyword",
     )
 
     # Build points

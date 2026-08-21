@@ -19,11 +19,12 @@ MANIFEST_PATH = os.path.join(CORPUS_DIR, "manifest.csv")
 # ---------------------------------------------------------------------------
 HEADER_PATTERNS = [
     (r"^Chapter\s+[IVXLCDM]+", "CHAPTER"),
-    (r"^Section\s+[IVXLCDM]+", "SECTION"),
+    (r"^Section\s+[IVXLCDM\d]+", "SECTION"),
     (r"^Part\s+[IVXLCDM]+", "PART"),
     (r"^(?:Annex|Annexure|Appendix)\s+[IVXLCDM\d]+", "ANNEX"),
     (r"^[A-Z]?\d+(?:\.\d+)+", "CLAUSE"),
-    (r"^[A-Z]\.\s", "LETTER_CLAUSE"),
+    (r"^[A-Z]\.?\s+[A-Z][a-zA-Z\s\-]{2,50}$", "LETTER_SECTION"),
+    (r"^\d+\.\s+[A-Z]", "PARAGRAPH"),
 ]
 
 COMPILED_PATTERNS = [

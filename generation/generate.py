@@ -43,6 +43,9 @@ _FENCE_RE = re.compile(
 )
 
 
+from generation.groq_client import groq_json_completion  # noqa: E402
+
+
 def _error_response(message: str) -> dict:
     """Keep provider failures distinguishable from an evidence abstention."""
     return {"_error": message, "answer": "", "claims": []}
@@ -74,6 +77,32 @@ Respond with valid JSON in exactly this shape (no markdown fences):
 """
 
 
+def _extract_relevant_window(text: str, query: str, max_chars: int = 1500) -> str:
+    """Extract a query-focused window from long regulatory chunks without blowing token limits."""
+    if len(text) <= max_chars:
+        return text
+
+    words = [
+        w for w in re.findall(r"\b[a-zA-Z]{4,}\b", query.lower())
+        if w not in ("what", "which", "where", "when", "about", "under", "banks", "requirements", "norms", "guidelines")
+    ]
+    best_pos = -1
+    for w in words:
+        pos = text.lower().find(w)
+        if pos != -1:
+            if best_pos == -1 or pos < best_pos:
+                best_pos = pos
+
+    if best_pos == -1 or best_pos < 300:
+        return text[:max_chars] + "..."
+
+    start = max(0, best_pos - 200)
+    end = min(len(text), start + max_chars)
+    prefix = "... " if start > 0 else ""
+    suffix = " ..." if end < len(text) else ""
+    return prefix + text[start:end] + suffix
+
+
 # ── Public API ──────────────────────────────────────────────────────
 def generate(query: str, chunks: list[dict] | None = None) -> dict:
     """
@@ -83,12 +112,7 @@ def generate(query: str, chunks: list[dict] | None = None) -> dict:
     2. Send query + those exact chunks to Groq with grounding instructions.
     3. Return a dict with keys ``answer`` and ``claims``.
     """
-    if not GROQ_API_KEY:
-        sys.exit("ERROR: GROQ_API_KEY not found in environment. Add it to .env")
-
     # ── 1. Retrieve ─────────────────────────────────────────────────
-    # The caller may already have retrieved and logged a set of chunks.  Reuse
-    # it so generation and verification always operate on the same evidence.
     if chunks is None:
         chunks = retrieve(query)
 
@@ -97,9 +121,9 @@ def generate(query: str, chunks: list[dict] | None = None) -> dict:
             "citation_id": f"C{index:02d}",
             "document_id": c.get("doc_id", ""),
             "clause_label": c.get("clause_id", ""),
-            "clause_text": c["clause_text"][:1200] + ("..." if len(c["clause_text"]) > 1200 else "")
+            "clause_text": _extract_relevant_window(c["clause_text"], query, max_chars=1400),
         }
-        for index, c in enumerate(chunks[:8], start=1)
+        for index, c in enumerate(chunks[:12], start=1)
     ]
 
     user_prompt = (
@@ -107,70 +131,10 @@ def generate(query: str, chunks: list[dict] | None = None) -> dict:
         f"Question: {query}"
     )
 
-    # ── 2. Call Groq with multi-model failover ──────────────────────
-    raw_text = None
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json",
-    }
-
-    for model_name in GROQ_MODELS:
-        payload = {
-            "model": model_name,
-            "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt},
-            ],
-            "temperature": 0,
-            "response_format": {"type": "json_object"},
-        }
-        for attempt in range(1, MAX_RETRIES + 1):
-            try:
-                response = requests.post(GROQ_URL, json=payload, headers=headers, timeout=25)
-                if response.status_code == 200:
-                    raw_text = response.json()["choices"][0]["message"]["content"]
-                    break
-                elif response.status_code == 429:
-                    # Instant failover to next model if available
-                    if model_name != GROQ_MODELS[-1]:
-                        break
-                    time.sleep(BASE_DELAY * attempt)
-                elif response.status_code in (500, 502, 503, 504):
-                    time.sleep(BASE_DELAY * attempt)
-            except Exception:
-                if attempt < MAX_RETRIES:
-                    time.sleep(BASE_DELAY)
-        if raw_text is not None:
-            break
-
-    if raw_text is None:
-        return _error_response("No response from Groq API after model failovers")
-
-    # ── 3. Parse JSON (strip markdown fences if present) ────────────
-    cleaned = raw_text.strip()
-    fence_match = _FENCE_RE.match(cleaned)
-    if fence_match:
-        cleaned = fence_match.group(1).strip()
-
-    try:
-        result = json.loads(cleaned)
-    except json.JSONDecodeError:
-        # Defensive compatibility for a provider response with incidental
-        # prose around an otherwise valid JSON object.
-        start, end = cleaned.find("{"), cleaned.rfind("}")
-        if start != -1 and end > start:
-            try:
-                result = json.loads(cleaned[start : end + 1])
-            except json.JSONDecodeError:
-                result = None
-        else:
-            result = None
-
-    if not isinstance(result, dict):
-        return {
-            "answer": raw_text,
-            "claims": [],
-        }
+    # ── 2. Call Groq via centralized client with failover ───────────
+    result = groq_json_completion(SYSTEM_PROMPT, user_prompt)
+    if "_error" in result:
+        return _error_response(result["_error"])
 
     # Keep the generator's public contract stable even if the model returns a
     # malformed-but-parseable object.

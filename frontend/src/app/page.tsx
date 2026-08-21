@@ -104,7 +104,7 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState("");
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const apiUrl = "/api/backend";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/backend";
   const apiKey = process.env.NEXT_PUBLIC_API_KEY || "regbrain-dev-key";
 
   useEffect(() => {
@@ -140,31 +140,49 @@ export default function Home() {
     abortControllerRef.current = abortController;
 
     try {
-      // 1. Start the asynchronous query job
-      const startRes = await fetch(`${apiUrl}/query/start`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": apiKey,
-        },
-        body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
-        signal: abortController.signal,
-      });
+      // 1. Start the asynchronous query job (with retry for cold-starting instances)
+      let startData: any = null;
+      const MAX_START_ATTEMPTS = 3;
 
-      if (!startRes.ok) {
-        let detail = `HTTP ${startRes.status}`;
+      for (let attempt = 1; attempt <= MAX_START_ATTEMPTS; attempt++) {
         try {
-          const errData = await startRes.json();
-          detail = errData.detail?.message || errData.detail || errData.message || detail;
-        } catch {
-          // Keep default detail
+          const startRes = await fetch(`${apiUrl}/query/start`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-Key": apiKey,
+            },
+            body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
+            signal: abortController.signal,
+          });
+
+          if (startRes.ok) {
+            startData = await startRes.json();
+            break;
+          }
+
+          if ([502, 503, 504].includes(startRes.status) && attempt < MAX_START_ATTEMPTS) {
+            await new Promise((resolve) => setTimeout(resolve, 2500));
+            continue;
+          }
+
+          let detail = `HTTP ${startRes.status}`;
+          try {
+            const errData = await startRes.json();
+            detail = errData.detail?.message || errData.detail || errData.message || detail;
+          } catch {}
+          throw new Error(detail);
+        } catch (fetchErr: unknown) {
+          if (fetchErr instanceof Error && fetchErr.name === "AbortError") throw fetchErr;
+          if (attempt < MAX_START_ATTEMPTS) {
+            await new Promise((resolve) => setTimeout(resolve, 2500));
+            continue;
+          }
+          throw fetchErr;
         }
-        throw new Error(detail);
       }
 
-      const startData = await startRes.json();
-      const jobId = startData.job_id;
-
+      const jobId = startData?.job_id;
       if (!jobId) {
         throw new Error("No job ID received from query start endpoint.");
       }
@@ -202,16 +220,17 @@ export default function Home() {
 
           const pollData = await pollRes.json();
 
-          if (pollData.status === "pending") {
+          if (pollData.job_status === "pending" || pollData.status === "pending") {
             if (pollData.stage) {
               setCurrentStage(pollData.stage as StageType);
             }
-          } else if (pollData.status === "done" || pollData.answer !== undefined) {
+          } else if (pollData.job_status === "error" || pollData.status === "error" || pollData.error) {
+            setErrorMessage(pollData.message || pollData.error || "Audit processing failed.");
+            completed = true;
+          } else {
+            // Terminal states: "answered", "abstain", "done"
             setResult(pollData);
             if (pollData.session_id) setSessionId(pollData.session_id);
-            completed = true;
-          } else if (pollData.status === "error" || pollData.error) {
-            setErrorMessage(pollData.message || pollData.error || "Audit processing failed.");
             completed = true;
           }
         } catch (pollErr: unknown) {

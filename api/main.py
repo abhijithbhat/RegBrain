@@ -412,7 +412,7 @@ def query_start(request: Request, body: QueryRequest):
 
 @app.get("/query/result/{job_id}")
 def query_result(job_id: str):
-    """Poll for job result. Returns status=pending while processing, status=done with result when complete."""
+    """Poll for job result. Returns status=pending while processing, terminal result when complete."""
     with _JOBS_LOCK:
         job = JOBS.get(job_id)
 
@@ -420,11 +420,11 @@ def query_result(job_id: str):
         raise HTTPException(status_code=404, detail="Job not found or expired")
 
     if job["status"] == "pending":
-        return {"status": "pending", "stage": job.get("stage", "retrieving")}
+        return {"job_status": "pending", "status": "pending", "stage": job.get("stage", "retrieving")}
     elif job["status"] == "done":
-        return {"status": "done", **job["result"]}
+        return {"job_status": "done", **job["result"]}
     else:
-        return {"status": "error", **job["result"]}
+        return {"job_status": "error", **job["result"]}
 
 
 @app.post("/query", dependencies=[Depends(check_rate_limit)])

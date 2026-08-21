@@ -31,17 +31,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from query_planner.plan_and_answer import plan_and_answer  # noqa: E402
 
-load_dotenv()
-
-# ── Config ──────────────────────────────────────────────────────────
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODELS = [
-    os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
-    "qwen/qwen3.6-27b",
-    "openai/gpt-oss-120b",
-]
+from generation.groq_client import groq_json_completion  # noqa: E402
 
 RATE_LIMIT_SLEEP = 0.2  # seconds between Groq calls
 
@@ -69,57 +59,20 @@ def _rewrite_if_followup(
     new_query: str,
 ) -> dict:
     """Check if *new_query* is a follow-up; rewrite if needed."""
-    if not GROQ_API_KEY:
-        sys.exit("ERROR: GROQ_API_KEY not found in environment. Add it to .env")
-
     user_prompt = (
         f"Previous query: {prev_query}\n"
         f"Previous answer: {prev_answer[:400]}\n\n"
         f"New query: {new_query}"
     )
 
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type":  "application/json",
+    result = groq_json_completion(REWRITE_PROMPT, user_prompt)
+    if "_error" in result:
+        return {"is_followup": False, "standalone_query": new_query}
+
+    return {
+        "is_followup": bool(result.get("is_followup", False)),
+        "standalone_query": result.get("standalone_query", new_query) or new_query,
     }
-
-    raw = None
-    for model_name in GROQ_MODELS:
-        payload = {
-            "model": model_name,
-            "messages": [
-                {"role": "system", "content": REWRITE_PROMPT},
-                {"role": "user",   "content": user_prompt},
-            ],
-            "temperature": 0,
-            "response_format": {"type": "json_object"},
-        }
-        for attempt in range(1, 3):
-            try:
-                response = requests.post(GROQ_URL, json=payload, headers=headers, timeout=15)
-                if response.status_code == 200:
-                    raw = response.json()["choices"][0]["message"]["content"]
-                    break
-                elif response.status_code == 429:
-                    if model_name != GROQ_MODELS[-1]:
-                        break
-                    time.sleep(1.0)
-            except Exception:
-                time.sleep(0.5)
-        if raw is not None:
-            break
-
-    if raw is None:
-        return {"is_followup": False, "standalone_query": new_query}
-
-    try:
-        parsed = json.loads(raw)
-        return {
-            "is_followup": bool(parsed.get("is_followup", False)),
-            "standalone_query": parsed.get("standalone_query", new_query) or new_query,
-        }
-    except json.JSONDecodeError:
-        return {"is_followup": False, "standalone_query": new_query}
 
 
 # ── Public API ──────────────────────────────────────────────────────
