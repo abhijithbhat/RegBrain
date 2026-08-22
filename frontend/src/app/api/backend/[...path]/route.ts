@@ -3,30 +3,31 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const BACKEND_URL = (
-  process.env.BACKEND_URL ||
-  "https://regbrain.onrender.com"
-).replace(/\/+$/, "");
-
-const BACKEND_API_KEY = (
-  process.env.BACKEND_API_KEY ||
-  process.env.API_KEY ||
-  "regbrain-dev-key"
-).trim();
-
 async function proxyRequest(
   request: NextRequest,
   context: { params: Promise<{ path: string[] }> | { path: string[] } }
 ) {
+  const backendUrl = (
+    process.env.BACKEND_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://regbrain.onrender.com"
+  ).replace(/\/+$/, "");
+
+  const apiKey = (
+    process.env.BACKEND_API_KEY ||
+    process.env.API_KEY ||
+    process.env.NEXT_PUBLIC_API_KEY ||
+    "regbrain-dev-key"
+  ).trim();
 
   const resolvedParams = context.params instanceof Promise ? await context.params : context.params;
   const path = resolvedParams?.path || [];
   const targetPath = Array.isArray(path) ? path.join("/") : path;
   const search = request.nextUrl.search;
-  const targetUrl = `${BACKEND_URL}/${targetPath}${search}`;
+  const targetUrl = `${backendUrl}/${targetPath}${search}`;
 
   const headers: Record<string, string> = {
-    "X-API-Key": BACKEND_API_KEY,
+    "X-API-Key": apiKey,
     Accept: request.headers.get("accept") || "application/json",
   };
 

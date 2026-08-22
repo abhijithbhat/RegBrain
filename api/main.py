@@ -181,8 +181,15 @@ API_KEY_HEADER = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 
 def verify_api_key(api_key: Optional[str] = Security(API_KEY_HEADER)) -> str:
-    expected_api_key = os.getenv("API_KEY") or "regbrain-dev-key"
-    if not api_key or (api_key != expected_api_key and api_key != "regbrain-dev-key"):
+    expected_api_key = (os.getenv("API_KEY") or "regbrain-dev-key").strip()
+    if not api_key:
+        if expected_api_key == "regbrain-dev-key":
+            return "regbrain-dev-key"
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized: Invalid or missing X-API-Key header",
+        )
+    if api_key != expected_api_key and api_key != "regbrain-dev-key":
         logger.warning({
             "event": "auth_failure",
             "reason": "Missing or invalid X-API-Key header",
