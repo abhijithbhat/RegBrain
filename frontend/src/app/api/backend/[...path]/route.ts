@@ -12,7 +12,6 @@ const BACKEND_URL = (
 const BACKEND_API_KEY =
   process.env.BACKEND_API_KEY ||
   process.env.API_KEY ||
-  process.env.NEXT_PUBLIC_API_KEY ||
   "regbrain-dev-key";
 
 async function proxyRequest(
@@ -25,11 +24,8 @@ async function proxyRequest(
   const search = request.nextUrl.search;
   const targetUrl = `${BACKEND_URL}/${targetPath}${search}`;
 
-  const incomingKey = request.headers.get("x-api-key");
-  const apiKeyToUse = incomingKey || BACKEND_API_KEY;
-
   const headers: Record<string, string> = {
-    "X-API-Key": apiKeyToUse,
+    "X-API-Key": BACKEND_API_KEY,
     Accept: request.headers.get("accept") || "application/json",
   };
 
