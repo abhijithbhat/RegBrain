@@ -109,7 +109,8 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState("");
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const apiUrl = "/api/backend";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/backend";
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY || "regbrain-dev-key";
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -154,6 +155,7 @@ export default function Home() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "X-API-Key": apiKey,
             },
             body: JSON.stringify({ question: trimmed, session_id: sessionId || null }),
             signal: abortController.signal,
@@ -209,6 +211,9 @@ export default function Home() {
 
         try {
           const pollRes = await fetch(`${apiUrl}/query/result/${jobId}`, {
+            headers: {
+              "X-API-Key": apiKey,
+            },
             signal: abortController.signal,
           });
 
