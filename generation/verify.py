@@ -430,7 +430,7 @@ def finalize_response(answer: str, verified_claims: list[dict]) -> dict:
     Produce the final API-style response.
 
     - Keeps only claims where ``supported`` is True.
-    - If confidence < 50% or zero supported claims → ``"status": "abstain"``.
+    - If confidence < 33% or zero supported claims → ``"status": "abstain"``.
     - Otherwise → ``"status": "answered"`` with the answer and citations.
     """
     confidence = compute_confidence(verified_claims)

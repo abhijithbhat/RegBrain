@@ -9,7 +9,7 @@ RegBrain is an auditable, self-verifying Retrieval-Augmented Generation (RAG) sy
 Unlike standard RAG systems that blindly trust whatever an LLM generates, RegBrain **decomposes every generated answer into atomic claims**, verifies each claim against retrieved source text using a strict dual-gate architecture, and **abstains when evidence is insufficient**:
 
 1. **Gate 1 (Lexical & Numerical Gate)**: Enforces strict keyword overlap ($\text{KW} \ge 0.60$), sliding sequence match ($\text{Seq} \ge 0.35$), and strict numerical consistency (every numeric threshold in the claim must exist in the source chunk).
-2. **Gate 2 (Neural Cross-Encoder Gate)**: Evaluates sentence-level neural cross-encoder relevance scoring (`Xenova/ms-marco-MiniLM-L-6-v2`), requiring positive neural relevance scores ($\ge 0.0$) against source passages.
+2. **Gate 2 (Neural Cross-Encoder Gate)**: Evaluates sentence-level neural cross-encoder relevance scoring (`Xenova/ms-marco-MiniLM-L-6-v2`), requiring cross-encoder relevance scores ($> -1.5$) against source passages.
 3. **Abstention Guardrail**: Automatically suppresses answers and enters an `abstain` status whenever confidence falls below 33% or zero claims are grounded in source text.
 4. **Zero Client-Key Exposure Architecture**: All client requests route through an authenticated Next.js server proxy (`/api/backend/...`) with origin-restricted CORS and automatic session TTL garbage collection.
 
@@ -38,7 +38,7 @@ RegBrain was benchmarked against a naive RAG baseline (dense-only retrieval, sin
 
 ### Hallucination Rates & Grounding Verification
 
-> *Note on Dual-Gate Verification*: RegBrain executes a dual-gate claim verifier (Gate 1 Lexical match + Gate 2 Neural Cross-Encoder Entailment). Every candidate claim must achieve positive neural entailment (average logit **+8.75**) before reaching the final answer. Unsupported or hallucinated sentences are stripped before response finalization.
+> *Note on Dual-Gate Verification*: RegBrain executes a dual-gate claim verifier (Gate 1 Lexical match + Gate 2 Neural Cross-Encoder Entailment). Every candidate claim must achieve positive neural cross-encoder relevance ($> -1.5$, with an average entailment logit of **+8.75**) before reaching the final answer. Unsupported or hallucinated sentences are stripped before response finalization.
 
 | Check Level | RegBrain | Naive Baseline |
 |---|:---:|:---:|
@@ -120,27 +120,26 @@ RegBrain was benchmarked against a naive RAG baseline (dense-only retrieval, sin
 ## Architecture & System Design
 
 ```
-┌─────────────────┐       ┌────────────────────────┐       ┌──────────────────────┐
-│  RBI Circular   │──────▶│   Hybrid Retrieval     │──────▶│   LLM Generator      │
-│  Ingestion/PDF  │       │ Dense (BGE) + BM25     │       │ Groq gpt-oss-120b    │
-└─────────────────┘       │ RRF + BGE Reranker     │       └──────────┬───────────┘
-                          └────────────────────────┘                  │
-                                                               ┌──────▼──────┐
-                                                               │  Two-Stage  │
-                                                               │  Verifier   │
-                                                               └──────┬──────┘
-                                                                ┌─────▼─────┐
-                                                                │ Finalize: │
-                                                                │ Answer or │
-                                                                │  Abstain  │
-                                                                └───────────┘
+┌─────────────────┐       ┌────────────────────────┐       ┌───────────────────────────┐
+│  RBI Circular   │──────▶│    Category Router     │──────▶│     Hybrid Retrieval      │
+│  Ingestion/PDF  │       │ & Multi-Hop Decomposer │       │  Dense (BGE) + BM25       │
+└─────────────────┘       └────────────────────────┘       │  RRF + MiniLM-L-6 Reranker│
+                                                           └─────────────┬─────────────┘
+                                                                         │
+┌─────────────────────────┐       ┌────────────────────────┐             │
+│ Finalize Response       │◀──────│  Dual-Gate Claim       │◀────────────┘
+│ Answer (Citations)      │       │  Verifier (Lexical +   │       ┌───────────────────────────┐
+│ or Safe Abstention      │       │  MiniLM Cross-Encoder) │◀──────│ Groq Multi-Model Failover │
+└─────────────────────────┘       └────────────────────────┘       │ (gpt-oss-20b -> qwen3.6)  │
+                                                                   └───────────────────────────┘
 ```
 
-- **Hybrid Retrieval**: Dense embeddings (`BAAI/bge-small-en-v1.5`) + Sparse BM25 fused via Reciprocal Rank Fusion (RRF) and scored via `BAAI/bge-reranker-base`.
-- **Query Planner**: Multi-hop query decomposition, conversational memory rewriting for multi-turn sessions, and joint synthesis.
-- **Two-Stage Claim Verifier**: Exact lexical keyword overlap ($\ge 0.60$), sliding sequence match ($\ge 0.35$), numerical consistency checks, and DeBERTa-v3 cross-encoder NLI entailment.
-- **FastAPI Layer**: Header authentication (`X-API-Key`), in-memory sliding-window rate limiter ($20\text{ req/min}$), structured rotating JSON logging, and SSE stream endpoints.
-- **Frontend UI ("The Regulatory Ledger")**: Gazette-style Next.js 14 interface with Vault (Dark) and Parchment (Light) themes, Notary Verification Seals, and real-time SSE audit pipeline stepper.
+- **Category Router & Query Planner**: Multi-hop query decomposition, conversational memory rewriting for multi-turn sessions, and category routing across the four regulated sectors (Commercial Banks, NBFCs, Housing Finance Companies, and Urban Co-operative Banks).
+- **Hybrid Retrieval**: Dense embeddings (`BAAI/bge-small-en-v1.5`) + Sparse BM25 fused via Reciprocal Rank Fusion (RRF) and scored via `Xenova/ms-marco-MiniLM-L-6-v2`.
+- **Generation Engine**: Groq multi-model failover chain (`openai/gpt-oss-20b` primary, `qwen/qwen3.6-27b`, `allam-2-7b`, and `openai/gpt-oss-safeguard-20b`) producing grounded regulatory answers with verbatim citations.
+- **Dual-Gate Claim Verifier**: Exact lexical keyword overlap ($\ge 0.60$), sliding sequence match ($\ge 0.35$), numerical consistency checks, and neural cross-encoder verification (`Xenova/ms-marco-MiniLM-L-6-v2` with score $> -1.5$, shared with the retrieval layer).
+- **Production API & Request Path**: Asynchronous job submission and polling architecture (`/query/start` + `/query/result`) with in-memory TTL cleanup, API key authentication (`X-API-Key`), sliding-window rate limiting ($20\text{ req/min}$), structured rotating logs, and an optional SSE stream endpoint (`/query/stream`).
+- **Frontend UI ("The Regulatory Ledger")**: Gazette-style Next.js 14 interface with Vault (Dark) and Parchment (Light) themes, Notary Verification Seals, and real-time polling audit pipeline stepper.
 
 ---
 
@@ -148,10 +147,10 @@ RegBrain was benchmarked against a naive RAG baseline (dense-only retrieval, sin
 
 ```
 Regbrain/
-├── api/             – FastAPI service with X-API-Key auth, sliding rate limiter & SSE streaming
+├── api/             – FastAPI service with X-API-Key auth, sliding rate limiter & async job polling
 ├── query_planner/   – Multi-hop decomposition, synthesis, and session memory rewriter
 ├── generation/      – Answer generation with verbatim citations and two-stage claim verification
-├── retrieval/       – Hybrid search (Qdrant Dense + BM25 Sparse + RRF + BGE Reranker)
+├── retrieval/       – Hybrid search (Qdrant Dense + BM25 Sparse + RRF + MiniLM-L-6 Reranker)
 ├── ingestion/       – RBI PDF parsing, chunking, and metadata embedding pipeline
 ├── frontend/        – Next.js 14 "The Regulatory Ledger" UI with Vault/Parchment themes & Notary Seals
 └── eval/            – RAGAS evaluation suite, naive baseline, and side-by-side benchmark comparison
@@ -198,7 +197,7 @@ npm run dev
 
 ### 3. Run Benchmark Evaluations
 ```bash
-# Generate answers for 35 benchmark questions
+# Generate answers for 38 benchmark questions
 python eval/run_eval.py --pipeline regbrain --stage generate
 python eval/run_eval.py --pipeline naive --stage generate
 
