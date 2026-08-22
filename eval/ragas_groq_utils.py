@@ -49,49 +49,74 @@ if not logger.handlers:
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-MODEL = "openai/gpt-oss-120b"
+MODEL = os.getenv("GROQ_EVAL_MODEL", "groq/compound")
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 CACHE_DIR = os.path.join(os.path.dirname(__file__), ".ragas_cache")
 
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-#  1.  Markdown fence stripping
+#  1.  Markdown fence stripping & JSON extraction
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-_FENCE_RE = re.compile(
-    r"^\s*```(?:json|JSON)?\s*\n?(.*?)\n?\s*```\s*$",
-    re.DOTALL,
-)
-
-
 def strip_markdown_fences(text: str) -> str:
-    """Remove leading/trailing ``json … `` wrappers if present."""
+    """Extract JSON block/object from text even if preceded by reasoning."""
     if not text:
         return text
-    m = _FENCE_RE.match(text.strip())
-    return m.group(1).strip() if m else text
+    # 1. Search for fenced code block ```json ... ```
+    m_fence = re.search(r"```(?:json|JSON)?\s*([\s\S]*?)\s*```", text)
+    if m_fence:
+        return m_fence.group(1).strip()
+    # 2. Search for bare JSON object { ... } or array [ ... ]
+    m_json = re.search(r"(\{[\s\S]*\}|\[[\s\S]*\])", text)
+    if m_json:
+        return m_json.group(1).strip()
+    return text.strip()
+
+
+import threading
+
+_GROQ_CALL_LOCK = threading.Lock()
+_GROQ_LAST_CALL = 0.0
 
 
 def _patch_client_strip_fences(client):
     """
-    Monkey-patch an OpenAI client so every chat-completion response has
-    markdown fences stripped from message.content *before* RAGAS /
-    instructor attempts to parse the JSON.
+    Monkey-patch an OpenAI client with thread-safe rate-limit pacing (2.5s interval)
+    and automatic 429 exponential backoff, plus JSON markdown fence stripping.
     """
     original_create = client.chat.completions.create
 
     def _patched_create(*args, **kwargs):
+        global _GROQ_LAST_CALL
         kwargs["max_tokens"] = 4096
-        response = original_create(*args, **kwargs)
-        for choice in response.choices:
-            if hasattr(choice, "message") and choice.message:
-                raw = choice.message.content
-                if raw:
-                    cleaned = strip_markdown_fences(raw)
-                    if cleaned != raw:
-                        logger.debug("Stripped markdown fences from Groq response")
-                    choice.message.content = cleaned
-        return response
+
+        for attempt in range(6):
+            with _GROQ_CALL_LOCK:
+                now = time.time()
+                elapsed = now - _GROQ_LAST_CALL
+                if elapsed < 2.5:
+                    time.sleep(2.5 - elapsed)
+                _GROQ_LAST_CALL = time.time()
+
+            try:
+                response = original_create(*args, **kwargs)
+                for choice in response.choices:
+                    if hasattr(choice, "message") and choice.message:
+                        raw = choice.message.content
+                        if raw:
+                            cleaned = strip_markdown_fences(raw)
+                            choice.message.content = cleaned
+                return response
+            except Exception as err:
+                err_str = str(err).lower()
+                if "429" in err_str or "rate" in err_str or "limit" in err_str:
+                    wait_s = min(30.0, 3.0 * (2 ** attempt))
+                    logger.warning(f"Groq judge rate limited. Backing off for {wait_s:.1f}s (attempt {attempt+1}/6)...")
+                    time.sleep(wait_s)
+                elif attempt == 5:
+                    raise
+                else:
+                    time.sleep(2.0)
 
     client.chat.completions.create = _patched_create
     return client

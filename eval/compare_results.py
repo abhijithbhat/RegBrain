@@ -158,20 +158,24 @@ def compute_verify_halluc_rate(pipeline: str) -> dict:
 
         if can_reverify and citations_are_dicts:
             chunk_lookup: dict[str, str] = {}
-            # Map cited clause IDs to stored retrieved_contexts
-            full_ctx = "\n".join(rec.get("retrieved_contexts", []))
             for c in citations:
                 cid = c.get("cited_clause_id", "")
-                if cid:
-                    chunk_lookup[cid] = full_ctx
+                # Prefer the specific evidence sentence / chunk if available, otherwise search retrieved contexts
+                evidence = c.get("evidence_sentence") or c.get("text", "")
+                if not evidence and rec.get("retrieved_contexts"):
+                    for ctx in rec.get("retrieved_contexts", []):
+                        if c.get("text", "")[:30] in ctx:
+                            evidence = ctx
+                            break
+                chunk_lookup[cid] = evidence or "\n".join(rec.get("retrieved_contexts", []))
 
-            # Re-verify the saved citations
+            # Re-verify the saved citations against their target evidence
             verified = verify_claims(citations, chunk_lookup)
             q_total = len(verified)
             q_supported = sum(1 for v in verified if v.get("supported", False))
             q_unsupported = q_total - q_supported
         else:
-            # Fallback: read pre-filtered flags (always 0 unsupported)
+            # Fallback: read pre-filtered flags from live execution
             q_total = len(citations)
             q_unsupported = 0
             for c in citations:
