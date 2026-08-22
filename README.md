@@ -119,20 +119,7 @@ RegBrain was benchmarked against a naive RAG baseline (dense-only retrieval, sin
 
 ## Architecture & System Design
 
-```
-┌─────────────────┐       ┌────────────────────────┐       ┌───────────────────────────┐
-│  RBI Circular   │──────▶│    Category Router     │──────▶│     Hybrid Retrieval      │
-│  Ingestion/PDF  │       │ & Multi-Hop Decomposer │       │  Dense (BGE) + BM25       │
-└─────────────────┘       └────────────────────────┘       │  RRF + MiniLM-L-6 Reranker│
-                                                           └─────────────┬─────────────┘
-                                                                         │
-┌─────────────────────────┐       ┌────────────────────────┐             │
-│ Finalize Response       │◀──────│  Dual-Gate Claim       │◀────────────┘
-│ Answer (Citations)      │       │  Verifier (Lexical +   │       ┌───────────────────────────┐
-│ or Safe Abstention      │       │  MiniLM Cross-Encoder) │◀──────│ Groq Multi-Model Failover │
-└─────────────────────────┘       └────────────────────────┘       │ (gpt-oss-20b -> qwen3.6)  │
-                                                                   └───────────────────────────┘
-```
+![RegBrain Architecture](assets/architecture-diagram.jpg)
 
 - **Category Router & Query Planner**: Multi-hop query decomposition, conversational memory rewriting for multi-turn sessions, and category routing across the four regulated sectors (Commercial Banks, NBFCs, Housing Finance Companies, and Urban Co-operative Banks).
 - **Hybrid Retrieval**: Dense embeddings (`BAAI/bge-small-en-v1.5`) + Sparse BM25 fused via Reciprocal Rank Fusion (RRF) and scored via `Xenova/ms-marco-MiniLM-L-6-v2`.
