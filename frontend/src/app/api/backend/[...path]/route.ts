@@ -15,14 +15,21 @@ const BACKEND_API_KEY =
   process.env.NEXT_PUBLIC_API_KEY ||
   "regbrain-dev-key";
 
-async function proxyRequest(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
-  const { path } = await params;
-  const targetPath = (path || []).join("/");
+async function proxyRequest(
+  request: NextRequest,
+  context: { params: Promise<{ path: string[] }> | { path: string[] } }
+) {
+  const resolvedParams = context.params instanceof Promise ? await context.params : context.params;
+  const path = resolvedParams?.path || [];
+  const targetPath = Array.isArray(path) ? path.join("/") : path;
   const search = request.nextUrl.search;
   const targetUrl = `${BACKEND_URL}/${targetPath}${search}`;
 
+  const incomingKey = request.headers.get("x-api-key");
+  const apiKeyToUse = incomingKey || BACKEND_API_KEY;
+
   const headers: Record<string, string> = {
-    "X-API-Key": BACKEND_API_KEY,
+    "X-API-Key": apiKeyToUse,
     Accept: request.headers.get("accept") || "application/json",
   };
 
@@ -82,10 +89,16 @@ async function proxyRequest(request: NextRequest, { params }: { params: Promise<
   }
 }
 
-export async function GET(request: NextRequest, context: { params: Promise<{ path: string[] }> }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ path: string[] }> | { path: string[] } }
+) {
   return proxyRequest(request, context);
 }
 
-export async function POST(request: NextRequest, context: { params: Promise<{ path: string[] }> }) {
+export async function POST(
+  request: NextRequest,
+  context: { params: Promise<{ path: string[] }> | { path: string[] } }
+) {
   return proxyRequest(request, context);
 }
