@@ -92,9 +92,16 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+ALLOWED_ORIGINS_RAW = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000,https://reg-brain.vercel.app,https://regbrain.vercel.app"
+)
+ALLOWED_ORIGINS = [o.strip() for o in ALLOWED_ORIGINS_RAW.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -231,8 +238,33 @@ def check_rate_limit(api_key: str = Depends(verify_api_key)) -> str:
     return api_key
 
 
-# In-memory session store: session_id -> session_state dict
+# In-memory session store: session_id -> session_state dict with TTL tracking
 SESSIONS: dict[str, dict] = {}
+SESSION_LAST_ACCESSED: dict[str, float] = {}
+_SESSIONS_LOCK = threading.Lock()
+SESSION_TTL_SECONDS = 3600.0  # 1 hour idle timeout
+
+
+def _touch_session(session_id: str) -> None:
+    """Record access time for session."""
+    with _SESSIONS_LOCK:
+        SESSION_LAST_ACCESSED[session_id] = time.time()
+
+
+def _cleanup_old_sessions(max_idle_seconds: float = SESSION_TTL_SECONDS) -> None:
+    """Purge sessions inactive for longer than max_idle_seconds."""
+    now = time.time()
+    with _SESSIONS_LOCK:
+        expired = [
+            sid for sid, last_active in SESSION_LAST_ACCESSED.items()
+            if now - last_active > max_idle_seconds
+        ]
+        for sid in expired:
+            SESSIONS.pop(sid, None)
+            SESSION_LAST_ACCESSED.pop(sid, None)
+        if expired:
+            logger.info({"event": "sessions_cleaned", "count": len(expired)})
+
 
 # Thread-local storage for request metadata & streaming callbacks
 _thread_local = threading.local()
@@ -332,12 +364,13 @@ MAX_JOBS = 50  # prevent memory leak from uncollected jobs
 
 
 def _cleanup_old_jobs():
-    """Remove jobs older than 5 minutes."""
+    """Remove jobs older than 5 minutes and cleanup stale sessions."""
     cutoff = time.time() - 300
     with _JOBS_LOCK:
         expired = [jid for jid, j in JOBS.items() if j["created"] < cutoff]
         for jid in expired:
             del JOBS[jid]
+    _cleanup_old_sessions()
 
 
 @app.post("/query/start", dependencies=[Depends(check_rate_limit)])
@@ -350,9 +383,11 @@ def query_start(request: Request, body: QueryRequest):
 
     if session_id and session_id in SESSIONS:
         session_state = SESSIONS[session_id]
+        _touch_session(session_id)
     else:
         session_id = str(uuid.uuid4())
         session_state = {}
+        _touch_session(session_id)
 
     with _JOBS_LOCK:
         JOBS[job_id] = {"status": "pending", "stage": "retrieving", "result": None, "created": time.time()}
@@ -376,6 +411,7 @@ def query_start(request: Request, body: QueryRequest):
                 return
 
             SESSIONS[session_id] = session_state
+            _touch_session(session_id)
             result["session_id"] = session_id
 
             with _JOBS_LOCK:
@@ -410,7 +446,7 @@ def query_start(request: Request, body: QueryRequest):
     return {"job_id": job_id, "status": "pending", "stage": "retrieving"}
 
 
-@app.get("/query/result/{job_id}")
+@app.get("/query/result/{job_id}", dependencies=[Depends(verify_api_key)])
 def query_result(job_id: str):
     """Poll for job result. Returns status=pending while processing, terminal result when complete."""
     with _JOBS_LOCK:
@@ -436,9 +472,11 @@ def query(request: Request, body: QueryRequest):
     session_id = body.session_id
     if session_id and session_id in SESSIONS:
         session_state = SESSIONS[session_id]
+        _touch_session(session_id)
     else:
         session_id = str(uuid.uuid4())
         session_state = {}
+        _touch_session(session_id)
 
     result = handle_query(body.question, session_state)
 
@@ -450,6 +488,7 @@ def query(request: Request, body: QueryRequest):
         raise RuntimeError(err_msg)
 
     SESSIONS[session_id] = session_state
+    _touch_session(session_id)
     result["session_id"] = session_id
 
     latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
@@ -486,9 +525,11 @@ def query_stream(request: Request, body: QueryRequest):
 
     if session_id and session_id in SESSIONS:
         session_state = SESSIONS[session_id]
+        _touch_session(session_id)
     else:
         session_id = str(uuid.uuid4())
         session_state = {}
+        _touch_session(session_id)
 
     event_queue: queue.Queue = queue.Queue()
 
@@ -506,6 +547,7 @@ def query_stream(request: Request, body: QueryRequest):
                 raise RuntimeError(err_msg)
 
             SESSIONS[session_id] = session_state
+            _touch_session(session_id)
             result["session_id"] = session_id
 
             latency_ms = round((time.perf_counter() - start_time) * 1000, 2)

@@ -1,16 +1,17 @@
 # RegBrain
 
-RegBrain is an auditable, self-verifying Retrieval-Augmented Generation (RAG) system designed specifically for RBI (Reserve Bank of India) regulatory compliance and Q&A. It ingests official RBI circulars and master directions as PDFs, chunks and embeds them into a hybrid vector + BM25 index over Qdrant, retrieves relevant passages, decomposes and synthesizes complex multi-hop queries, generates grounded answers with clause citations, and executes a two-stage neural claim verification pipeline (Lexical overlap + DeBERTa-v3 NLI entailment) to guarantee zero hallucinations before delivering answers.
+RegBrain is an auditable, self-verifying Retrieval-Augmented Generation (RAG) system designed specifically for RBI (Reserve Bank of India) regulatory compliance and Q&A. It ingests official RBI circulars and master directions as PDFs, chunks and embeds them into a hybrid vector + BM25 index over Qdrant across four regulated categories (Commercial Banks, NBFCs, Housing Finance Companies, and Urban Co-operative Banks), retrieves relevant passages, decomposes and synthesizes complex multi-hop queries, generates grounded answers with clause citations, and executes a dual-gate neural claim verification pipeline (Lexical overlap + Cross-Encoder neural relevance scoring) to guarantee zero hallucinations before delivering answers.
 
 ---
 
-## Key Innovation: Two-Stage Claim Verification Pipeline
+## Key Innovation: Dual-Gate Claim Verification Pipeline
 
-Unlike standard RAG systems that blindly trust whatever an LLM generates, RegBrain **decomposes every generated answer into atomic claims**, verifies each claim against retrieved source text using a strict two-stage gate, and **abstains when evidence is insufficient**:
+Unlike standard RAG systems that blindly trust whatever an LLM generates, RegBrain **decomposes every generated answer into atomic claims**, verifies each claim against retrieved source text using a strict dual-gate architecture, and **abstains when evidence is insufficient**:
 
-1. **Stage 1 (Lexical Gate)**: Enforces strict keyword overlap ($\text{KW} \ge 0.60$), sliding sequence match ($\text{Seq} \ge 0.35$), and zero number omission / mismatch.
-2. **Stage 2 (Neural NLI Gate)**: Evaluates sentence-level cross-encoder entailment (`cross-encoder/nli-deberta-v3-base`), requiring positive entailment margins over contradiction.
+1. **Gate 1 (Lexical & Numerical Gate)**: Enforces strict keyword overlap ($\text{KW} \ge 0.60$), sliding sequence match ($\text{Seq} \ge 0.35$), and strict numerical consistency (every numeric threshold in the claim must exist in the source chunk).
+2. **Gate 2 (Neural Cross-Encoder Gate)**: Evaluates sentence-level neural cross-encoder relevance scoring (`Xenova/ms-marco-MiniLM-L-6-v2`), requiring positive neural relevance scores ($\ge 0.0$) against source passages.
 3. **Abstention Guardrail**: Automatically suppresses answers and enters an `abstain` status whenever confidence falls below 33% or zero claims are grounded in source text.
+4. **Zero Client-Key Exposure Architecture**: All client requests route through an authenticated Next.js server proxy (`/api/backend/...`) with origin-restricted CORS and automatic session TTL garbage collection.
 
 ---
 

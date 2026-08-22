@@ -41,15 +41,28 @@ _NLI_MODEL = None
 
 
 def _get_nli_model():
-    """Return dedicated NLI model if configured, else None to keep RAM within 280MB."""
+    """Return neural cross-encoder instance for claim verification.
+    
+    If NLI_MODEL is 'shared' or unspecified, reuses the singleton reranker
+    instance from retrieval.retrieve (_get_reranker()) to avoid loading extra
+    weights into memory while enforcing genuine neural relevance scoring.
+    """
     global _NLI_MODEL
-    if _NLI_MODEL is None and NLI_MODEL_NAME not in ("shared", "disabled", ""):
-        try:
-            from fastembed.rerank.cross_encoder import TextCrossEncoder
-            FASTEMBED_CACHE = os.getenv("FASTEMBED_CACHE_PATH", "/tmp/fastembed_cache")
-            _NLI_MODEL = TextCrossEncoder(NLI_MODEL_NAME, cache_dir=FASTEMBED_CACHE, threads=1)
-        except Exception:
-            _NLI_MODEL = None
+    if _NLI_MODEL is None:
+        if NLI_MODEL_NAME not in ("shared", "reranker", "disabled", ""):
+            try:
+                from fastembed.rerank.cross_encoder import TextCrossEncoder
+                FASTEMBED_CACHE = os.getenv("FASTEMBED_CACHE_PATH", "/tmp/fastembed_cache")
+                _NLI_MODEL = TextCrossEncoder(NLI_MODEL_NAME, cache_dir=FASTEMBED_CACHE, threads=1)
+            except Exception:
+                _NLI_MODEL = None
+
+        if _NLI_MODEL is None and NLI_MODEL_NAME != "disabled":
+            try:
+                from retrieval.retrieve import _get_reranker
+                _NLI_MODEL = _get_reranker()
+            except Exception:
+                _NLI_MODEL = None
     return _NLI_MODEL
 
 
