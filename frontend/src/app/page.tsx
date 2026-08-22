@@ -190,18 +190,22 @@ export default function Home() {
         throw new Error("No job ID received from query start endpoint.");
       }
 
-      // 2. Poll for job progress and completion
+      // 2. Poll for job progress and completion with adaptive backoff
       let completed = false;
       const startTime = Date.now();
       const MAX_POLL_TIME = 180000; // 3 minutes timeout
+      let pollDelay = 500; // Start fast at 500ms, back off to 2000ms cap
 
       while (!completed && !abortController.signal.aborted) {
         if (Date.now() - startTime > MAX_POLL_TIME) {
           throw new Error("Audit request timed out. Please retry.");
         }
 
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, pollDelay));
         if (abortController.signal.aborted) break;
+
+        // Gradual backoff on subsequent polls: 500 -> 800 -> 1200 -> 1600 -> 2000ms
+        pollDelay = Math.min(2000, Math.floor(pollDelay * 1.5));
 
         try {
           const pollRes = await fetch(`${apiUrl}/query/result/${jobId}`, {

@@ -254,6 +254,7 @@ def retrieve(query: str, category: str | None = None) -> list[dict]:
                 "category": payload.get("category", ""),
                 "effective_date": payload.get("effective_date", ""),
                 "clause_text": payload.get("clause_text", ""),
+                "rrf_score": round(score * 100, 4),
                 "reranker_score": round(score * 100, 4),
             }
         )

@@ -13,6 +13,7 @@ Usage from the command line:
     python query_planner/plan_and_answer.py "your query here"
 """
 
+import concurrent.futures
 import json
 import os
 import re
@@ -282,7 +283,6 @@ def plan_and_answer(query: str) -> dict:
 
     # ── 2a. Single-hop: answer directly ─────────────────────────────
     if not needs_decomp:
-        time.sleep(RATE_LIMIT_SLEEP)  # respect rate limit after classify call
         result = answer_query(query, category=category)
         if "_error" in result:
             return result
@@ -295,28 +295,30 @@ def plan_and_answer(query: str) -> dict:
             "was_decomposed": False,
         }
 
-    # ── 2b. Multi-hop: decompose → fan-out → synthesize ─────────────
-    time.sleep(RATE_LIMIT_SLEEP)
+    # ── 2b. Multi-hop: decompose → parallel fan-out → synthesize ────
     sub_queries = decompose_query(query)
 
-    # Fan-out: run each sub-query through the full pipeline with category scoping
-    sub_results: list[dict] = []
-    for i, sq in enumerate(sub_queries):
-        if i > 0:
-            time.sleep(RATE_LIMIT_SLEEP)
-
+    # Fan-out: parallelize sub-query retrieval and processing across threads
+    def _execute_sub_query(sq: str) -> dict:
         sq_cat = extract_category_scope(sq)
         raw = answer_query(sq, category=sq_cat)
-        if "_error" in raw:
-            return raw
-        sub_results.append({
+        return {
             "sub_query": sq,
             "category": sq_cat,
             "status": raw.get("status", "abstain"),
             "answer": raw.get("answer", raw.get("reason", "")),
             "citations": raw.get("citations", []),
             "confidence": raw.get("confidence", 0.0),
-        })
+            "_error": raw.get("_error"),
+        }
+
+    max_workers = min(3, max(1, len(sub_queries)))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        sub_results = list(executor.map(_execute_sub_query, sub_queries))
+
+    for sr in sub_results:
+        if sr.get("_error"):
+            return {"_error": sr["_error"]}
 
     # ── Separate answered vs abstained sub-results ──────────────────
     answered = [sr for sr in sub_results if sr["status"] == "answered"]
@@ -344,7 +346,6 @@ def plan_and_answer(query: str) -> dict:
     avg_confidence = sum(confidences) / len(confidences)
 
     # ── Synthesize (pass only answered content + abstained topics) ──
-    time.sleep(RATE_LIMIT_SLEEP)
     synth = _synthesize(query, answered, abstained_topics)
     if "_error" in synth:
         return synth

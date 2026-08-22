@@ -364,12 +364,17 @@ MAX_JOBS = 50  # prevent memory leak from uncollected jobs
 
 
 def _cleanup_old_jobs():
-    """Remove jobs older than 5 minutes and cleanup stale sessions."""
+    """Remove jobs older than 5 minutes and enforce MAX_JOBS capacity."""
     cutoff = time.time() - 300
     with _JOBS_LOCK:
         expired = [jid for jid, j in JOBS.items() if j["created"] < cutoff]
         for jid in expired:
             del JOBS[jid]
+        if len(JOBS) > MAX_JOBS:
+            sorted_jobs = sorted(JOBS.items(), key=lambda x: x[1].get("created", 0.0))
+            excess = len(JOBS) - MAX_JOBS
+            for jid, _ in sorted_jobs[:excess]:
+                del JOBS[jid]
     _cleanup_old_sessions()
 
 

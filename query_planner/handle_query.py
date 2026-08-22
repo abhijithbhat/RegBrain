@@ -116,7 +116,6 @@ def handle_query(query: str, session_state: dict) -> dict:
         if rewrite_result.get("is_followup"):
             standalone_query = rewrite_result.get("standalone_query", query)
             was_rewritten = True
-            time.sleep(RATE_LIMIT_SLEEP)
         else:
             standalone_query = query
             was_rewritten = False
