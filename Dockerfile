@@ -26,7 +26,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Pre-download ONNX model weights into the image cache directory so runtime never downloads
 RUN mkdir -p /app/.fastembed_cache && \
-    python -c "from fastembed import TextEmbedding; TextEmbedding('BAAI/bge-small-en-v1.5', cache_dir='/app/.fastembed_cache', threads=1)"
+    python -c "from fastembed import TextEmbedding; TextEmbedding('BAAI/bge-small-en-v1.5', cache_dir='/app/.fastembed_cache', threads=1); from fastembed.rerank.cross_encoder import TextCrossEncoder; TextCrossEncoder('Xenova/ms-marco-MiniLM-L-6-v2', cache_dir='/app/.fastembed_cache', threads=1)"
 
 # Copy application source code and artifacts
 COPY api/ /app/api/

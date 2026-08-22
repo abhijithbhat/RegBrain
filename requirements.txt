@@ -7,4 +7,3 @@ qdrant-client
 fastapi
 uvicorn
 python-dotenv
-ragas
