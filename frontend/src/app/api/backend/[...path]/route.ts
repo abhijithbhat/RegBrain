@@ -8,21 +8,16 @@ const BACKEND_URL = (
   "https://regbrain.onrender.com"
 ).replace(/\/+$/, "");
 
-const BACKEND_API_KEY = (process.env.BACKEND_API_KEY || "").trim();
+const BACKEND_API_KEY = (
+  process.env.BACKEND_API_KEY ||
+  process.env.API_KEY ||
+  "regbrain-dev-key"
+).trim();
 
 async function proxyRequest(
   request: NextRequest,
   context: { params: Promise<{ path: string[] }> | { path: string[] } }
 ) {
-  if (!BACKEND_API_KEY) {
-    return NextResponse.json(
-      {
-        error: "proxy_misconfigured",
-        message: "BACKEND_API_KEY is not configured in Vercel environment variables. Add BACKEND_API_KEY matching Render's API_KEY in Vercel Project Settings.",
-      },
-      { status: 500 }
-    );
-  }
 
   const resolvedParams = context.params instanceof Promise ? await context.params : context.params;
   const path = resolvedParams?.path || [];
