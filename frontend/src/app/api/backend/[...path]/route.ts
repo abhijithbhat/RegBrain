@@ -5,35 +5,33 @@ export const dynamic = "force-dynamic";
 
 const BACKEND_URL = (
   process.env.BACKEND_URL ||
-  process.env.NEXT_PUBLIC_API_URL ||
   "https://regbrain.onrender.com"
 ).replace(/\/+$/, "");
 
-const BACKEND_API_KEY =
-  process.env.BACKEND_API_KEY ||
-  process.env.API_KEY ||
-  "regbrain-dev-key";
+const BACKEND_API_KEY = (process.env.BACKEND_API_KEY || "").trim();
 
 async function proxyRequest(
   request: NextRequest,
   context: { params: Promise<{ path: string[] }> | { path: string[] } }
 ) {
+  if (!BACKEND_API_KEY) {
+    return NextResponse.json(
+      {
+        error: "proxy_misconfigured",
+        message: "BACKEND_API_KEY is not configured in Vercel environment variables. Add BACKEND_API_KEY matching Render's API_KEY in Vercel Project Settings.",
+      },
+      { status: 500 }
+    );
+  }
+
   const resolvedParams = context.params instanceof Promise ? await context.params : context.params;
   const path = resolvedParams?.path || [];
   const targetPath = Array.isArray(path) ? path.join("/") : path;
   const search = request.nextUrl.search;
   const targetUrl = `${BACKEND_URL}/${targetPath}${search}`;
 
-  const incomingKey = request.headers.get("x-api-key");
-  const resolvedKey =
-    (process.env.BACKEND_API_KEY && process.env.BACKEND_API_KEY.trim()) ||
-    (process.env.API_KEY && process.env.API_KEY.trim()) ||
-    (process.env.NEXT_PUBLIC_API_KEY && process.env.NEXT_PUBLIC_API_KEY.trim()) ||
-    (incomingKey && incomingKey.trim()) ||
-    "regbrain-dev-key";
-
   const headers: Record<string, string> = {
-    "X-API-Key": resolvedKey,
+    "X-API-Key": BACKEND_API_KEY,
     Accept: request.headers.get("accept") || "application/json",
   };
 
