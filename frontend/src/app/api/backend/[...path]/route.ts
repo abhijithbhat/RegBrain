@@ -24,8 +24,14 @@ async function proxyRequest(
   const search = request.nextUrl.search;
   const targetUrl = `${BACKEND_URL}/${targetPath}${search}`;
 
+  const resolvedKey =
+    (process.env.BACKEND_API_KEY && process.env.BACKEND_API_KEY.trim()) ||
+    (process.env.API_KEY && process.env.API_KEY.trim()) ||
+    (process.env.NEXT_PUBLIC_API_KEY && process.env.NEXT_PUBLIC_API_KEY.trim()) ||
+    "regbrain-dev-key";
+
   const headers: Record<string, string> = {
-    "X-API-Key": BACKEND_API_KEY,
+    "X-API-Key": resolvedKey,
     Accept: request.headers.get("accept") || "application/json",
   };
 
