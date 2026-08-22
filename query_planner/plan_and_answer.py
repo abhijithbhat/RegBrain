@@ -244,9 +244,14 @@ def _filter_ungrounded_sentences(synthesized_text: str, citations: list[dict]) -
         if overlap >= 0.35:
             valid_sentences.append(sent)
         elif nli_model is not None and hasattr(nli_model, "rerank_pairs"):
-            pairs = [[ct, sent] for ct in citation_texts]
+            cand_cites = sorted(
+                citation_texts,
+                key=lambda ct: len(set(re.findall(r"\b\w+\b", ct.lower())) & set(re.findall(r"\b\w+\b", sent.lower()))),
+                reverse=True
+            )[:2]
+            pairs = [[ct, sent] for ct in cand_cites]
             if pairs:
-                scores = list(nli_model.rerank_pairs(pairs, batch_size=8))
+                scores = list(nli_model.rerank_pairs(pairs, batch_size=2))
                 if scores and max(scores) > -1.5:
                     valid_sentences.append(sent)
         elif overlap >= 0.20:
@@ -295,30 +300,25 @@ def plan_and_answer(query: str) -> dict:
             "was_decomposed": False,
         }
 
-    # ── 2b. Multi-hop: decompose → parallel fan-out → synthesize ────
+    # ── 2b. Multi-hop: decompose → memory-safe sequential fan-out → synthesize
     sub_queries = decompose_query(query)
 
-    # Fan-out: parallelize sub-query retrieval and processing across threads
-    def _execute_sub_query(sq: str) -> dict:
+    sub_results: list[dict] = []
+    for sq in sub_queries:
         sq_cat = extract_category_scope(sq)
         raw = answer_query(sq, category=sq_cat)
-        return {
+        if "_error" in raw:
+            return raw
+        sub_results.append({
             "sub_query": sq,
             "category": sq_cat,
             "status": raw.get("status", "abstain"),
             "answer": raw.get("answer", raw.get("reason", "")),
             "citations": raw.get("citations", []),
             "confidence": raw.get("confidence", 0.0),
-            "_error": raw.get("_error"),
-        }
-
-    max_workers = min(3, max(1, len(sub_queries)))
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        sub_results = list(executor.map(_execute_sub_query, sub_queries))
-
-    for sr in sub_results:
-        if sr.get("_error"):
-            return {"_error": sr["_error"]}
+        })
+        import gc
+        gc.collect()
 
     # ── Separate answered vs abstained sub-results ──────────────────
     answered = [sr for sr in sub_results if sr["status"] == "answered"]
@@ -352,6 +352,8 @@ def plan_and_answer(query: str) -> dict:
 
     synth_answer = synth.get("synthesized_answer", "")
     synth_answer = _filter_ungrounded_sentences(synth_answer, merged_citations)
+    import gc
+    gc.collect()
 
     return {
         "answer": synth_answer,

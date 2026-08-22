@@ -1,3 +1,4 @@
+import gc
 import json
 import logging
 from logging.handlers import RotatingFileHandler
@@ -376,6 +377,7 @@ def _cleanup_old_jobs():
             for jid, _ in sorted_jobs[:excess]:
                 del JOBS[jid]
     _cleanup_old_sessions()
+    gc.collect()
 
 
 @app.post("/query/start", dependencies=[Depends(check_rate_limit)])
@@ -444,6 +446,7 @@ def query_start(request: Request, body: QueryRequest):
                 }
         finally:
             _thread_local.stage_callback = None
+            gc.collect()
 
     thread = threading.Thread(target=worker, daemon=True)
     thread.start()

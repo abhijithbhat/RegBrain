@@ -66,7 +66,12 @@ def _get_embed_model():
     global _embed_model
     if _embed_model is None:
         from fastembed import TextEmbedding
-        _embed_model = TextEmbedding(EMBED_MODEL, cache_dir=FASTEMBED_CACHE, threads=1)
+        _embed_model = TextEmbedding(
+            EMBED_MODEL,
+            cache_dir=FASTEMBED_CACHE,
+            threads=1,
+            extra_session_options={"enable_cpu_mem_arena": False},
+        )
     return _embed_model
 
 
@@ -74,7 +79,12 @@ def _get_reranker():
     global _reranker
     if _reranker is None:
         from fastembed.rerank.cross_encoder import TextCrossEncoder
-        _reranker = TextCrossEncoder(RERANKER_MODEL, cache_dir=FASTEMBED_CACHE, threads=1)
+        _reranker = TextCrossEncoder(
+            RERANKER_MODEL,
+            cache_dir=FASTEMBED_CACHE,
+            threads=1,
+            extra_session_options={"enable_cpu_mem_arena": False},
+        )
     return _reranker
 
 
