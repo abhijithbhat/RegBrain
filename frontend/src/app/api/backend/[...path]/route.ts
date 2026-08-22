@@ -26,8 +26,6 @@ async function proxyRequest(
 
   const resolvedKey =
     (process.env.BACKEND_API_KEY && process.env.BACKEND_API_KEY.trim()) ||
-    (process.env.API_KEY && process.env.API_KEY.trim()) ||
-    (process.env.NEXT_PUBLIC_API_KEY && process.env.NEXT_PUBLIC_API_KEY.trim()) ||
     "regbrain-dev-key";
 
   const headers: Record<string, string> = {
