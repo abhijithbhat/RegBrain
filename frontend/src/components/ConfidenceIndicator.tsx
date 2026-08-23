@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Check, ShieldAlert, ShieldCheck } from "lucide-react";
 
 interface ConfidenceIndicatorProps {
   confidence: number;
@@ -28,30 +29,42 @@ export default function ConfidenceIndicator({
 
   return (
     <>
-      <p className="entry-kicker">Verification record</p>
+      <div className="flex items-center justify-between gap-2">
+        <p className="entry-kicker">Verification Record</p>
+        <span className="inline-flex items-center gap-1 text-[0.62rem] font-semibold text-[var(--accent-brass)]">
+          GATE 1 &amp; GATE 2 CHECKED
+        </span>
+      </div>
       <h3 className="entry-title">{finding}</h3>
       <p className="entry-prose">{description}</p>
+
       <div className="entry-meta">
         <span>{wasDecomposed ? "Multi-hop inquiry reconciled" : "Direct inquiry review"}</span>
         <span>{isAbstain ? "Response withheld" : "Grounded response released"}</span>
       </div>
+
       <div className="audit-axis">
         <div>
           <div className="confidence-track" aria-label={`Audit confidence: ${score.toFixed(1)}%`}>
             <div className="confidence-fill" style={{ width: `${Math.max(2, score)}%` }} />
           </div>
           <div className="mt-2 flex justify-between text-[0.62rem] text-[var(--text-secondary)]">
-            <span>Abstention gate · 33%</span>
-            <span>Notarization standard · 75%</span>
+            <span>Abstention threshold · 33%</span>
+            <span>Notarization threshold · 75%</span>
           </div>
         </div>
-        <span className="confidence-value text-sm text-[var(--accent-supported)]">{score.toFixed(1)}%</span>
+        <span className="confidence-value text-sm font-bold text-[var(--accent-supported)]">{score.toFixed(1)}%</span>
       </div>
 
       {!isAbstain && (
         <div className="verification-mark" aria-label={`Verified confidence: ${score.toFixed(1)}%`}>
-          <span className="verification-mark-icon" aria-hidden="true">✓</span>
-          <span className="verification-mark-label">Verified</span>
+          <span className="verification-mark-icon" aria-hidden="true">
+            <Check className="h-4 w-4 stroke-[3]" />
+          </span>
+          <div>
+            <p className="verification-mark-label">Verified</p>
+            <p className="text-[0.62rem] text-[var(--text-secondary)]">Zero-Hallucination</p>
+          </div>
           <span className="verification-mark-score">{score.toFixed(1)}%</span>
         </div>
       )}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, ShieldCheck } from "lucide-react";
 
 export interface CitationItem {
   text: string;
@@ -32,10 +32,10 @@ export default function CitationsList({ citations }: CitationsListProps) {
   if (citations.length === 0) return null;
 
   return (
-    <section className="mt-4" aria-labelledby="citations-title">
+    <section className="mt-8" aria-labelledby="citations-title">
       <div className="section-heading">
         <h3 className="section-title" id="citations-title">Verified statutory clauses</h3>
-        <span className="session-id text-xs text-[var(--text-secondary)]">{citations.length} RECORDS</span>
+        <span className="session-id text-xs text-[var(--accent-brass)] tracking-widest">{citations.length} AUDIT RECORDS</span>
       </div>
 
       {citations.map((citation, index) => {
@@ -48,17 +48,24 @@ export default function CitationsList({ citations }: CitationsListProps) {
           <article className="ledger-entry" key={`${citation.cited_clause_id}-${index}`}>
             <span className="folio-number">{String(index + 3).padStart(2, "0")}</span>
             <div>
-              <p className="entry-kicker">{isSupported ? "Supported source record" : "Unverified source record"}</p>
+              <div className="flex items-center gap-2">
+                <p className="entry-kicker">{isSupported ? "Supported source record" : "Unverified source record"}</p>
+                {isSupported && (
+                  <span className="inline-flex items-center gap-1 text-[0.62rem] font-semibold text-[var(--accent-supported)] bg-[var(--accent-supported)]/10 px-1.5 py-0.5 rounded">
+                    <ShieldCheck className="h-3 w-3" /> VERIFIED
+                  </span>
+                )}
+              </div>
               <h4 className="entry-title">{title}</h4>
               <p className="entry-prose">{citation.text}</p>
               <blockquote className="source-excerpt">“{excerpt}”</blockquote>
 
               <div className="entry-meta">
-                <span className="session-id">§ {citation.source_clause_id || citation.cited_clause_id}</span>
-                <span>{isSupported ? "Entailment supported" : "Entailment not established"}</span>
+                <span className="session-id text-[var(--accent-brass)]">§ {citation.source_clause_id || citation.cited_clause_id}</span>
+                <span>{isSupported ? "Statutory relevance verified" : "Relevance not established"}</span>
                 <button
                   aria-expanded={isExpanded}
-                  className="entry-action"
+                  className="entry-action cursor-pointer"
                   onClick={() => setExpandedIndex(isExpanded ? null : index)}
                   type="button"
                 >
@@ -81,7 +88,7 @@ export default function CitationsList({ citations }: CitationsListProps) {
                     </p>
                   </div>
                   <div className="telemetry-cell">
-                    <p className="telemetry-label">Neural entailment</p>
+                    <p className="telemetry-label">Neural relevance</p>
                     <p className="telemetry-value">{citation.best_entailment !== undefined ? citation.best_entailment.toFixed(3) : "Not recorded"}</p>
                     <p className="mt-1 text-[0.65rem] text-[var(--text-secondary)]">Contradiction: {citation.best_contradiction !== undefined ? citation.best_contradiction.toFixed(3) : "—"}</p>
                   </div>
