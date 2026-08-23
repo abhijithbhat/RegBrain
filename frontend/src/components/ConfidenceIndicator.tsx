@@ -24,7 +24,7 @@ export default function ConfidenceIndicator({
         : "Finding below notarization standard";
   const description = isAbstain
     ? "The available record did not meet the threshold for a grounded response."
-    : "Confidence is derived from lexical fidelity and neural entailment across the cited record.";
+    : "Confidence is derived from lexical fidelity and neural relevance across the cited record.";
 
   return (
     <>

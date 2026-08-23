@@ -54,7 +54,7 @@ const STAGE_CONFIG: Record<
   },
   verifying: {
     label: "Dual-gate verification",
-    desc: "Checking lexical fidelity and neural entailment before entry.",
+    desc: "Checking lexical fidelity and neural relevance before entry.",
     stepNumber: "04",
   },
 };

@@ -136,6 +136,7 @@ ABSOLUTE NEGATIVE CONSTRAINTS (ZERO TOLERANCE):
 3. Every sentence in your output MUST strictly derive from and map to at least one bullet in the "Verified Supported Claims" list.
 4. If only 2-3 brief claims are provided, your output must be equally concise and contain ONLY those 2-3 facts.
 5. If abstained topics are listed, state clearly: "Regarding [topic], the available regulatory corpus does not contain grounded information on this."
+6. Preserve exact entity-to-statistic pairings without conflation (e.g., keep Commercial Banks, NBFCs, and Urban Co-operative Banks figures distinctly attributed to their respective entities).
 
 Respond with ONLY a JSON object:
 {
