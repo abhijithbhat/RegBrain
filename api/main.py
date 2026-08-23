@@ -331,10 +331,14 @@ verify_module.verify_claims = _hooked_verify_claims
 answer_query_module.verify_claims = _hooked_verify_claims
 
 
-# ── Schemas ─────────────────────────────────────────────────────────
 class QueryRequest(BaseModel):
-    question: str
+    question: Optional[str] = None
+    query: Optional[str] = None
     session_id: Optional[str] = None
+
+    @property
+    def effective_question(self) -> str:
+        return (self.question or self.query or "").strip()
 
 
 @app.get("/health")
@@ -412,7 +416,10 @@ def query_start(request: Request, body: QueryRequest):
         _thread_local.retrieved_chunks = []
         _thread_local.verified_claims = []
         try:
-            result = handle_query(body.question, session_state)
+            question_text = body.effective_question
+            if not question_text:
+                raise ValueError("Question or query text is required.")
+            result = handle_query(question_text, session_state)
 
             if "_error" in result:
                 err_msg = str(result["_error"])
@@ -431,7 +438,7 @@ def query_start(request: Request, body: QueryRequest):
                 "event": "async_query_completed",
                 "job_id": job_id,
                 "session_id": session_id,
-                "question": (body.question[:100] + "...") if len(body.question) > 100 else body.question,
+                "question": (question_text[:100] + "...") if len(question_text) > 100 else question_text,
                 "status": result.get("status", "abstain"),
             })
         except Exception as err:
@@ -489,7 +496,10 @@ def query(request: Request, body: QueryRequest):
         session_state = {}
         _touch_session(session_id)
 
-    result = handle_query(body.question, session_state)
+    question_text = body.effective_question
+    if not question_text:
+        raise HTTPException(status_code=400, detail="Missing 'question' or 'query' parameter.")
+    result = handle_query(question_text, session_state)
 
     # Check for internal error keys returned by LLM wrappers
     if "_error" in result:
@@ -512,7 +522,7 @@ def query(request: Request, body: QueryRequest):
     logger.info({
         "event": "query_completed",
         "session_id": session_id,
-        "question": (body.question[:100] + "...") if len(body.question) > 100 else body.question,
+        "question": (question_text[:100] + "...") if len(question_text) > 100 else question_text,
         "retrieved_chunks": retrieved,
         "verification": {
             "total_claims": total_claims,
@@ -549,7 +559,10 @@ def query_stream(request: Request, body: QueryRequest):
         _thread_local.retrieved_chunks = []
         _thread_local.verified_claims = []
         try:
-            result = handle_query(body.question, session_state)
+            question_text = body.effective_question
+            if not question_text:
+                raise ValueError("Question or query text is required.")
+            result = handle_query(question_text, session_state)
 
             if "_error" in result:
                 err_msg = str(result["_error"])
@@ -571,7 +584,7 @@ def query_stream(request: Request, body: QueryRequest):
             logger.info({
                 "event": "query_stream_completed",
                 "session_id": session_id,
-                "question": (body.question[:100] + "...") if len(body.question) > 100 else body.question,
+                "question": (question_text[:100] + "...") if len(question_text) > 100 else question_text,
                 "retrieved_chunks": retrieved,
                 "verification": {
                     "total_claims": total_claims,

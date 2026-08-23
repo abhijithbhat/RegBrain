@@ -152,7 +152,7 @@ export default function Home() {
     abortControllerRef.current = abortController;
 
     try {
-      // 1. Start the asynchronous query job
+      // 1. Start the asynchronous query job (sending both question and query for full compatibility)
       let startData: any = null;
       const MAX_START_ATTEMPTS = 3;
 
@@ -161,7 +161,11 @@ export default function Home() {
           const res = await fetch(`${apiUrl}/query/start`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ query: trimmed, session_id: sessionId || undefined }),
+            body: JSON.stringify({
+              question: trimmed,
+              query: trimmed,
+              session_id: sessionId || undefined,
+            }),
             signal: abortController.signal,
           });
 
@@ -178,7 +182,19 @@ export default function Home() {
           }
 
           const errJson = await res.json().catch(() => ({}));
-          throw new Error(errJson.detail || `Server responded with status ${res.status}`);
+          let errorMsg = `Server responded with status ${res.status}`;
+          if (typeof errJson.detail === "string") {
+            errorMsg = errJson.detail;
+          } else if (Array.isArray(errJson.detail)) {
+            errorMsg = errJson.detail
+              .map((d: any) => (typeof d === "string" ? d : d.msg || JSON.stringify(d)))
+              .join("; ");
+          } else if (typeof errJson.detail === "object" && errJson.detail !== null) {
+            errorMsg = JSON.stringify(errJson.detail);
+          } else if (errJson.error) {
+            errorMsg = typeof errJson.error === "string" ? errJson.error : JSON.stringify(errJson.error);
+          }
+          throw new Error(errorMsg);
         } catch (err: any) {
           if (err.name === "AbortError") throw err;
           if (attempt === MAX_START_ATTEMPTS) throw err;
@@ -214,8 +230,12 @@ export default function Home() {
           setCurrentStage(pollData.stage);
         }
 
-        if (pollData.status === "completed") {
-          const finalRes = pollData.result || {};
+        if (
+          pollData.job_status === "done" ||
+          pollData.status === "completed" ||
+          (pollData.status && pollData.status !== "pending" && pollData.status !== "error" && pollData.status !== "failed")
+        ) {
+          const finalRes = pollData.result || pollData;
           setResult({
             status: finalRes.status || "answered",
             answer: finalRes.answer,
@@ -235,8 +255,13 @@ export default function Home() {
           return;
         }
 
-        if (pollData.status === "failed") {
-          throw new Error(pollData.error || "Query execution failed.");
+        if (pollData.job_status === "error" || pollData.status === "failed" || pollData.status === "error") {
+          const errDetail = typeof pollData.error === "string"
+            ? pollData.error
+            : pollData.result?.error
+              ? (typeof pollData.result.error === "string" ? pollData.result.error : JSON.stringify(pollData.result.error))
+              : "Query execution failed.";
+          throw new Error(errDetail);
         }
 
         await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
@@ -288,7 +313,7 @@ export default function Home() {
                 {sessionId ? sessionId.slice(0, 12) : "UNOPENED"}
               </span>
               {sessionId && (
-                <button className="ledger-control" onClick={handleResetSession} title="Reset audit session">
+                <button className="ledger-control cursor-pointer" onClick={handleResetSession} title="Reset audit session">
                   <RefreshCw className="h-3 w-3" />
                   Reset
                 </button>
@@ -316,7 +341,7 @@ export default function Home() {
 
           <div className="spine-controls">
             {sessionId && (
-              <button className="ledger-control lg:hidden" onClick={handleResetSession} title="Reset audit session">
+              <button className="ledger-control lg:hidden cursor-pointer" onClick={handleResetSession} title="Reset audit session">
                 <RefreshCw className="h-3 w-3" />
                 Reset
               </button>
@@ -368,13 +393,13 @@ export default function Home() {
                         handleSubmit();
                       }
                     }}
-                    placeholder="Compare capital adequacy or ask a regulatory question…"
+                    placeholder="Ask a regulatory question or compare capital adequacy norms…"
                     type="text"
                     value={question}
                   />
                   {question && !isLoading && (
                     <button
-                      className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer mr-1 p-1"
+                      className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer p-1 shrink-0"
                       onClick={() => setQuestion("")}
                       title="Clear text"
                       type="button"
@@ -406,8 +431,8 @@ export default function Home() {
                 </div>
               </form>
 
-              {/* Horizontal Touch-Friendly Inquiry Chips */}
-              <div className="inquiry-chips-wrap" aria-label="Preset regulatory inquiries">
+              {/* Mobile-Only Horizontal Quick Inquiry Chips */}
+              <div className="inquiry-chips-wrap lg:hidden" aria-label="Preset regulatory inquiries">
                 <span className="text-[0.63rem] font-semibold tracking-wider text-[var(--accent-brass)] uppercase shrink-0">
                   Quick Inquiries:
                 </span>

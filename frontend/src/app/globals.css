@@ -241,7 +241,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   box-shadow: var(--shadow-luxury);
   border-radius: 6px;
   padding: clamp(2.2rem, 5vw, 5.2rem) clamp(1.6rem, 5.5vw, 6.5rem) 3.5rem;
-  contain: paint;
   backdrop-filter: blur(16px);
 }
 
@@ -318,14 +317,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   text-transform: uppercase;
 }
 
-/* ── Luxury Inquiry Chips Bar ─────────────────────────────────── */
+/* ── Mobile-Only Quick Inquiry Chips ──────────────────────────── */
 .inquiry-chips-wrap {
-  margin-top: 1.4rem;
+  margin-top: 1.1rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   overflow-x: auto;
-  padding-bottom: 0.4rem;
+  padding: 0.4rem 0.1rem;
   scrollbar-width: thin;
 }
 .inquiry-chip {
@@ -336,7 +335,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   background: var(--surface-raised);
   border: 1px solid var(--border-hairline);
   color: var(--text-secondary);
-  padding: 0.42rem 0.85rem;
+  padding: 0.45rem 0.85rem;
   border-radius: 9999px;
   font-size: 0.73rem;
   font-weight: 500;
@@ -348,8 +347,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   border-color: var(--accent-brass);
   color: var(--text-primary);
   background: var(--surface-subtle);
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 .inquiry-chip-num {
   font-family: "IBM Plex Mono", monospace;
@@ -357,7 +354,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   color: var(--accent-brass);
 }
 
-/* ── Gilded Search Desk Console ───────────────────────────────── */
+/* ── Clean Horizontal Search Desk Console ──────────────────────── */
 .ledger-entry-line {
   margin-top: clamp(1.8rem, 3vw, 2.8rem);
   border-top: 1px solid var(--border-hairline);
@@ -366,10 +363,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
 }
 
 .query-line {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 1rem;
+  display: flex;
   align-items: center;
+  gap: 0.75rem;
+  width: 100%;
   border-bottom: 1.5px solid var(--accent-brass);
   padding: 0.35rem 0 0.55rem;
   transition: border-color 200ms ease;
@@ -379,12 +376,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
 }
 
 .query-field {
+  flex: 1 1 auto;
   min-width: 0;
   height: 2.3rem;
   border: 0;
   background: transparent;
   color: var(--text-primary);
-  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-size: clamp(0.95rem, 1.4vw, 1.12rem);
   line-height: 1.4;
   padding: 0;
 }
@@ -392,6 +390,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
 .query-field:focus { outline: 0; }
 
 .ledger-submit {
+  flex: 0 0 auto;
   border: 0;
   border-left: 1.5px solid var(--accent-brass);
   background: transparent;
@@ -404,6 +403,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
   transition: all 180ms ease;
 }
 .ledger-submit:hover:not(:disabled) {
@@ -458,8 +458,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   gap: 1.2rem;
   border-bottom: 1px solid var(--border-hairline);
   padding: 2rem 0;
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 180px;
 }
 
 .folio-number {
@@ -513,7 +511,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   font-style: italic;
   line-height: 1.65;
   border-radius: 0 4px 4px 0;
-  content-visibility: auto;
 }
 
 /* ── Notary Seal & Verification Badge ─────────────────────────── */
@@ -760,7 +757,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   .spine-brand { gap: 0.65rem; }
   .crest-mark { width: 38px; height: 44px; font-size: 1.15rem; }
   .spine-vertical-rule, .binding-rule { display: none; }
-  .registry-list { display: none; } /* Replaced by horizontal chips in main view */
   
   .spine-controls {
     margin-top: 0;
@@ -796,16 +792,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 1.5
   .masthead-dateline { text-align: left; }
   
   .query-line {
-    grid-template-columns: auto minmax(0, 1fr);
-    padding-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
   .ledger-submit {
-    grid-column: 1 / -1;
-    border-left: 0;
-    border-top: 1px solid var(--border-hairline);
-    padding: 0.65rem 0 0;
-    justify-content: center;
-    width: 100%;
+    padding: 0.25rem 0 0.25rem 0.75rem;
+    font-size: 0.72rem;
   }
   
   .query-footer {
