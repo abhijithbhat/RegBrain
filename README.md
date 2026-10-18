@@ -123,7 +123,7 @@ RegBrain was benchmarked against a naive RAG baseline (dense-only retrieval, sin
 
 - **Category Router & Query Planner**: Multi-hop query decomposition, conversational memory rewriting for multi-turn sessions, and category routing across the four regulated sectors (Commercial Banks, NBFCs, Housing Finance Companies, and Urban Co-operative Banks).
 - **Hybrid Retrieval**: Dense embeddings (`BAAI/bge-small-en-v1.5`) + Sparse BM25 fused via Reciprocal Rank Fusion (RRF) and scored via `Xenova/ms-marco-MiniLM-L-6-v2`.
-- **Generation Engine**: Groq multi-model failover chain (`openai/gpt-oss-20b` primary, `qwen/qwen3.6-27b`, `allam-2-7b`, and `openai/gpt-oss-safeguard-20b`) producing grounded regulatory answers with verbatim citations.
+- **Generation Engine**: Groq multi-model failover chain (`openai/gpt-oss-20b` primary, `qwen/qwen3.8-27b`, and `openai/gpt-oss-120b`) producing grounded regulatory answers with verbatim citations.
 - **Dual-Gate Claim Verifier**: Exact lexical keyword overlap ($\ge 0.60$), sliding sequence match ($\ge 0.35$), numerical consistency checks, and neural cross-encoder verification (`Xenova/ms-marco-MiniLM-L-6-v2` with score $> -1.5$, shared with the retrieval layer).
 - **Production API & Request Path**: Asynchronous job submission and polling architecture (`/query/start` + `/query/result`) with in-memory TTL cleanup, API key authentication (`X-API-Key`), sliding-window rate limiting ($20\text{ req/min}$), structured rotating logs, and an optional SSE stream endpoint (`/query/stream`).
 - **Frontend UI ("The Regulatory Ledger")**: Gazette-style Next.js 14 interface with Vault (Dark) and Parchment (Light) themes, Notary Verification Seals, and real-time polling audit pipeline stepper.

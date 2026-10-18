@@ -19,13 +19,14 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-# Active models with available token quotas (excluding exhausted 120b)
-GROQ_MODELS = [
-    os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
-    "qwen/qwen3.6-27b",
-    "allam-2-7b",
-    "openai/gpt-oss-safeguard-20b",
+# Active general LLM models on Groq with full context windows and independent quotas
+_DEFAULT_MODELS = [
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-27b",
+    "openai/gpt-oss-120b",
 ]
+_PRIMARY_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
+GROQ_MODELS = [_PRIMARY_MODEL] + [m for m in _DEFAULT_MODELS if m != _PRIMARY_MODEL]
 
 _FENCE_RE = re.compile(
     r"^\s*```(?:json|JSON)?\s*\n?(.*?)\n?\s*```\s*$",
@@ -52,7 +53,7 @@ def _parse_wait_time(response: requests.Response) -> float:
     retry_header = response.headers.get("retry-after")
     if retry_header:
         try:
-            return min(float(retry_header), 6.0)
+            return min(float(retry_header), 15.0)
         except ValueError:
             pass
     # 2. X-RateLimit-Reset-Tokens header
@@ -62,7 +63,7 @@ def _parse_wait_time(response: requests.Response) -> float:
             if "ms" in reset_tokens:
                 return float(reset_tokens.replace("ms", "")) / 1000.0
             elif "s" in reset_tokens:
-                return min(float(reset_tokens.replace("s", "")), 6.0)
+                return min(float(reset_tokens.replace("s", "")), 15.0)
         except ValueError:
             pass
     # 3. Regex in response body
@@ -71,7 +72,7 @@ def _parse_wait_time(response: requests.Response) -> float:
         msg = data.get("error", {}).get("message", "")
         match = re.search(r"try again in (\d+(?:\.\d+)?)s", msg, re.IGNORECASE)
         if match:
-            return min(float(match.group(1)), 6.0)
+            return min(float(match.group(1)), 15.0)
     except Exception:
         pass
     return 2.0
@@ -94,9 +95,10 @@ def groq_json_completion(
 
     raw_text = None
     last_error = "No response from Groq"
+    last_wait = 2.0
 
     # Up to 2 full passes across all available models
-    for _ in range(2):
+    for pass_idx in range(2):
         for model_name in GROQ_MODELS:
             payload = {
                 "model": model_name,
@@ -117,13 +119,13 @@ def groq_json_completion(
                         raw_text = data["choices"][0]["message"]["content"]
                         break
                     elif resp.status_code == 429:
-                        wait = _parse_wait_time(resp)
+                        last_wait = _parse_wait_time(resp)
                         last_error = f"Rate limit on {model_name}: {resp.text[:150]}"
                         if model_name != GROQ_MODELS[-1]:
                             time.sleep(0.4)
-                            break  # Failover to next model
+                            break  # Failover immediately to next model with its own TPM bucket
                         else:
-                            time.sleep(min(wait, 3.0) * attempt)
+                            time.sleep(min(last_wait + 0.5, 12.0))
                     elif resp.status_code in (500, 502, 503, 504):
                         last_error = f"Server error {resp.status_code} on {model_name}"
                         time.sleep(1.0 * attempt)
@@ -138,6 +140,9 @@ def groq_json_completion(
                 break
         if raw_text is not None:
             break
+        # If all models hit limits on pass 1, wait for token window reset before pass 2
+        if pass_idx == 0:
+            time.sleep(min(last_wait + 0.5, 6.0))
 
     if raw_text is None:
         return {"_error": f"Groq failover exhausted: {last_error}"}

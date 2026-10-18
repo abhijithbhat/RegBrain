@@ -23,27 +23,9 @@ from dotenv import load_dotenv
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from retrieval.retrieve import retrieve  # noqa: E402
+from generation.groq_client import groq_json_completion  # noqa: E402
 
 load_dotenv()
-
-# ── Config ──────────────────────────────────────────────────────────
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODELS = [
-    os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
-    "qwen/qwen3.6-27b",
-    "openai/gpt-oss-120b",
-]
-MAX_RETRIES = 3
-BASE_DELAY = 1.0  # seconds exponential backoff base
-
-_FENCE_RE = re.compile(
-    r"^\s*```(?:json|JSON)?\s*\n?(.*?)\n?\s*```\s*$",
-    re.DOTALL,
-)
-
-
-from generation.groq_client import groq_json_completion  # noqa: E402
 
 
 def _error_response(message: str) -> dict:
